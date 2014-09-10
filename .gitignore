@@ -1,0 +1,16 @@
+# Always ignore
+*.swp
+.ipynb_checkpoints/
+*.pyc
+README.html
+
+
+# Ignore these directories
+res/*
+seq/*
+raw/*
+meta/*
+tre/*
+
+# But white-list these files
+!*/README.md
