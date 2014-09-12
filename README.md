@@ -1,14 +1,15 @@
-# [Project Name] #
-## Introduction ##
-[One sentence, what this project is about.]
-[A description of the project.]
-
+# Computation Biology Project Template #
 ## Directory Structure and Conventions ##
 In order to make projects more rational, here I define a standard
 directory/file structure which is intended to be universal for computational
 biology projects.
 
-### `README.md` ###
+## Requirements ##
+ -  [`pandoc`](http://johnmacfarlane.net/pandoc/) (1.13.1+)
+    -  to compile markdown files into pretty html
+
+## Directory/Workflow Conventions ##
+### `NOTES.md` ###
 This is the core notebook for the project.
 All experiments and conclusions should be clearly described in the
 "Notebook" section below.
@@ -30,7 +31,7 @@ This should be kept in the exact same format as it is available publicly.
 While these files are not version controlled, they _should_ all be available
 in an online repository.
 
-### `raw/README.md` ###
+### `raw/NOTES.md` ###
  -  Required: Describes (in detail) where all of the data came from.
  -  Good: Instructions for retrieving all of the data from an online
     repository.
@@ -64,7 +65,7 @@ generated from `seq/16S.ungap.afn`.
 Any intermediate results which cannot be easily placed in another directory.
 For instance, a TSV of pairwise sequence distances.
 
-### `res/README.md` ###
+### `res/NOTES.md` ###
 Description of the intermediate results and what they're good for.
 
 ### `static/` ###
@@ -133,31 +134,8 @@ Before being committed to git, IPYNBs should have their output and line
 numbers wiped, so as to avoid committing binary data, or arbitrary changes;
 re-running your notebook shouldn't change it in the eyes of git.
 To do this in an automated fashion, see
-[this git smudge/clean filter](github.com/bsmith89/ipynb-outfilt).
+[this git smudge/clean filter](http://github.com/bsmith89/ipynb-outfilt).
 
 ### `fig/` ###
 Finished figures.
 "Publishable" output of analysis.
-
-## Requirements ##
-### Applications ###
- -  [`pandoc`](http://johnmacfarlane.net/pandoc/) (1.13.1+)
-    -  to compile notes (this file!) into pretty html
- -  [`python`](https://www.python.org/) (3.4+)
-
-### Python Packages ###
- -  [`numpy`](http://www.numpy.org/) (1.8.0+)
- -  [`scipy`](http://www.scipy.org/) (0.14.0+)
- -  [`matplotlib`](http://www.matplotlib.org/) (1.3.1+)
- -  [`ipython`](http://ipython.org/) (2.2+)
-    -  With the notebook feature: `pip install ipython[notebook]`
- -  [`pandas`](pandas.pydata.org) (0.31.1+)
-
-## Notebook ##
-### [Date1] ###
-#### [Experiment1] ####
-### [Date2] ###
-#### [Experiment1]\(cont.) ####
-
-### TODOs ###
- -  My first notebook entry!

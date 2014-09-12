@@ -1,6 +1,3 @@
-# `raw/` #
-
-## Files ##
 ### [`example-raw-file.txt`] ###
 [Where did this file come from?]
 
