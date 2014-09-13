@@ -4,7 +4,6 @@
 *.pyc
 README.html
 
-
 # Ignore these directories
 res/*
 seq/*
@@ -14,3 +13,4 @@ tre/*
 
 # But white-list these files
 !*/README.md
+!*/NOTES.md

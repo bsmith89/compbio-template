@@ -1,4 +1,4 @@
-# `tre/` #
+All phylogenetic trees.
 
 ## Conventions ##
 ### `*.nwk` ###

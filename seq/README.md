@@ -1,8 +1,7 @@
-# `seq/` #
+All sequence files.
+Various types.
 
-## Files ##
-This directory contains a variety of sequence files.
-
+## Conventions ##
 `16S.*` refer to sequence files which originally come from the rrnDBs
 16S sequence database.
 

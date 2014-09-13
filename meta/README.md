@@ -1,7 +1,4 @@
-# `meta/` #
-
-All files represent metadata about the sequences and genomes
-analyzed in this study.
+All files represent metadata about the data analyzed in this study.
 
 ## Conventions ##
 ### `*.tsv` ###
@@ -21,10 +18,3 @@ TSVs are preferred (because they're easier to inspect manually),
 but CSVs are acceptable.
 See:
 [`pandas.read_csv`](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.parsers.read_csv.html).
-
-## Files ##
-### [`example-metadata-file.tsv`] ###
-
- -  [Comment associated with this metadata file.]
- -  [row #]: [Comment associated with a particular row.]
-
