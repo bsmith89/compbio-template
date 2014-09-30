@@ -25,6 +25,9 @@ Reproduce the full analysis with a single command:
 $ make all
 ```
 
+Any data processing which is computationally intensive should save intermediate
+files in order to utilize `make`'s piece-wise compilation.
+
 ### `raw/` ###
 All of the raw (meta)data needed to recreate the entire analysis.
 This should be kept in the exact same format as it is available publicly.
@@ -82,7 +85,6 @@ this folder.
 Executable files which carry out any parts of the pipeline requiring more
 than a `Makefile` recipe.
 
-
 ### `bin/*` ###
 These scripts (and source code to be compiled) _are_ version controlled,
 unlike data files.
@@ -96,20 +98,20 @@ Scripts should be well documented.
     standards.
 
 Scripts should take any data which only needs to be used once from STDIN.
-If this can be accomplished in multiple ways scripts should take the largest
-files (usually a sequence file) from STDIN and smaller metadata files as
-positional arguments.
+If this can be accomplished in multiple ways, one rule of thumb is for  scripts
+to take the largest files (usually a sequence file) from STDIN and smaller
+metadata files as positional arguments.
 This is designed to make streaming pipelines an easy transition.
 
 Scripts should be designed for portability.
 
- -  Required: Scripts accept all input data externally.
+ -  Good: Scripts accept all input data externally.
     Data files are _not_ hard coded into the script.
- -  Good: Variable parameters of the analysis are accepted as positional
+ -  Great: Variable parameters of the analysis are accepted as positional
     arguments, and options.
     Logical defaults are acceptable.
     Parameters are _not_ hard-coded into the scripts.
- -  Great: Scripts are constructed in a modular design.
+ -  Greatest: Scripts are constructed in a modular design.
     e.g. Python scripts divide logical chunks into "public" functions so that
     those parts can be imported by other scripts.
 
@@ -120,7 +122,7 @@ output data in the same file.
 They are also not conducive to reproducing a result after external files
 and directories have been changed.
 This is largely because they have file paths hard-coded in.
-IPYNBs should be used kinda like the 'Notebook' section of this document;
+IPYNBs should be used kinda like the `NOTES.md` files;
 They are a record of a thought-process/workflow, but are not guarenteed to
 execute the same way after subsequent commits.
 Instead, important analyses should be ported over to version controlled
