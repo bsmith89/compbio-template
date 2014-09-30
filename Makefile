@@ -5,15 +5,14 @@ TODOS   = $(subst .md,.$(DOC_FMT),TODO.md   $(wildcard */TODO.md)  )
 ALL_DOCS = READMES NOTES TODOS
 
 all: docs figs
-
-
+docs: $(READMES) $(NOTES) TODO.$(DOC_FMT)
 figs: ;
 
-docs: $(READMES) $(NOTES) TODO.$(DOC_FMT)
 pandoc_recipe_md2html = \
 pandoc -f markdown -t html5 -s \
        --highlight-style pygments --mathjax \
        --toc --toc-depth=4 \
+       --css static/main.css \
        <$< >$@
 %/README.html: %/README.md
 	$(pandoc_recipe_md2html)
