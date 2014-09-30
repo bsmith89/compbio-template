@@ -138,6 +138,11 @@ re-running your notebook shouldn't change it in the eyes of git.
 To do this in an automated fashion, see
 [this git smudge/clean filter](http://github.com/bsmith89/ipynb-outfilt).
 
+### `profile_default/` ###
+A custom ipython profile for compbio projects.
+This lets me change particular components in just one place.
+Anyone who forks the project will then have the same configuration.
+
 ### `fig/` ###
 Finished figures.
 "Publishable" output of analysis.
