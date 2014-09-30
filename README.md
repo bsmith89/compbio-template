@@ -129,9 +129,6 @@ Instead, important analyses should be ported over to version controlled
 scripts.
 
 ### `ipynb/*` ###
-Notebooks start with `cd ..`; all code is run from the project's root
-directory.
-
 Before being committed to git, IPYNBs should have their output and line
 numbers wiped, so as to avoid committing binary data, or arbitrary changes;
 re-running your notebook shouldn't change it in the eyes of git.
@@ -143,6 +140,17 @@ A custom ipython profile for compbio projects.
 This lets me change particular components in just one place.
 Anyone who forks the project will then have the same configuration.
 
+This profile does a few things by default:
+ -  IPython notebooks display figures inline by default.
+ -  The default editor is full vim.
+ -  Tab completion is more like `bash`.
+ -  Running `ipython notebook` from the command line is convenient.
+    -  This will start a server in the `ipynb/` subdirectory.
+    -  When ipy kernels are subsequently started, the current working directory
+       is changed to the root of the project (i.e. `cd ..`).
+
 ### `fig/` ###
 Finished figures.
 "Publishable" output of analysis.
+
+## TODO ##

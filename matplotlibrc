@@ -35,12 +35,12 @@
 # You can also deploy your own backend outside of matplotlib by
 # referring to the module name (which must be in the PYTHONPATH) as
 # 'module://my_backend'
-backend      : qt4agg
+backend      : Qt4Agg
 
 # If you are using the Qt4Agg backend, you can choose here
 # to use the PyQt4 bindings or the newer PySide bindings to
 # the underlying Qt4 toolkit.
-#backend.qt4 : PyQt4        # PyQt4 | PySide
+backend.qt4 : PySide       # PyQt4 | PySide
 
 # Note that this can be overridden by the environment variable
 # QT_API used by Enthought Tool Suite (ETS); valid values are
@@ -234,9 +234,9 @@ backend      : qt4agg
 #axes.facecolor      : white   # axes background color
 #axes.edgecolor      : black   # axes edge color
 #axes.linewidth      : 1.0     # edge linewidth
-#axes.grid           : False   # display grid or not
-#axes.titlesize      : large   # fontsize of the axes title
-#axes.labelsize      : medium  # fontsize of the x any y labels
+axes.grid           : False   # display grid or not
+axes.titlesize      : x-large   # fontsize of the axes title
+axes.labelsize      : large  # fontsize of the x any y labels
 #axes.labelweight    : normal  # weight of the x and y labels
 #axes.labelcolor     : black
 #axes.axisbelow      : False   # whether axis gridlines and ticks are below
@@ -315,7 +315,7 @@ backend      : qt4agg
 #legend.borderaxespad : 0.5   # the border between the axes and legend edge in fraction of fontsize
 #legend.columnspacing : 2.    # the border between the axes and legend edge in fraction of fontsize
 #legend.shadow        : False
-#legend.frameon       : True   # whether or not to draw a frame around legend
+legend.frameon       : False   # whether or not to draw a frame around legend
 #legend.scatterpoints : 3 # number of scatter points
 
 ### FIGURE
@@ -394,7 +394,7 @@ backend      : qt4agg
 #savefig.jpeg_quality: 95       # when a jpeg is saved, the default quality parameter.
 #savefig.directory   : ~        # default directory in savefig dialog box,
                                 # leave empty to always use current working directory
-#savefig.transparent : False    # setting that controls whether figures are saved with a 
+#savefig.transparent : False    # setting that controls whether figures are saved with a
                                 # transparent background by default
 
 # tk backend params

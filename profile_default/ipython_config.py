@@ -232,7 +232,7 @@ c = get_config()
 # c.TerminalInteractiveShell.screen_length = 0
 
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
-# c.TerminalInteractiveShell.editor = u'vim'
+c.TerminalInteractiveShell.editor = u'vim'
 
 # Deprecated, use PromptManager.justify
 # c.TerminalInteractiveShell.prompts_pad_left = True
@@ -241,7 +241,19 @@ c = get_config()
 # c.TerminalInteractiveShell.banner1 = 'Python 2.7.6 (default, Apr  9 2014, 11:48:52) \nType "copyright", "credits" or "license" for more information.\n\nIPython 2.2.0 -- An enhanced Interactive Python.\n?         -> Introduction and overview of IPython\'s features.\n%quickref -> Quick reference.\nhelp      -> Python\'s own help system.\nobject?   -> Details about \'object\', use \'object??\' for extra details.\n'
 
 # 
-c.TerminalInteractiveShell.readline_parse_and_bind = ['tab: complete', '"\\C-l": clear-screen', 'set show-all-if-ambiguous off', '"\\C-o": tab-insert', '"\\C-r": reverse-search-history', '"\\C-s": forward-search-history', '"\\C-p": history-search-backward', '"\\C-n": history-search-forward', '"\\e[A": history-search-backward', '"\\e[B": history-search-forward', '"\\C-k": kill-line', '"\\C-u": unix-line-discard']
+c.TerminalInteractiveShell.readline_parse_and_bind = \
+        ['tab: complete',
+         '"\\C-l": clear-screen',
+         'set show-all-if-ambiguous off',  # only change from the defaults
+         '"\\C-o": tab-insert',
+         '"\\C-r": reverse-search-history',
+         '"\\C-s": forward-search-history',
+         '"\\C-p": history-search-backward',
+         '"\\C-n": history-search-forward',
+         '"\\e[A": history-search-backward',
+         '"\\e[B": history-search-forward',
+         '"\\C-k": kill-line',
+         '"\\C-u": unix-line-discard']
 
 # The part of the banner to be printed after the profile
 # c.TerminalInteractiveShell.banner2 = ''

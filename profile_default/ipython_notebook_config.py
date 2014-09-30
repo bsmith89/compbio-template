@@ -89,7 +89,7 @@ c = get_config()
 # c.NotebookApp.base_url = '/'
 
 # The directory to use for notebooks and kernels.
-# c.NotebookApp.notebook_dir = u'/Users/bjsmith/Projects/compbio-template'
+c.NotebookApp.notebook_dir = u'/Users/bjsmith/Projects/compbio-template/ipynb'
 
 # 
 # c.NotebookApp.file_to_run = ''
@@ -218,7 +218,8 @@ c = get_config()
 # c.IPKernelApp.log_level = 30
 
 # lines of code to run at IPython startup.
-# c.IPKernelApp.exec_lines = []
+c.IPKernelApp.exec_lines = ["import os as _os",
+                            "_os.chdir('..')"]
 
 # Path to an extra config file to load.
 # 
@@ -280,7 +281,7 @@ c = get_config()
 # c.IPKernelApp.ipython_dir = u''
 
 # Configure matplotlib for interactive use with the default matplotlib backend.
-# c.IPKernelApp.matplotlib = None
+c.IPKernelApp.matplotlib = 'inline'
 
 # ONLY USED ON WINDOWS Interrupt this process when the parent is signaled.
 # c.IPKernelApp.interrupt = 0
