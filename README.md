@@ -149,6 +149,11 @@ This profile does a few things by default:
     -  When ipy kernels are subsequently started, the current working directory
        is changed to the root of the project (i.e. `cd ..`).
 
+### `matplotlibrc` ###
+A custom matplotlib profile for compbio projects.
+This lets me change particular components of matplotlib plotting in one place.
+All figures will have the same config.
+
 ### `fig/` ###
 Finished figures.
 "Publishable" output of analysis.
