@@ -1,5 +1,5 @@
 READMES = README.md $(wildcard */README.md)
-NOTES   = NOTE.md  $(wildcard */NOTE.md )
+NOTES   = NOTE.md   $(wildcard */NOTE.md  )
 TODOS   = TODO.md   $(wildcard */TODO.md  )
 ALL_DOCS_HTML = $(subst .md,.html, $(READMES) $(NOTES) $(TODOS))
 
@@ -12,7 +12,7 @@ pandoc -f markdown -t html5 -s \
        --highlight-style pygments --mathjax \
        --toc --toc-depth=4 \
        --css static/main.css \
-       <$< >$@
+    <$< >$@
 %/README.html: %/README.md
 	$(pandoc_recipe_md2html)
 %/NOTEBOOK.html: %/NOTES.md

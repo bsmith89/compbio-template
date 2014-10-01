@@ -1,3 +1,6 @@
+% Project Layout
+% [Byron J. Smith](http://byronjsmith.com)
+
 # Computation Biology Project Template #
 In order to make projects more rational, here I define a standard
 project structure which is intended to be universal for computational
@@ -88,7 +91,7 @@ Executable scripts which _normally_:
  -  Have the same file name (minus the extension) as the figure produced.
 
 ### `bin/pbs/` ###
-Scripts to be submitted to `qsub` of the PBS batch computing system.
+Scripts to be submitted to the PBS batch computing system (`qsub`).
 These are used to carry out computationally intensive steps in the analysis
 pipeline.
 They do not replace, however, `Makefile` as a complete description of the
@@ -231,5 +234,4 @@ found in `res/NOTE.md`.
 _Final results are not version controlled._
 
 ### `fig/` ###
-Finished figures.
-"Publishable" output of analysis.
+The "publishable" output of an analysis.  Usually figures.
