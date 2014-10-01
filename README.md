@@ -3,12 +3,8 @@ In order to make projects more rational, here I define a standard
 project structure which is intended to be universal for computational
 biology projects.
 
-## Requirements ##
- -  [`pandoc`](http://johnmacfarlane.net/pandoc/) (1.13.1+)
-    -  to compile markdown files into pretty html
-
 ## Notes ##
-**_All files which describe the project are version controlled._**
+_All files which describe the project are version controlled._
 
 ### `NOTES.md` ###
 This is the core notebook for the project.
@@ -37,7 +33,7 @@ this folder.
 markdown.
 
 ## Code ##
-**_All project code is version controlled._**
+_All project code is version controlled._
 
 ### `Makefile` ###
 The entire workflow of the analysis.
@@ -49,7 +45,7 @@ $ make all
 ```
 
 Any data processing which is computationally intensive should save intermediate
-files in order to utilize `make`'s piece-wise compilation.
+files in order to utilize `make`'s piece-wise build.
 
 ### `bin/` ###
 Executable files which carry out any parts of the pipeline requiring more
@@ -138,24 +134,25 @@ Before being committed to git, IPYNBs should have their output and line
 numbers wiped, so as to avoid committing binary data, or arbitrary changes;
 re-running your notebook shouldn't change it in the eyes of git.
 To do this in an automated fashion, see
-[this git smudge/clean filter](http://github.com/bsmith89/ipynb-outfilt).
+[this git smudge/clean filter](https://gist.github.com/bsmith89/4a32efdeda6495d2ba4e).
 
 ## Configuration ##
-**_All configuration files are version controlled._**
+_All configuration files are version controlled._
 
-### `profile_default/` ###
-A custom ipython profile.
 This lets me change particular components in just one place.
 Anyone who forks the template or any project based on it will then have the
 same configuration.
 
-This profile changes a few things:
- -  IPython notebooks display figures inline by default.
- -  The default editor is full vim.
- -  Tab completion is more like `bash`.
- -  Running `ipython notebook` from the command line is convenient.
-    -  This will start a server in the `ipynb/` subdirectory.
-    -  When ipy kernels are subsequently started, the current working directory
+### `profile_default/` ###
+A custom IPython profile
+which changes a few things from the built-in default:
+
+ -  IPython notebooks display figures inline by default;
+ -  The default editor is full `vim`;
+ -  Tab completion is more like `bash`;
+ -  Running `ipython notebook` from the command line is convenient;
+    -  This will start a server in the `ipynb/` subdirectory;
+    -  When `ipython` kernels are subsequently started, the current working directory
        is changed to the root of the project (i.e. `cd ..`).
 
 See
@@ -171,7 +168,7 @@ See
 
 
 ## Data ##
-**_Data is _not_ version controlled._**
+_Data is not version controlled._
 
 ### `raw/` ###
 All of the raw (meta)data needed to recreate the entire analysis.
@@ -179,7 +176,8 @@ This should be kept in the exact same format as it is available publicly.
 While these files are not version controlled, they _should_ all be available
 in an online repository.
 
-`raw/NOTES.md`:
+`raw/NOTES.md` describes everything a third party (including yourself in
+a month) needs to know about the raw data.
 
  -  Required: Describes (in detail) where all of the data came from.
  -  Good: Instructions for retrieving all of the data from an online
@@ -219,7 +217,7 @@ found in `res/NOTES.md`.
 
 
 ## Final Results ###
-**_Final results are _not_ version controlled._**
+_Final results are not version controlled._
 
 ### `fig/` ###
 Finished figures.
