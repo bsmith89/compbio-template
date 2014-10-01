@@ -1,11 +1,10 @@
-DOC_FMT = html  # File format for documentation
-READMES = $(subst .md,.$(DOC_FMT),README.md $(wildcard */README.md))
-NOTES   = $(subst .md,.$(DOC_FMT),NOTES.md  $(wildcard */NOTES.md) )
-TODOS   = $(subst .md,.$(DOC_FMT),TODO.md   $(wildcard */TODO.md)  )
-ALL_DOCS = READMES NOTES TODOS
+READMES = README.md $(wildcard */README.md)
+NOTES   = NOTE.md  $(wildcard */NOTE.md )
+TODOS   = TODO.md   $(wildcard */TODO.md  )
+ALL_DOCS_HTML = $(subst .md,.html, $(READMES) $(NOTES) $(TODOS))
 
 all: docs figs
-docs: $(READMES) $(NOTES) TODO.$(DOC_FMT)
+docs: ALL_DOCS_HTML
 figs: ;
 
 pandoc_recipe_md2html = \
@@ -24,4 +23,4 @@ pandoc -f markdown -t html5 -s \
 	$(pandoc_recipe_md2html)
 
 clean:
-	rm -f $(READMES) $(NOTES) $(TODOS)
+	rm -f $(ALL_DOCS_HTML)

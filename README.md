@@ -6,7 +6,7 @@ biology projects.
 ## Notes ##
 _All files which describe the project are version controlled._
 
-### `NOTES.md` ###
+### `NOTE.md` ###
 This is the core notebook for the project.
 All experiments and conclusions should be clearly described in the
 "Notebook" section below.
@@ -124,7 +124,7 @@ output data in the same file.
 They are also not conducive to reproducing a result after external files
 and directories have been changed.
 This is largely because they have file paths hard-coded in.
-IPYNBs should be used kinda like the `NOTES.md` files;
+IPYNBs should be used kinda like the `NOTE.md` files;
 They are a record of a thought-process/workflow, but are not guarenteed to
 execute the same way after subsequent commits.
 Instead, important analyses should be ported over to version controlled
@@ -179,13 +179,19 @@ This should be kept in the exact same format as it is available publicly.
 While these files are not version controlled, they _should_ all be available
 in an online repository.
 
-`raw/NOTES.md` describes everything a third party (including yourself in
+`raw/NOTE.md` describes everything a third party (including yourself in
 a month) needs to know about the raw data.
 
  -  Required: Describes (in detail) where all of the data came from.
  -  Good: Instructions for retrieving all of the data from an online
     repository.
  -  Great: Recipe for data retrieval included in `Makefile`.
+
+It is also advisable to save data in directories named by the date it was
+collected,
+so growth curves taken on October 20th, 2014, would be stored in
+`raw/2014-10-20/growth-curve.csv`, and
+`raw/NOTE.md` would describe the experiment and this file in detail.
 
 ### `meta/` ###
 All of the experiment metadata, formatted conveniently for downstream analysis.
@@ -218,7 +224,7 @@ Any intermediate results which cannot be easily placed in another directory.
 For instance, a TSV of pairwise sequence distances.
 
 A description of the intermediate results and what they're good for can be
-found in `res/NOTES.md`.
+found in `res/NOTE.md`.
 
 
 ## Final Results ###
