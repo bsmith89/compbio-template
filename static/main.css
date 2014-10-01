@@ -11,64 +11,74 @@ body {
     line-height: 140%;
     color: #333; 
 }
+
+/* Code Blocks */
 pre {
     border: 1px dotted gray;
     background-color: #ececec;
     color: #1111111;
     padding: 0.5em;
 }
+
+/* Monospaced Spans */
 code {
     font-family: monospace;
 }
+
 h1 a, h2 a, h3 a, h4 a, h5 a { 
     text-decoration: none;
-    color: #7a5ada; 
+/*    color: #7a5ada;*/
 }
-h1, h2, h3, h4, h5 { font-family: verdana;
-                     font-weight: bold;
-                     border-bottom: 1px dotted black;
-                     color: #7a5ada; }
+
+h1, h2, h3, h4, h5 {
+/*    font-family: verdana;*/
+/*    font-weight: bold;*/
+    border-bottom: 1px dotted black;
+/*    color: #7a5ada;*/
+}
+
 h1 {
-        font-size: 130%;
+    font-size: 180%;
 }
 
 h2 {
-        font-size: 110%;
+    font-size: 160%;
 }
 
 h3 {
-        font-size: 95%;
+    font-size: 140%;
 }
 
 h4 {
-        font-size: 90%;
-        font-style: italic;
+    font-size: 120%;
+    font-style: italic;
 }
 
 h5 {
-        font-size: 90%;
-        font-style: italic;
+    font-size: 100%;
+    font-style: italic;
 }
 
 h1.title {
-        font-size: 200%;
-        font-weight: bold;
-        padding-top: 0.2em;
-        padding-bottom: 0.2em;
-        text-align: left;
-        border: none;
+    font-size: 200%;
+    font-weight: bold;
+    padding-top<: 0.2em;
+    padding-bottom: 0.2em;
+    text-align: left;
+    border: none;
 }
 
 dt code {
-        font-weight: bold;
+    font-weight: bold;
 }
+
 dd p {
-        margin-top: 0;
+    margin-top: 0;
 }
 
 #footer {
-        padding-top: 1em;
-        font-size: 70%;
-        color: gray;
-        text-align: center;
-        }
+    padding-top: 1em;
+    font-size: 70%;
+    color: gray;
+    text-align: center;
+}

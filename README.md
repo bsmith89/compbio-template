@@ -33,6 +33,9 @@ Future analysis may completely remove the workflow which produced these files,
 but, in order to record the research process, the results are maintained in
 this folder.
 
+`main.css` is used in the compilation of HTML versions of notes written in
+markdown.
+
 ## Code ##
 **_All project code is version controlled._**
 
