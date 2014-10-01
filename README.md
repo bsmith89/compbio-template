@@ -170,6 +170,9 @@ See
 ## Data ##
 _Data is not version controlled._
 
+Instead, it should be easy to regenerate data, by downloading raw data from
+an external repository and then re-running the pipeline.
+
 ### `raw/` ###
 All of the raw (meta)data needed to recreate the entire analysis.
 This should be kept in the exact same format as it is available publicly.
@@ -195,10 +198,12 @@ Intermediate analysis files which contain sequence.
 The extension portion of these file names should indicate the format of the
 data, while the `.` separated words which make up the file name loosely
 describe the workflow used to produce the file.
+This nameing scheme is not a replacement for both liberal note-taking
+and coding the pipeline into the `Makefile`.
 
-For example: `16S.ungap.afn` would be FASTA formatted multiple nucleotide
-sequence alignment (`.afn`) which has had all gap positions
-removed (`.ungap.`).
+For example: `16S.align.ungap.afn` would be multiple
+sequence alignment (`.align.`) in nuceotide FASTA format (`.afn`)
+which has had all gap positions removed (`.ungap.`).
 
 ### `tre/` ###
 Intermediate analysis files which contain phylogenetic or taxonomic trees.
