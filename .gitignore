@@ -1,8 +1,9 @@
 # Always ignore
+.DS_Store
 *.swp
 .ipynb_checkpoints/
 *.pyc
-README.html
+*.html
 
 # Ignore these directories
 res/*

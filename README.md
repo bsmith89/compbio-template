@@ -9,6 +9,19 @@ biology projects.
 ## Notes ##
 _All files which describe the project are version controlled._
 
+Notes files are written in
+[Markdown](http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html),
+and are expected to be compiled to HTML for reading.
+
+The default recipe for converting Markdown to HTML includes a script
+for rendering LaTeX math in attractive typeset math.
+This should work for either inline math ($\chi^2$, for instance) or blocks
+of math:
+
+$$
+\chi^2
+$$
+
 ### `NOTE.md` ###
 This is the core notebook for the project.
 All experiments and conclusions should be clearly described in the
@@ -230,8 +243,13 @@ A description of the intermediate results and what they're good for can be
 found in `res/NOTE.md`.
 
 
-## Final Results ###
+## Final Results ##
 _Final results are not version controlled._
 
 ### `fig/` ###
 The "publishable" output of an analysis.  Usually figures.
+
+## TODO ##
+ -  Python requirements.txt file
+ -  External tools and utilities library, `bypy`
+ -  ReST vs. Markdown

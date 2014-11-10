@@ -4,7 +4,7 @@ TODOS   = TODO.md   $(wildcard */TODO.md  )
 ALL_DOCS_HTML = $(subst .md,.html, $(READMES) $(NOTES) $(TODOS))
 
 all: docs figs
-docs: ALL_DOCS_HTML
+docs: $(ALL_DOCS_HTML)
 figs: ;
 
 pandoc_recipe_md2html = \
