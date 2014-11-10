@@ -5,7 +5,7 @@ ALL_DOCS_HTML = $(subst .md,.html, $(READMES) $(NOTES) $(TODOS))
 
 all: docs figs
 docs: $(ALL_DOCS_HTML)
-figs: ;
+figs:
 
 pandoc_recipe_md2html = \
 pandoc -f markdown -t html5 -s \

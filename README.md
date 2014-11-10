@@ -37,7 +37,7 @@ This file, describing the layout of the project.
 
 ### `static/` ###
 Files (usually images) which are included in notebooks.
-These files are version controlled, so that a respository (e.g. github)
+These files are version controlled, so that a remote repository (e.g. github)
 can compile the notebook with the images.
 Despite being version controlled, they should never change: no diffing binary
 data!
@@ -63,7 +63,14 @@ $ make all
 Any data processing which is computationally intensive should save intermediate
 files in order to utilize `make`'s piece-wise build.
 
-### `bin/` ###
+### `utils/` ###
+A [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules)
+of utility scripts and executibles.
+
+Any analysis scripts that can be used by other projects should ultimately
+end up in this [repository](https://github.com/bsmith89/compbio-scripts).
+
+### `scripts/` ###
 Executable files which carry out any parts of the pipeline requiring more
 than a `Makefile` recipe.
 These scripts (and source code to be compiled) _are_ version controlled,
@@ -95,15 +102,17 @@ Scripts should be designed for portability.
     e.g. Python scripts divide logical chunks into "public" functions so that
     those parts can be imported by other scripts.
 
-### `bin/fig/` ###
+If all of these recommendations are met, then scripts are great candidates
+for inclusion in the `utils/` submodule.
+
+### `scripts/fig` ###
 Executable scripts which _normally_:
 
  -  Produce figures in PDF format, saving them to `fig/`;
- -  Require intermediate results in a tabular format produced by code in
-    `bin/` and saved in `res/`;
+ -  Require intermediate results in a tabular format, saved in `res/`;
  -  Have the same file name (minus the extension) as the figure produced.
 
-### `bin/pbs/` ###
+### `scripts/pbs/` ###
 Scripts to be submitted to the PBS batch computing system (`qsub`).
 These are used to carry out computationally intensive steps in the analysis
 pipeline.
@@ -248,6 +257,8 @@ _Final results are not version controlled._
 
 ### `fig/` ###
 The "publishable" output of an analysis.  Usually figures.
+
+Should be produced by scripts in `fig/scripts`.
 
 ## TODO ##
  -  Python requirements.txt file
