@@ -77,11 +77,11 @@ These scripts (and source code to be compiled) _are_ version controlled,
 unlike data files.
 Scripts should be well documented.
 
- -  Required: Each script has a docstring (comment at the top after the
-    shebang) which describes the use of the script from the command line.
- -  Good: Scripts are well commented, explaining the logic of any difficult
-    to understand code.
- -  Great: Scripts are designed with full help text, conforming to POSIX
+-  Required: Each script has a docstring (comment at the top after the
+   shebang) which describes the use of the script from the command line.
+-  Good: Scripts are well commented, explaining the logic of any difficult
+   to understand code.
+-  Great: Scripts are designed with full help text, conforming to POSIX
     standards.
 
 Scripts should take any data which only needs to be used once from STDIN.
@@ -92,15 +92,15 @@ This is designed to make streaming pipelines an easy transition.
 
 Scripts should be designed for portability.
 
- -  Good: Scripts accept all input data externally.
-    Data files are _not_ hard coded into the script.
- -  Great: Variable parameters of the analysis are accepted as positional
-    arguments, and options.
-    Logical defaults are acceptable.
-    Parameters are _not_ hard-coded into the scripts.
- -  Greatest: Scripts are constructed in a modular design.
-    e.g. Python scripts divide logical chunks into "public" functions so that
-    those parts can be imported by other scripts.
+-  Good: Scripts accept all input data externally.
+   Data files are _not_ hard coded into the script.
+-  Great: Variable parameters of the analysis are accepted as positional
+   arguments, and options.
+   Logical defaults are acceptable.
+   Parameters are _not_ hard-coded into the scripts.
+-  Greatest: Scripts are constructed in a modular design.
+   e.g. Python scripts divide logical chunks into "public" functions so that
+   those parts can be imported by other scripts.
 
 If all of these recommendations are met, then scripts are great candidates
 for inclusion in the `utils/` submodule.
@@ -108,9 +108,9 @@ for inclusion in the `utils/` submodule.
 ### `scripts/fig` ###
 Executable scripts which _normally_:
 
- -  Produce figures in PDF format, saving them to `fig/`;
- -  Require intermediate results in a tabular format, saved in `res/`;
- -  Have the same file name (minus the extension) as the figure produced.
+-  Produce figures in PDF format, saving them to `fig/`;
+-  Require intermediate results in a tabular format, saved in `res/`;
+-  Have the same file name (minus the extension) as the figure produced.
 
 ### `scripts/pbs/` ###
 Scripts to be submitted to the PBS batch computing system (`qsub`).
@@ -172,10 +172,10 @@ same configuration.
 A custom IPython profile
 which changes a few things from the built-in default:
 
- -  IPython notebooks display figures inline by default;
- -  The default editor is full `vim`;
- -  Tab completion is more like `bash`;
- -  Running `ipython notebook` from the command line is convenient;
+-  IPython notebooks display figures inline by default;
+-  The default editor is full `vim`;
+-  Tab completion is more like `bash`;
+-  Running `ipython notebook` from the command line is convenient;
     -  This will start a server in the `ipynb/` subdirectory;
     -  When `ipython` kernels are subsequently started, the current working directory
        is changed to the root of the project (i.e. `cd ..`).
@@ -207,10 +207,10 @@ in an online repository.
 `raw/NOTE.md` describes everything a third party (including yourself in
 a month) needs to know about the raw data.
 
- -  Required: Describes (in detail) where all of the data came from.
- -  Good: Instructions for retrieving all of the data from an online
-    repository.
- -  Great: Recipe for data retrieval included in `Makefile`.
+-  Required: Describes (in detail) where all of the data came from.
+-  Good: Instructions for retrieving all of the data from an online
+   repository.
+-  Great: Recipe for data retrieval included in `Makefile`.
 
 It is also advisable to save data in directories named by the date it was
 collected,
@@ -261,6 +261,5 @@ The "publishable" output of an analysis.  Usually figures.
 Should be produced by scripts in `fig/scripts`.
 
 ## TODO ##
- -  Python requirements.txt file
- -  External tools and utilities library, `bypy`
- -  ReST vs. Markdown
+-  Python requirements.txt file
+-  ReST vs. Markdown
