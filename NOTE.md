@@ -7,14 +7,10 @@
 ## Requirements ##
 ### Applications ###
 -  [`python`](http://www.python.org/) (3.4+)
+-  GNU Make
 
 ### Python Packages ###
--  [`numpy`](http://www.numpy.org/) (1.8.0+)
--  [`scipy`](http://www.scipy.org/) (0.14.0+)
--  [`matplotlib`](http://www.matplotlib.org/) (1.3.1+)
--  [`ipython`](http://ipython.org/) (2.2+)
-    -  With the notebook feature: `pip install ipython[notebook]`
--  [`pandas`](http://pandas.pydata.org) (0.31.1+)
+See `requirements.pip`.
 
 ## Notebook ##
 ### [Date1] ###
