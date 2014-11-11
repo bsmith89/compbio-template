@@ -15,6 +15,9 @@ git clone --recursive --origin template \
 # Stop master from tracking the template; we don't want git push to
 # overwrite the template.
 git config --unset branch.master.remote
+# Relink README.md to NOTES.md, instead of TEMPLATE.md
+unlink README.md
+ln -s NOTES.md README.md
 # Remove unneeded directories and files from the repository.
 # e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
 git rm -r img/ seq/ tre/
