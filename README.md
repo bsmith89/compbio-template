@@ -161,6 +161,9 @@ re-running your notebook shouldn't change it in the eyes of git.
 To do this in an automated fashion, see
 [this git smudge/clean filter](https://gist.github.com/bsmith89/4a32efdeda6495d2ba4e).
 
+Just calling `ipython notebook` from the root directory is best:
+see `profile_default/` below.
+
 ## Configuration ##
 _All configuration files are version controlled._
 
@@ -178,7 +181,7 @@ which changes a few things from the built-in default:
 -  Running `ipython notebook` from the command line is convenient;
     -  This will start a server in the `ipynb/` subdirectory;
     -  When `ipython` kernels are subsequently started, the current working directory
-       is changed to the root of the project (i.e. `cd ..`).
+       is automatically changed to the root of the project (i.e. `cd ..`).
 
 See
 [IPython's documentation](http://ipython.org/ipython-doc/dev/config/intro.html).
@@ -256,7 +259,9 @@ found in `res/NOTE.md`.
 _Final results are not version controlled._
 
 ### `fig/` ###
-The "publishable" output of an analysis.  Usually figures.
+All 'final' output from an analysis, usually figures or tables.
+Figures don't have to be good enough for a publication, they just
+have to represent the culmination of an analysis.
 
 Should be produced by scripts in `fig/scripts`.
 

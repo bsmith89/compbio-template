@@ -1,5 +1,3 @@
-All files represent metadata about the data analyzed in this study.
-
 ## Conventions ##
 ### `*.tsv` ###
 Tab-separated values.
