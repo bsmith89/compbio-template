@@ -1,7 +1,23 @@
-% Project Layout
+% Computation Biology Project Template 
 % [Byron J. Smith](http://byronjsmith.com)
 
-# Computation Biology Project Template #
+# Quickstart #
+```bash
+# Clone the template and submodules.
+git clone --recursive --depth=0 https://github.com/bsmith89/compbio-template
+# Remove unneeded directories and files from the repository.
+# e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
+git rm img/ seq/ tre/
+# Describe your projects, the objectives and the input data.
+vim NOTES.md 
+# Optional: Make a python virtual environment
+python3 -m venv env
+source env/bin/activate
+# Install required python packages
+pip3 install -r requirements.pip utils/requirements.pip
+```
+
+# Directory Structure #
 In order to make projects more rational, here I define a standard
 project structure which is intended to be universal for computational
 biology projects.
