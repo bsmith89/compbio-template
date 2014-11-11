@@ -89,7 +89,7 @@ c = get_config()
 # c.NotebookApp.base_url = '/'
 
 # The directory to use for notebooks and kernels.
-c.NotebookApp.notebook_dir = u'/Users/bjsmith/Projects/compbio-template/ipynb'
+c.NotebookApp.notebook_dir = u'ipynb/'
 
 # 
 # c.NotebookApp.file_to_run = ''
