@@ -1,27 +1,68 @@
 % Computation Biology Project Template 
 % [Byron J. Smith](http://byronjsmith.com)
 
+In order to make projects more rational, here I define a standard
+project structure which is intended to be a superset of most computational
+biology projects.
+
 # Quickstart #
+Get the template and install requirements:
 ```bash
-# Clone the template and submodules.
-git clone --recursive --depth=0 https://github.com/bsmith89/compbio-template
+# Clone the template and submodules into `new-project`,
+# naming the remote 'template'.
+git clone --recursive --origin template --depth=0 \
+          https://github.com/bsmith89/compbio-template new-project
 # Remove unneeded directories and files from the repository.
 # e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
 git rm img/ seq/ tre/
-# Describe your projects, the objectives and the input data.
-vim NOTES.md 
 # Optional: Make a python virtual environment
 python3 -m venv env
 source env/bin/activate
 # Install required python packages
-pip3 install -r requirements.pip utils/requirements.pip
+pip3 install -r requirements.pip -r utils/requirements.pip
 ```
 
-# Directory Structure #
-In order to make projects more rational, here I define a standard
-project structure which is intended to be universal for computational
-biology projects.
+Document your project:
+```bash
+# Describe your projects, the goals and the input data.
+vim NOTES.md
+# Write a preliminary list of objectives.
+vim TODO.md
+# Write recipes for steps in the analysis.
+vim Makefile
+# Describe your thoughts and what you've done already.
+vim NOTES.md
+# Include pictures and quick figures in `static/`
+```
 
+Import data:
+```bash
+# Import raw-data
+wget http://mydata.com/raw/data/URL
+# --OR--
+# Write a recipe for downloading data
+vim Makefile
+make import-data
+```
+
+Prototype more difficult analyses:
+```bash
+ipython notebook
+```
+
+Write scripts to generate results:
+```python
+# TODO
+```
+
+Use git to full advantage:
+```bash
+git add Makefile
+git commit -m "Updated the Makefile with new steps in my workflow."
+```
+
+
+# Directory Structure #
 ## Notes ##
 _All files which describe the project are version controlled._
 
@@ -29,9 +70,10 @@ Notes files are written in
 [Markdown](http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html),
 and are expected to be compiled to HTML for reading.
 
-The default recipe for converting Markdown to HTML includes a script
+The default recipe for converting Markdown to HTML includes a call to a script
 for rendering LaTeX math in attractive typeset math.
-This should work for either inline math ($\chi^2$, for instance) or blocks
+With an internet connection,
+this should work for either inline math ($\chi^2$, for instance) or blocks
 of math:
 
 $$
