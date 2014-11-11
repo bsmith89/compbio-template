@@ -10,7 +10,7 @@ Get the template and install requirements:
 ```bash
 # Clone the template and submodules into `new-project`,
 # naming the remote 'template'.
-git clone --recursive --origin template --depth=0 \
+git clone --recursive --origin template --depth=1 \
           https://github.com/bsmith89/compbio-template new-project
 # Remove unneeded directories and files from the repository.
 # e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
