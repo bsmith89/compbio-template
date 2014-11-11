@@ -65,6 +65,9 @@ Use git to full advantage:
 ```bash
 git add Makefile
 git commit -m "Updated the Makefile with new steps in my workflow."
+# Merge changes to the template repository
+git fetch template
+git merge template
 ```
 
 
