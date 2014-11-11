@@ -14,7 +14,7 @@ git clone --recursive --origin template --depth=1 \
           https://github.com/bsmith89/compbio-template new-project
 # Remove unneeded directories and files from the repository.
 # e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
-git rm img/ seq/ tre/
+git rm -r img/ seq/ tre/
 # Optional: Make a python virtual environment
 python3 -m venv env
 source env/bin/activate
