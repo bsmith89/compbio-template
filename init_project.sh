@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -x
 
 git submodule update --init --recursive
 git remote rename origin template
