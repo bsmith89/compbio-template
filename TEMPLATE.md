@@ -72,7 +72,7 @@ git push -u origin
 ```
 
 
-# Directory Structure #
+# Project Outline #
 ## Notes ##
 _All files which describe the project are version controlled._
 
