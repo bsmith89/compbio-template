@@ -64,6 +64,13 @@ git fetch template
 git merge template
 ```
 
+Publish your project to github:
+```bash
+# After you've made a new repository called 'new-project' on github...
+git remote git@github.com:USERNAME/new-project.git origin
+git push -u origin
+```
+
 
 # Directory Structure #
 ## Notes ##
