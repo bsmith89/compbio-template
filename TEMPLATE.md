@@ -51,8 +51,8 @@ ipython notebook
 ```
 
 Write scripts to generate results:
-```python
-# TODO
+```bash
+vim scripts/example.py
 ```
 
 Use git to full advantage:
@@ -325,7 +325,3 @@ Figures don't have to be good enough for a publication, they just
 have to represent the culmination of an analysis.
 
 Should be produced by scripts in `fig/scripts`.
-
-## TODO ##
--  Python requirements.txt file
--  ReST vs. Markdown
