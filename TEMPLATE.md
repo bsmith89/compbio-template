@@ -8,16 +8,10 @@ biology projects.
 # Quickstart #
 Fork the template and install requirements:
 ```bash
-# Clone the template and submodules into `new-project`,
-# naming the remote 'template'.
-git clone --recursive --origin template \
-          https://github.com/bsmith89/compbio-template new-project
-# Stop master from tracking the template; we don't want git push to
-# overwrite the template.
-git config --unset branch.master.remote
-# Relink README.md to NOTES.md, instead of TEMPLATE.md
-unlink README.md
-ln -s NOTES.md README.md
+# Clone the project template
+git clone https://github.com/bsmith89/compbio-template new-project
+# Initialize the project
+./init_project.sh
 # Remove unneeded directories and files from the repository.
 # e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
 git rm -r img/ seq/ tre/
