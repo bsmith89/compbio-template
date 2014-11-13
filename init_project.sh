@@ -1,9 +1,8 @@
 #!/usr/bin/env bash -x
 
 git submodule update --init --recursive
-# Rename the remote and avoid accidentally pushing changes to the template.
-git remote rename origin template
-git config --unset branch.master.remote
+# Remove the template remote
+git remote remove origin
 # Configure IPYNB output filtering
 git config --local filter.dropoutput_ipynb.clean utils/ipynb_output_filter.py
 git config --local filter.dropoutput_ipynb.smudge cat
