@@ -43,6 +43,8 @@ wget http://mydata.com/raw/data/URL
 # Write a recipe for downloading data
 vim Makefile
 make import-data
+# Document the data in detail
+vim raw/NOTE.html
 ```
 
 Prototype more difficult analyses:
