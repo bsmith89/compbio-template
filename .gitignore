@@ -12,7 +12,10 @@ raw/*
 meta/*
 tre/*
 img/*
+profile_default/*
 
 # But white-list these files
 !*/README.md
 !*/NOTES.md
+!profile_default/*config.py
+
