@@ -4,13 +4,13 @@ git submodule update --init --recursive
 # Remove the template remote
 git remote remove origin
 # Configure IPYNB output filtering
-git config --local filter.dropoutput_ipynb.clean utils/ipynb_output_filter.py
+git config --local filter.dropoutput_ipynb.clean scripts/utils/ipynb_output_filter.py
 git config --local filter.dropoutput_ipynb.smudge cat
 # Link README to project notes, instead of template notes.
 unlink README.md
 ln -s NOTE.md README.md
 # Hard coded rm to avoid deleting something else accidentally.
-rm init_project.sh
+rm initialize_project.sh
 # Remove all of the commits after the first, leaving files intact,
 # add files created/changed during initialization,
 # and amend the first commit with everything else.
