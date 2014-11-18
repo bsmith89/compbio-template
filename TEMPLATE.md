@@ -142,6 +142,8 @@ $$
 
     This file, describing how to use the template and the project's
     directory structure.
+    Additional `*/TEMPLATE.md` files serve as directory placeholders for git
+    and describe consistant naming schemes for particular file types.
 
 -  `static/`
 
@@ -307,10 +309,8 @@ same configuration.
     2. Squashes the entire git history into a single
         initial commit.
     3. Adds the IPython notebook filter to the projects git configuration.
-
-    Designed to only be run once.
-    If publishing a modified project template,
-    it is probably wise to `chmod +x initialize_project.sh`.
+    4. Remove execute permissions from the script so that it won't be
+        accidentally re-run.
 
 -  `profile_default/`
 
