@@ -4,6 +4,7 @@
 .ipynb_checkpoints/
 *.pyc
 *.html
+tags
 
 # Ignore these directories
 res/*
