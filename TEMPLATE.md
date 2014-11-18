@@ -1,17 +1,22 @@
-% Computation Biology Project Template 
-% [Byron J. Smith](http://byronjsmith.com)
+---
+title: "Computation Biology Project Template"
+author: "[Byron J. Smith](http://byronjsmith.com/)"
+...
 
 In order to make projects more rational, here I define a standard
 project structure which is intended to be a superset of most computational
 biology projects.
 
+[On Github](http://github.com/bsmith89/compbio-template)
+
 # Quickstart #
+
 Fork the template and install requirements:
 ```bash
 # Clone the project template
 git clone https://github.com/bsmith89/compbio-template new-project
 # Initialize the project
-./init_project.sh
+./inititalize_project.sh
 # Remove unneeded directories and files from the repository.
 # e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
 git rm -r img/ seq/ tre/
