@@ -7,7 +7,7 @@ In order to make projects more rational, here is a standard
 project structure which is intended to be a superset of most computational
 biology projects.
 
-A clean template is available
+A git repository which implements this template is available
 [on Github](http://github.com/bsmith89/compbio-template).
 
 # Quickstart #
@@ -36,7 +36,8 @@ pip3 install -r requirements.pip -r utils/requirements.pip
 # Example Workflow #
 
 ```bash
-# Write a project description; create a preliminary list of objectives.
+# Name the project; write a description;
+# create a preliminary list of objectives.
 vim NOTES.md TODO.md
 
 # Download raw data from an online repository
@@ -136,7 +137,7 @@ $$
 
 -  `TODO.md`
 
-    What is left to do in this project.
+    Remaining tasks.
 
 -  `TEMPLATE.md`
 

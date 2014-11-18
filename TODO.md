@@ -1,1 +1,2 @@
--  My first notebook entry!
+[ ]  Import data
+[ ]  My first notebook entry
