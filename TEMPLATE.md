@@ -13,11 +13,14 @@ A git repository which implements this template is available
 # Quickstart #
 
 ```bash
-# Clone the project template
+# Clone the *template* and initialize
 git clone https://github.com/bsmith89/compbio-template new-project
+make init_from_template
+# ---OR---
+# Clone a *project* and initialize
+git clone http://github.com/USERNAME/compbio-project new-project
+make init_from_project
 
-# Initialize the project
-./inititalize_project.sh
 
 # Remove unneeded directories and files from the repository.
 # e.g. if not analyzing images, sequence data, or phylogenetic trees:
@@ -282,7 +285,7 @@ _All project code is version controlled._
     numbers wiped, so as to avoid committing binary data, or arbitrary changes;
     re-running a notebook shouldn't change it in the eyes of git.
     To do this in an automated fashion, a clean/smudge filter has been included
-    in `scripts/utils`, and `initialize_project.sh` configures git to
+    in `scripts/utils`, and the initalization recipes in Makefile configure git to
     run the filter when staging files to be commited.
     While this won't erase the output from the local copy of the notebook,
     forks of the project will get an 'un-run' version.
@@ -303,17 +306,16 @@ in just one place.
 Anyone who forks the template or any project based on it will then have the
 same configuration.
 
--  `initialize_project.sh`
+-  `.initialized`
 
-    Script to convert a project template into an active project.
-    Carries out several tasks:
+    Empty file used to signal whether or not the project has been initialized.
+    The file is created on running `make init_from_project`,
+    which adds the IPython notebook filter to the project's git configuration,
+    or `make init_from_template` which _also_:
 
-    1. Removes the template as a remote repository.
+    1. Removes the template remote repository.
     2. Squashes the entire git history into a single
         initial commit.
-    3. Adds the IPython notebook filter to the projects git configuration.
-    4. Remove execute permissions from the script so that it won't be
-        accidentally re-run.
 
 -  `profile_default/`
 
