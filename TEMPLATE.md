@@ -28,7 +28,8 @@ python3 -m venv env
 source env/bin/activate
 
 # Install required python packages
-pip3 install -r requirements.pip -r utils/requirements.pip
+pip3 install -r requirements.pip -r scripts/utils/requirements.pip
+# Don't forget to install requirements for the scripts/utils submodule
 
 ```
 
@@ -137,7 +138,7 @@ $$
 
 -  `TODO.md`
 
-    Remaining tasks.
+    List of remaining tasks.
 
 -  `TEMPLATE.md`
 
@@ -229,7 +230,8 @@ _All project code is version controlled._
     Executable scripts which _normally_:
     -  Produce figures in PDF format, saving them to `fig/`;
     -  Require intermediate results in a tabular format, saved in `res/`;
-    -  Have the same file name (minus the extension) as the figure produced.
+    -  Usually have a name which is identical to or a substring of the figure
+        produced.
 
 -  `scripts/pbs/`
 
@@ -347,14 +349,14 @@ same configuration.
 ## Data ##
 _Data is not version controlled._
 
-Instead, it should be easy to regenerate data, by downloading raw data from
-an external repository and then re-running the pipeline.
-
 -  `raw/`
 
-    All of the raw (meta)data needed to recreate the entire analysis.
-    This should be kept in the exact same format as it is available publicly.
-    While these files are not version controlled, they _should_ all be
+    All of the raw data and metadata needed to recreate the entire analysis.
+    This should be kept in the exact same format as it is available publicly;
+    if you're going to rename files, remove header lines, or reformat,
+    these processed versions of the data should be stored in directories
+    other than `raw/`.
+    While raw data files are not version controlled, they _should_ all be
     available in an online repository.
     `raw/NOTE.md`\ describes everything a third party
     (or the author a month later)
@@ -362,14 +364,16 @@ an external repository and then re-running the pipeline.
 
     -  Required: Describes (in detail) where all of the data came from.
     -  Good: Instructions for retrieving all of the data from an online
-    repository.
+        repository.
     -  Great: Recipe for data retrieval included in `Makefile`.
 
     It is also advisable to save data in directories named by the date it was
-    collected,
-    so growth curves taken on October 20th, 2014, would be stored in
+    collected, or the date of the experiment
+    so growth curves started on October 20th, 2014, would be stored in
     `raw/2014-10-20/growth-curve.csv`, and
     `raw/NOTE.md` would describe the experiment and this file in detail.
+
+Intermediate data files are separated into directories based on their content.
 
 -  `meta/`
 
@@ -419,5 +423,3 @@ _Final results are not version controlled._
     All 'final' output from an analysis, usually figures or tables.
     Figures don't have to be good enough for a publication, they just
     have to represent the culmination of an analysis.
-
-    Should be produced by scripts in `fig/scripts`.

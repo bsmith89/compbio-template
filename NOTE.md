@@ -1,19 +1,19 @@
-# [Project Name] #
-## Introduction ##
+---
+title: [Project Name]
+author: [Author Name]
+...
+
+# Introduction #
 [A single sentence summarizing the project.]
 
 [A larger passage detailing the motivation and direction of the project.]
 
-## Requirements ##
-### Applications ###
+# Requirements and Environment #
+## Required Applications ##
 -  [`python`](http://www.python.org/) (3.4+)
 -  GNU Make
+-  BASH
 
-### Python Packages ###
-See `requirements.pip`.
-
-## Notebook ##
-### [Date1] ###
-#### [Experiment1] ####
-### [Date2] ###
-#### [Experiment1]\(cont.) ####
+# Notebook #
+## [Today's Date] ##
+### [First Experiment Name] ###
