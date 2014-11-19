@@ -5,6 +5,7 @@
 *.pyc
 *.html
 tags
+.initialized
 
 # Ignore these directories
 res/*

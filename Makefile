@@ -35,20 +35,17 @@ cat $< \
 #  Initialization Recipes
 # ------------------------
 SEMAPHORE = .initialized
-${SEMAPHORE}:
-	[ ! -e ${SEMAPHORE} ]
-	# Create the initialization semaphor.
-	touch $@
-.PHONY: ${SEMAPHORE}
 
-base_init: ${SEMAPHORE}
+ifeq (,$(wildcard ${SEMAPHORE}))  # The semaphor file does NOT exist
+touch_semaphore:
+	# Create the initialization semaphore.
+	touch ${SEMAPHORE}
+base_init: touch_semaphore
 	git submodule update --init --recursive
 	# Configure IPYNB output filtering
 	git config --local filter.dropoutput_ipynb.clean scripts/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
-
 init_from_project: base_init
-
 init_from_template: base_init
 	# Remove the template remote
 	git remote remove origin
@@ -62,6 +59,15 @@ init_from_template: base_init
 	git reset --soft $(git rev-list --max-parents=0 HEAD)
 	git add -A
 	git commit --amend -em "Clean project.  Let's get started!"
+else
+base_init:
+	$(error "This directory contains a file '${SEMAPHORE}' indicating \
+			 that it has already been initialized. \
+			 Delete this file if you would like to run the initialization \
+			 scripts again (which may cause problems).")
+init_from_project: base_init
+init_from_template: base_init
+endif
 
 # -----------------
 #  Cleanup Recipes
