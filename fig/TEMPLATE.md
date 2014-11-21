@@ -1,1 +1,1 @@
-Directory placeholder for `fig/`.
+<!-- Directory placeholder for `fig/`. -->

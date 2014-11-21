@@ -1,10 +1,17 @@
-## Conventions ##
--  `16S.*` refer to sequence files which originally come from the rrnDBs
-   16S sequence database.
--  `*.fn` means that a file is a nucleotide file in FASTA format.
--  `*.afn` is an aligned nucleotide FASTA.
--  `*.ungap.*` means that an alignment has had columns which are only
-   composed of gaps ('-') removed.
--  `*.head.*` and `*.tail.*` are files which only represent the top or bottom
-   fractions of the dataset, respectively.  These are to be used as sample data
-   in testing scripts.
+## `seq/` Conventions ##
+### File Formats ###
+
+| suffix | meaning                  | comments |
+| ----   | ----                     | ----     |
+| fn     | nucleotide FASTA         |          |
+| fa     | amino acid FASTA         |          |
+| afn    | aligned nucleotide FASTA |          |
+| afa    | aligned amino acid FASTA |          |
+
+### Processing ###
+
+| infix / suffix | meaning                        | comments                           |
+| ----           | ----                           | ----                               |
+| head/tail      | top and bottom entries         | part of dataset, meant for testing |
+| align          | aligned for estimated homology | a variety of tools are available   |
+| ungap          | gap only positions removed     |                                    |

@@ -10,7 +10,7 @@ biology projects.
 A git repository which implements this template is available
 [on Github](http://github.com/bsmith89/compbio-template).
 
-# Quickstart #
+# Quick Start #
 
 ```bash
 # Clone the *template* and initialize
@@ -360,7 +360,7 @@ _Data is not version controlled._
     other than `raw/`.
     While raw data files are not version controlled, they _should_ all be
     available in an online repository.
-    `raw/NOTE.md`\ describes everything a third party
+    `raw/NOTE.md` describes everything a third party
     (or the author a month later)
     needs to know about the raw data.
 
@@ -376,45 +376,45 @@ _Data is not version controlled._
     `raw/NOTE.md` would describe the experiment and this file in detail.
 
 Intermediate data files are separated into directories based on their content.
+The extension portion of these file names should indicate the format of the
+data, while the '`.`' separated words which make up the file name loosely
+describe the workflow used to produce the file.
+For example:
+-  `seq/16S.align.ungap.afn` would be multiple sequence alignment (`.align.`)
+    in nuceotide FASTA format (`.afn`) which has had all gap positions removed
+    (`.ungap.`).
+-  `tre/16S.align.ungap.nwk` is a Newick formatted phylogenetic tree generated
+    from `seq/16S.align.ungap.afn`.
+
+A subset of filename keyword recommendations are document in `*/TEMPLATE.md`
+files in various directories.
+This naming scheme is not a replacement for both liberal note-taking
+and a programmatic description of the pipeline in the `Makefile`.
 
 -  `meta/`
 
     All of the experiment metadata, formatted conveniently for downstream
     analysis.
-    Tab separated values (`.tsv`) is the preferred format.
+    Tab separated values (`.tsv`) with headers is the preferred format.
     The files in this directory are usually minimally processed versions of
     the original metadata files stored in `raw/`.
+    Column titles should be explained in `meta/NOTE.md`.
 
 -  `seq/`
 
     Intermediate analysis files which contain sequence.
-    The extension portion of these file names should indicate the format of the
-    data, while the `.` separated words which make up the file name loosely
-    describe the workflow used to produce the file.
-    This nameing scheme is not a replacement for both liberal note-taking
-    and coding the pipeline into the `Makefile`.
 
-    For example: `16S.align.ungap.afn` would be multiple
-    sequence alignment (`.align.`) in nuceotide FASTA format (`.afn`)
-    which has had all gap positions removed (`.ungap.`).
 
 -  `tre/`
 
     Intermediate analysis files which contain phylogenetic or taxonomic trees.
-    As above, the extension describes the file format and the `.` separated
-    parts of the name describe the workflow.
 
-    For example: `16S.afn.ungap.nwk` is a Newick formatted phylogenetic tree
-    generated from `seq/16S.ungap.afn`.
 
 -  `res/`
 
     Any intermediate results which cannot be easily placed in another
     directory.
     For instance, a TSV of pairwise sequence distances.
-
-    A description of the intermediate results and what they're good for can be
-    found in `res/NOTE.md`.
 
 
 ## Final Results ##

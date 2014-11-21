@@ -1,1 +1,1 @@
-Directory placeholder for `ipynb/`.
+<!-- Directory placeholder for `ipynb/`. -->
