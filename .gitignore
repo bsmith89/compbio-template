@@ -4,6 +4,7 @@
 .ipynb_checkpoints/
 *.pyc
 *.html
+*.pdf
 tags
 .initialized
 
@@ -20,4 +21,3 @@ profile_default/*
 !*/README.md
 !*/NOTES.md
 !profile_default/*config.py
-
