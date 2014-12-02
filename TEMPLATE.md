@@ -31,8 +31,9 @@ python3 -m venv env
 source env/bin/activate
 
 # Install required python packages
-pip3 install -r requirements.pip -r scripts/utils/requirements.pip
+pip3 install -r requirements.pip
 # Don't forget to install requirements for the scripts/utils submodule
+pip3 install -r scripts/utils/requirements.pip
 
 ```
 
@@ -115,11 +116,13 @@ git push -u origin
 _All files which describe the project are version controlled._
 
 Notes files are written in
-[Pandoc Markdown][pdmd]
+[Pandoc Markdown][pdmd],
+a superset of [strict Markdown][stmd],
 and may be compiled for reading.
 (A recipe to compile markdown files into HTML is defined in the Makefile.)
 
 [pdmd]: <http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html>
+[stmd]: <http://daringfireball.net/projects/markdown/syntax>
 
 This default recipe includes a script
 for rendering LaTeX math in attractive typeset.
@@ -131,28 +134,28 @@ $$
 \chi^2
 $$
 
--  `NOTE.md`
+`NOTE.md`
 
-    This is the core notebook for the project.
+:   This is the core notebook for the project.
     All experiments and conclusions should be clearly described in the
     "Notebook" section below.
     Along with the project's `Makefile`, this notebook should allow a 3rd party
     to run and understand the entire analysis which was carried out.
 
--  `TODO.md`
+`TODO.md`
 
-    List of remaining tasks.
+:    List of remaining tasks.
 
--  `TEMPLATE.md`
+`TEMPLATE.md`
 
-    This file, describing how to use the template and the project's
+:   This file, describing how to use the template and the project's
     directory structure.
     Additional `*/TEMPLATE.md` files serve as directory placeholders for git
     and describe consistant naming schemes for particular file types.
 
--  `static/`
+`static/`
 
-    Files (usually images) which are included in notebooks.
+:   Files (usually images) which are included in notebooks.
     These files are version controlled, so that a remote
     repository (e.g. github) can compile the notebook with the images.
     Despite being version controlled, they should never change:
@@ -162,17 +165,17 @@ $$
     but, in order to record the research process,
     the results are maintained in this folder.
 
--  `static/main.css`
+`static/main.css`
 
-    Used in the compilation of HTML versions of notes written in
+:   Used in the compilation of HTML versions of notes written in
     markdown.
 
 ## Code ##
 _All project code is version controlled._
 
--  `Makefile`
+`Makefile`
 
-    Ideally, the entire analysis.
+:   Ideally, the entire analysis.
     Reproduce the full analysis with a single command:
 
     ```bash
@@ -183,9 +186,9 @@ _All project code is version controlled._
     Any data processing which is computationally intensive should save
     intermediate files in order to utilize `make`'s piece-wise build.
 
--  `scripts/`
+`scripts/`
 
-    Executable files which carry out any parts of the pipeline requiring more
+:   Executable files which carry out any parts of the pipeline requiring more
     than a `Makefile` recipe.
     These scripts (and source code to be compiled) _are_ version controlled,
     unlike data files.
@@ -220,25 +223,25 @@ _All project code is version controlled._
     and where the routine may be useful in other projects,
     are great candidates for inclusion in the `scripts/utils/` submodule.
 
--  `scripts/utils/`
+`scripts/utils/`
 
-    A [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules)
+:   A [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules)
     of utility scripts and executables.
 
     Any analysis scripts that can be used by other projects should ultimately
     end up in this [repository](https://github.com/bsmith89/compbio-scripts).
 
--  `scripts/fig`
+`scripts/fig/`
 
-    Executable scripts which _normally_:
+:   Executable scripts which _normally_:
     -  Produce figures in PDF format, saving them to `fig/`;
     -  Require intermediate results in a tabular format, saved in `res/`;
     -  Usually have a name which is identical to or a substring of the figure
         produced.
 
--  `scripts/pbs/`
+`scripts/pbs/`
 
-    Scripts to be submitted to the PBS batch computing system (`qsub`).
+:   Scripts to be submitted to the PBS batch computing system (`qsub`).
     These are used to carry out computationally intensive steps in the analysis
     pipeline.
     They do not replace, however, `Makefile` as a complete description of the
@@ -267,9 +270,9 @@ _All project code is version controlled._
 
     ```
 
--  `ipynb/`
+`ipynb/`
 
-    IPython notebooks, useful for fast prototyping and exploratory analysis.
+:   IPython notebooks, useful for fast prototyping and exploratory analysis.
     In there raw form, they are _not_ good for version control,
     since they include a bunch of the output data in the same file.
     They are also not conducive to reproducing a result after external files
@@ -306,9 +309,9 @@ in just one place.
 Anyone who forks the template or any project based on it will then have the
 same configuration.
 
--  `.initialized`
+`.initialized`
 
-    Empty file used to signal whether or not the project has been initialized.
+:   Empty file used to signal whether or not the project has been initialized.
     The file is created on running `make init_from_project`,
     which adds the IPython notebook filter to the project's git configuration,
     or `make init_from_template` which _also_:
@@ -317,9 +320,9 @@ same configuration.
     2. Squashes the entire git history into a single
         initial commit.
 
--  `profile_default/`
+`profile_default/`
 
-    A custom IPython profile
+:   A custom IPython profile
     which changes a few things from the built-in default:
 
     -  IPython notebooks display figures inline by default;
@@ -335,25 +338,28 @@ same configuration.
 
     [ipy-config]: <http://ipython.org/ipython-doc/dev/config/intro.html>
 
--  `matplotlibrc`
+    TODO: Load the users defaults
+    TODO: Should these override project defaults?
 
-    A custom matplotlib profile for compbio projects.
+`matplotlibrc`
+
+:   A custom matplotlib profile for compbio projects.
     Change matplotlib styles in a central place.
     All figures will have the same config.
 
     See
     [matplotlib's documentation](http://matplotlib.org/users/customizing.html).
 
--  `.gitattributes` / `.gitignore` / `.gitmodules`
+`.gitattributes` / `.gitignore` / `.gitmodules`
 
-    Configuration files for `git`.
+:   Configuration files for `git`.
 
 ## Data ##
 _Data is not version controlled._
 
--  `raw/`
+`raw/`
 
-    All of the raw data and metadata needed to recreate the entire analysis.
+:   All of the raw data and metadata needed to recreate the entire analysis.
     This should be kept in the exact same format as it is available publicly;
     if you're going to rename files, remove header lines, or reformat,
     these processed versions of the data should be stored in directories
@@ -391,28 +397,28 @@ files in various directories.
 This naming scheme is not a replacement for both liberal note-taking
 and a programmatic description of the pipeline in the `Makefile`.
 
--  `meta/`
+`meta/`
 
-    All of the experiment metadata, formatted conveniently for downstream
+:   All of the experiment metadata, formatted conveniently for downstream
     analysis.
     Tab separated values (`.tsv`) with headers is the preferred format.
     The files in this directory are usually minimally processed versions of
     the original metadata files stored in `raw/`.
     Column titles should be explained in `meta/NOTE.md`.
 
--  `seq/`
+`seq/`
 
-    Intermediate analysis files which contain sequence.
-
-
--  `tre/`
-
-    Intermediate analysis files which contain phylogenetic or taxonomic trees.
+:   Intermediate analysis files which contain sequence.
 
 
--  `res/`
+`tre/`
 
-    Any intermediate results which cannot be easily placed in another
+:   Intermediate analysis files which contain phylogenetic or taxonomic trees.
+
+
+`res/`
+
+:   Any intermediate results which cannot be easily placed in another
     directory.
     For instance, a TSV of pairwise sequence distances.
 
@@ -420,8 +426,8 @@ and a programmatic description of the pipeline in the `Makefile`.
 ## Final Results ##
 _Final results are not version controlled._
 
--  `fig/`
+`fig/`
 
-    All 'final' output from an analysis, usually figures or tables.
+:   All 'final' output from an analysis, usually figures or tables.
     Figures don't have to be good enough for a publication, they just
     have to represent the culmination of an analysis.
