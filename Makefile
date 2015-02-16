@@ -8,6 +8,11 @@ figs:
 
 .PHONY: all docs figs
 
+
+# --------------
+#  Data Recipes
+# --------------
+
 # -----------------------
 #  Analysis Recipes
 # -----------------------
