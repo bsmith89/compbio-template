@@ -1,3 +1,6 @@
+PYTHON = venv/bin/python
+PYTHON3 = venv/bin/python3
+
 PROJ_DIRS = $(shell find . \( -name ".git" \) -prune -o -type d -print)
 
 all:   docs figs
@@ -79,13 +82,11 @@ venv: venv/bin/activate
 
 venv/bin/activate: requirements.pip scripts/utils/requirements.pip
 	[ -d venv ] || python3 -m venv venv
-	source $@; for req_file in $^; do pip install -r $$req_file; done
+	source $@; \
+	for req_file in $^; do \
+		pip install -r $$req_file; \
+	done
 	touch $@
-
-activate_venv: venv/bin/activate
-	source $@
-
-
 
 # -----------------
 #  Cleanup Recipes
