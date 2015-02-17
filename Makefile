@@ -1,16 +1,30 @@
+# ---------------
+#  Configuration
+# ---------------
 PYTHON = venv/bin/python
 PYTHON3 = venv/bin/python3
 
+# All directories which are part of the project (since all of these might have
+# documentation and notes to be compiled.)
 PROJ_DIRS = $(shell find . \( -name ".git" \) -prune -o -type d -print)
+
+
+# ------------------
+#  Special Targets
+# ------------------
+# This special target means that the first failing command in a recipe will
+# cause the whole recipe to fail.
+.POSIX:
+
+# # Don't delete any intermediate files # Is this actually necessary?
+# I don't use implicit rules...?
+# .SECONDARY:
+
+# Some recipes don't actually make any files:
+.PHONY: all docs figs
 
 all:   docs figs
 figs:
-
-# Don't delete any intermediate files
-.SECONDARY:
-
-.PHONY: all docs figs
-
 
 # --------------
 #  Data Recipes
@@ -23,7 +37,6 @@ figs:
 # -----------------------
 #  Documentation Recipes
 # -----------------------
-
 ALL_DOCS_MD = $(foreach d,${PROJ_DIRS}, $(wildcard ${d}/*.md))
 ALL_DOCS_HTML = $(patsubst %.md,%.html, ${ALL_DOCS_MD})
 
@@ -51,7 +64,8 @@ touch_semaphore:
 base_init: touch_semaphore
 	git submodule update --init --recursive
 	# Configure IPYNB output filtering
-	git config --local filter.dropoutput_ipynb.clean scripts/utils/ipynb_output_filter.py
+	git config --local filter.dropoutput_ipynb.clean \
+					   scripts/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
 	make venv
 init_from_project: base_init
@@ -92,6 +106,5 @@ venv/bin/activate: requirements.pip scripts/utils/requirements.pip
 # -----------------
 #  Cleanup Recipes
 # -----------------
-
 clean:
 	rm -f ${ALL_DOCS_HTML}
