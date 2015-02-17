@@ -74,6 +74,19 @@ init_from_project: base_init
 init_from_template: base_init
 endif
 
+# Python virtual environment recipes:
+venv: venv/bin/activate
+
+venv/bin/activate: requirements.pip scripts/utils/requirements.pip
+	[ -d venv ] || python3 -m venv venv
+	source $@; for req_file in $^; do pip install -r $$req_file; done
+	touch $@
+
+activate_venv: venv/bin/activate
+	source $@
+
+
+
 # -----------------
 #  Cleanup Recipes
 # -----------------

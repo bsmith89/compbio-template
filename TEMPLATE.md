@@ -186,6 +186,10 @@ _All project code is version controlled._
     Any data processing which is computationally intensive should save
     intermediate files in order to utilize `make`'s piece-wise build.
 
+    TODO: Recipes for setting up a virtualenv and installing the dependencies.
+    TODO: Link recipes directly to the virtualenv python (how?)
+    TODO: Clean up the initialization routines
+
 `scripts/`
 
 :   Executable files which carry out any parts of the pipeline requiring more
