@@ -13,19 +13,20 @@ A git repository which implements this template is available
 # Quick Start #
 
 ```bash
-# Clone the *template* and initialize
-git clone https://github.com/bsmith89/compbio-template new-project
-make init_from_template
-# ---OR---
-# Clone a *project* and initialize
+# Clone a project or project template
 git clone http://github.com/USERNAME/compbio-project new-project
-make init_from_project
-
 
 # Remove unneeded directories/files/requirements from the repository.
 # You might want to do this before you've initialized the project.
-# e.g. if not analyzing images, sequence data, or phylogenetic trees:
+# e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
 git rm -r img/ seq/ tre/
+
+# Initialize the project
+make init
+# You'll be prompted for whether you'd like to treat the current
+# repository as a template, or an active project.
+# Initialization from a template squashes the entire commit history into
+# a single commit and removes the 'origin' repository from remotes.
 
 ```
 
