@@ -53,6 +53,7 @@ base_init: touch_semaphore
 	# Configure IPYNB output filtering
 	git config --local filter.dropoutput_ipynb.clean scripts/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
+	make venv
 init_from_project: base_init
 init_from_template: base_init
 	# Remove the template remote

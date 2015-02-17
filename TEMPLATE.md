@@ -22,18 +22,10 @@ git clone http://github.com/USERNAME/compbio-project new-project
 make init_from_project
 
 
-# Remove unneeded directories and files from the repository.
+# Remove unneeded directories/files/requirements from the repository.
+# You might want to do this before you've initialized the project.
 # e.g. if not analyzing images, sequence data, or phylogenetic trees:
 git rm -r img/ seq/ tre/
-
-# Optional: Make a python virtual environment
-python3 -m venv env
-source env/bin/activate
-
-# Install required python packages
-pip3 install -r requirements.pip
-# Don't forget to install requirements for the scripts/utils submodule
-pip3 install -r scripts/utils/requirements.pip
 
 ```
 
@@ -186,7 +178,6 @@ _All project code is version controlled._
     Any data processing which is computationally intensive should save
     intermediate files in order to utilize `make`'s piece-wise build.
 
-    TODO: Recipes for setting up a virtualenv and installing the dependencies.
     TODO: Link recipes directly to the virtualenv python (how?)
     TODO: Clean up the initialization routines
 
