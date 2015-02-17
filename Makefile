@@ -66,7 +66,7 @@ init_from_template: base_init
 	# TL;DR Squash everything to a single first commit.
 	git reset --soft $$(git rev-list --max-parents=0 HEAD)
 	git add -A
-	git commit --amend -em "Clean project.  Let's get started!"
+	git commit --amend -em "Initial commit"
 else
 base_init:
 	$(error "This directory contains a file '${SEMAPHORE}' indicating \
