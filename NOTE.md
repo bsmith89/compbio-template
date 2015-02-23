@@ -8,6 +8,14 @@ author: [Author Name]
 
 [A larger passage detailing the motivation and direction of the project.]
 
+## Glossary ##
+
+[TermA]
+:   [Definition]
+
+[TermB]
+:   [Definition]
+
 # Requirements and Environment #
 ## Required Applications ##
 -  [`python`](http://www.python.org/) (3.4+)
@@ -15,6 +23,10 @@ author: [Author Name]
 -  BASH
 
 # Notebook #
-## [Today's Date] ##
-### [First Experiment Name] ###
+## [First Experiment Name] ##
+(date:[First Date])
+[Content]
 
+(date:[Next Date])
+
+## [Next Experiment Name] ##
