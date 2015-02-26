@@ -30,3 +30,7 @@ author: [Author Name]
 (date:[Next Date])
 
 ## [Next Experiment Name] ##
+
+# Appendices #
+
+<!-- This space left open for `NOTE.md` files in project subdirectories. -->

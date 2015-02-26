@@ -93,20 +93,39 @@ figs:
 # All directories which are part of the project (since all of these might have
 # documentation and notes to be compiled.)
 PROJ_DIRS = $(shell find . \( -name ".git" \) -prune -o -type d -print)
-ALL_DOCS_MD = $(foreach d,${PROJ_DIRS}, $(wildcard ${d}/*.md))
-ALL_DOCS_HTML = $(patsubst %.md,%.html, ${ALL_DOCS_MD})
+
+TEMPLATE = TEMPLATE
+TEMPLATE_MD_NAME = ${TEMPLATE}.md
+TEMPLATE_MD_MAIN = ./${TEMPLATE_MD_NAME}
+TEMPLATE_MD_AUX = $(foreach d,${PROJ_DIRS}, $(wildcard ${d}/${TEMPLATE_MD_NAME}))
+TEMPLATE_MD_PREX = ${TEMPLATE_MD_MAIN} ${TEMPLATE_MD_AUX}
+TEMPLATE_HTML = ${TEMPLATE}.html
+
+NOTE = NOTE
+NOTE_MD_NAME = ${NOTE}.md
+NOTE_MD_MAIN = ./${NOTE_MD_NAME}
+NOTE_MD_AUX = $(foreach d,${PROJ_DIRS}, $(wildcard ${d}/${NOTE_MD_NAME})) ${TODO_MD_MAIN}
+TODO = TODO
+TODO_MD_MAIN = TODO.md
+NOTE_MD_PREX = ${NOTE_MD_MAIN} ${NOTE_MD_AUX} ${TODO_MD_MAIN}
+NOTE_HTML = ${NOTE}.html
+
+ALL_DOCS_HTML = ${TEMPLATE_HTML} ${NOTE_HTML}
 
 docs: ${ALL_DOCS_HTML}
 
 MD2HTML = \
-cat $< \
+cat $^ \
 | pandoc -f markdown -t html5 -s \
 			--highlight-style pygments --mathjax \
 			--toc --toc-depth=4 \
 			--css static/main.css \
 > $@
 
-%.html: %.md
+${TEMPLATE_HTML}: ${TEMPLATE_MD_PREX}
+	${MD2HTML}
+
+${NOTE_HTML}: ${NOTE_MD_PREX}
 	${MD2HTML}
 
 # ========================

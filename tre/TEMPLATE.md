@@ -1,16 +1,20 @@
+<!-- Directory placeholder for `tre/` -->
+
 ## `tre/` Conventions ##
 ### File Formats ###
 
-| suffix | meaning            | comments                  |
-| ----   | ----               | ----                      |
-| nwk    | Newick tree format | see [wikipedia][nwk-wiki] |
+| suffix   | meaning            | comments                  |
+| ----     | ----               | ----                      |
+| `nwk`    | Newick tree format | see [wikipedia][nwk-wiki] |
 
 ### Processing ###
 
-| suffix | meaning                     | comments |
-| ----   | ----                        | ----     |
-| prune  | subtrees removed            |          |
-| root   | tree non-arbitrarily rooted |          |
+| suffix   | meaning                     | comments |
+| ----     | ----                        | ----     |
+| `prune`  | subtrees removed            |          |
+| `root`   | tree non-arbitrarily rooted |          |
 
 
 [nwk-wiki]: <http://en.wikipedia.org/wiki/Newick_format>
+
+<!-- /Placeholder -->

@@ -119,9 +119,8 @@ and may be compiled for reading.
 
 This default recipe includes a script
 for rendering LaTeX math in attractive typeset.
-This should work
---- as long as there's an internet connection ---
-for either inline math ($\chi^2$, for instance) or blocks of math:
+This should work&mdash;as long as there's an internet connection&mdash;for
+either inline math ($\chi^2$, for instance) or blocks of math:
 
 $$
 \chi^2
@@ -131,9 +130,13 @@ $$
 
 :   This is the core notebook for the project.
     All experiments and conclusions should be clearly described in the
-    "Notebook" section below.
+    "Notebook" section.
     Along with the project's `Makefile`, this notebook should allow a 3rd party
     to run and understand the entire analysis which was carried out.
+
+    Subdirectories `raw/` and `meta/` both have their own `NOTE.md`,
+    each containing an appendix about the raw data and the metadata,
+    respectively.
 
 `TODO.md`
 
@@ -145,6 +148,8 @@ $$
     directory structure.
     Additional `*/TEMPLATE.md` files serve as directory placeholders for git
     and describe consistant naming schemes for particular file types.
+    See the section on
+    [file name conventions](#filename-conventions) below.
 
 `static/`
 
@@ -308,13 +313,21 @@ same configuration.
 `.initialized`
 
 :   Empty file used to signal whether or not the project has been initialized.
-    The file is created on running `make init_from_project`,
+    The file is created on running `make init`,
     which adds the IPython notebook filter to the project's git configuration,
-    or `make init_from_template` which _also_:
+    makes a new Python virtual environment (`venv/`), and installs everything
+    in `requirements.pip` and `scripts/utils/requirements.pip` to `venv`.
 
-    1. Removes the template remote repository.
+    This recipe will also prompt for whether or not you want to initialize
+    as a _new_ project (as opposed to a clone of a previously started project).
+    Treating it as a new project will also:
+
+    1. Removes the template remote repository (so the user doesn't
+        accidentally push changes to the template itself.)
     2. Squashes the entire git history into a single
         initial commit.
+
+    Unlike the other configuration files, `.initialized` is ignored by git.
 
 `profile_default/`
 
@@ -334,8 +347,8 @@ same configuration.
 
     [ipy-config]: <http://ipython.org/ipython-doc/dev/config/intro.html>
 
-    TODO: Load the users defaults
-    TODO: Should these override project defaults?
+    -  TODO: Load the users defaults
+    -  TODO: Should these override project defaults?
 
 `matplotlibrc`
 
@@ -362,9 +375,8 @@ _Data is not version controlled._
     other than `raw/`.
     While raw data files are not version controlled, they _should_ all be
     available in an online repository.
-    `raw/NOTE.md` describes everything a third party
-    (or the author a month later)
-    needs to know about the raw data.
+    The raw data appendix, in `raw/NOTE.md`, describes everything a third party
+    (or the author a month later) needs to know about the raw data.
 
     -  Required: Describes (in detail) where all of the data came from.
     -  Good: Instructions for retrieving all of the data from an online
@@ -400,7 +412,8 @@ and a programmatic description of the pipeline in the `Makefile`.
     Tab separated values (`.tsv`) with headers is the preferred format.
     The files in this directory are usually minimally processed versions of
     the original metadata files stored in `raw/`.
-    Column titles should be explained in `meta/NOTE.md`.
+    Column titles should be explained in the metadata appendix
+    in `meta/NOTE.md`.
 
 `seq/`
 
@@ -428,3 +441,8 @@ _Final results are not version controlled._
     Figures don't have to be good enough for a publication, they just
     have to represent the culmination of an analysis.
 
+# Filename Conventions #
+These conventions may vary from project to project.
+
+<!-- Compiled documentation will include `TEMPLATE.md` files from
+subdirectories of the project in the final version of `TEMPLATE.html` -->
