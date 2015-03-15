@@ -1,3 +1,5 @@
 --langdef=markdown
 --langmap=markdown:.md
 --regex-markdown=/^#+[ \t](.*)[ \t]#+$/\1/h,heading,headings/
+--exclude=.git
+--exclude=venv
