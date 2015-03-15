@@ -14,8 +14,8 @@ make help
 
 make init
 	Initialize the project:
-		(1) initialize and update all submodules;
-		(2) create a virtualenv and load python requirements;
+		(1) make submodules
+		(2) make venv
 		(3) configure git to automatically clean IPython notebooks;
 		(4) remove the 'origin' git remote;
 		(5) squash the commit history into a single 'Initial commit';
@@ -45,6 +45,7 @@ PYTHON3 = venv/bin/python3
 
 
 
+.PHONY: all figs
 all:   docs figs
 figs:
 
@@ -88,7 +89,7 @@ figs:
 
 
 # =======================
-#  Documentation Recipes
+#  Documentation Recipes {{{1
 # =======================
 # All directories which are part of the project (since all of these might have
 # documentation and notes to be compiled.)
@@ -112,6 +113,7 @@ NOTE_HTML = ${NOTE}.html
 
 ALL_DOCS_HTML = ${TEMPLATE_HTML} ${NOTE_HTML}
 
+.PHONY: docs
 docs: ${ALL_DOCS_HTML}
 
 MD2HTML = \
@@ -128,8 +130,15 @@ ${TEMPLATE_HTML}: ${TEMPLATE_MD_PREX}
 ${NOTE_HTML}: ${NOTE_MD_PREX}
 	${MD2HTML}
 
+# =================
+#  Cleanup Recipes
+# =================
+.PHONY: clean
+clean:
+	rm -f ${ALL_DOCS_HTML}
+
 # ========================
-#  Initialization Recipes
+#  Initialization Recipes {{{1
 # ========================
 SEMAPHORE = .initialized
 init: venv ${SEMAPHORE}
@@ -183,8 +192,7 @@ scripts/utils/ipynb_output_filter.py: scripts/utils/.git
 
 .git/config: scripts/utils/ipynb_output_filter.py
 	# Configure IPYNB output filtering
-	git config --local filter.dropoutput_ipynb.clean \
-					   scripts/utils/ipynb_output_filter.py
+	git config --local filter.dropoutput_ipynb.clean scripts/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
 	touch $@
 
@@ -202,10 +210,3 @@ venv/bin/activate: ${PIP_REQUIREMENTS}
 	touch $@
 
 scripts/utils/requirements.pip: scripts/utils/.git
-
-# =================
-#  Cleanup Recipes
-# =================
-.PHONY: clean
-clean:
-	rm -f ${ALL_DOCS_HTML}
