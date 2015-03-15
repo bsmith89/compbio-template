@@ -16,11 +16,12 @@ author: [Author Name]
 [TermB]
 :   [Definition]
 
-# Requirements and Environment #
-## Required Applications ##
--  [`python`](http://www.python.org/) (3.4+)
+## Requirements and Environment ##
+### Applications ###
+-  [Python](http://www.python.org/) (3.4+)
 -  GNU Make
 -  BASH
+-  [Exuberant Ctags](http://ctags.sourceforge.net/) (optional)
 
 # Notebook #
 ## [First Experiment Name] ##
