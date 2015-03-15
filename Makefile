@@ -1,54 +1,77 @@
 define HELP_MSG
 
-make all
-	Generate all figures and documentation based on user-defined recipes.
+================================
+ Analysis Makefile Documentation
+================================
 
-make docs
-	Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML (uses Pandoc).
+SYNOPSIS
+	Run project operations using make commands.
 
-make figs
-	Carry out the pipeline to ultimately generate figures of the results.
+TARGETS
+	all
+		Generate all figures and documentation based on user-defined recipes.
 
-make help
-	Show this help message.
+	docs
+		Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML (uses
+		Pandoc).
 
-make init
-	Initialize the project:
-		(1) make submodules
-		(2) make venv
-		(3) configure git to automatically clean IPython notebooks;
-		(4) remove the 'origin' git remote;
-		(5) squash the commit history into a single 'Initial commit';
-		(6) create `.initialized` to indicate that these steps are completed.
+	figs
+		Carry out the pipeline to ultimately generate figures of the results.
 
-make submodules
-	Initialize and update all requirements.
+	help
+		Show this help message.
 
-make venv
-	Create the virtualenv if absent and install from `requirements.pip`.
+	init
+		Initialize the project:
+			(1) make submodules
+			(2) make venv
+			(3) configure git to automatically clean IPython notebooks;
+			(4) remove the 'origin' git remote;
+			(5) squash the commit history into a single 'Initial commit';
+			(6) create `.initialized` to indicate that these steps are
+			    completed.
+
+	submodules
+		Initialize and update all requirements.
+
+	venv
+		Create the virtualenv if absent and install from `requirements.pip`.
+
+EXAMPLES
+	make init  # Initialize the project.
+	make all   # Carry out all defined steps in the project.
+
+NOTE
+	Sensitive data should not be included in `Makefile`, since that
+	file is frequently version controlled.  Instead `local.mk` is included so
+	that sensitive values can be included and then referenced as variables.
+
+GNU MAKE HELP:
+
 
 endef
 export HELP_MSG
-help:
-	@echo "$$HELP_MSG"
-	@${MAKE} -h
 
 -include local.mk
 
 # ===============
 #  Configuration
 # ===============
-PYTHON = venv/bin/python
+PYTHON2 = venv/bin/python2
 PYTHON3 = venv/bin/python3
+
 # This special target means that the first failing command in a recipe will
 # cause the whole recipe to fail.
 .POSIX:
 
-
-
 .PHONY: all figs
 all:   docs figs
 figs:
+
+HELP_TRGTS = help h HELP Help
+.PHONY: ${HELP_TRGTS}
+${HELP_TRGTS}:
+	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
 
 # ==============
 #  Data Recipes
