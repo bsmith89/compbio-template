@@ -31,7 +31,7 @@ endef
 export HELP_MSG
 help:
 	@echo "$$HELP_MSG"
-	@make -h
+	@${MAKE} -h
 
 
 # ===============
@@ -167,8 +167,8 @@ ${SEMAPHORE}: .git/config
 	if [ $$SQUASH != "y" ] && [ $$SQUASH != "Y" ] ; then \
 		: ; \
 	else \
-		make _remove_remote; \
-		make _squash_history; \
+		${MAKE} _remove_remote; \
+		${MAKE} _squash_history; \
 	fi
 	touch $@
 
