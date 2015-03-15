@@ -33,6 +33,7 @@ help:
 	@echo "$$HELP_MSG"
 	@${MAKE} -h
 
+-include local.mk
 
 # ===============
 #  Configuration
