@@ -215,6 +215,16 @@ _All project code is version controlled._
     Alternatively, add a smudge filter in the intialization process that
     replaces the shebang with the virtualenv python.)
 
+`etc/`
+
+:   While not strictly code, the `etc/` directory is a place to store version
+    controlled data which cannot be regenerated automatically, but which
+    is needed for the workflow regardless of the data in `raw/`.
+
+    The best example of something that should go in this directory are
+    primer sequences.  Contents of `etc/` are version controlled, unlike
+    raw data.
+
 `bin/`
 
 :   Executable files which carry out any parts of the pipeline requiring more
@@ -252,7 +262,7 @@ _All project code is version controlled._
     and where the routine may be useful in other projects,
     are great candidates for inclusion in the `scripts/utils/` submodule.
 
-`scripts/utils/`
+`bin/utils/`
 
 :   A [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules)
     of utility scripts and executables.
@@ -260,7 +270,7 @@ _All project code is version controlled._
     Any analysis scripts that can be used by other projects should ultimately
     end up in this [repository](https://github.com/bsmith89/compbio-scripts).
 
-`scripts/fig/`
+`bin/fig/`
 
 :   Executable scripts which _normally_:
     -  Produce figures in PDF format, saving them to `fig/`;
@@ -268,7 +278,7 @@ _All project code is version controlled._
     -  Usually have a name which is identical to or a substring of the figure
         produced.
 
-`scripts/pbs/`
+`bin/pbs/`
 
 :   Scripts to be submitted to the PBS batch computing system (`qsub`).
     These are used to carry out computationally intensive steps in the analysis
@@ -317,7 +327,7 @@ _All project code is version controlled._
     numbers wiped, so as to avoid committing binary data, or arbitrary changes;
     re-running a notebook shouldn't change it in the eyes of git.
     To do this in an automated fashion, a clean/smudge filter has been included
-    in `scripts/utils`, and the initalization recipes in Makefile configure git to
+    in `bin/utils`, and the initalization recipes in Makefile configure git to
     run the filter when staging files to be commited.
     While this won't erase the output from the local copy of the notebook,
     forks of the project will get an 'un-run' version.
@@ -344,7 +354,7 @@ same configuration.
     The file is created on running `make init`,
     which adds the IPython notebook filter to the project's git configuration,
     makes a new Python virtual environment (`venv/`), and installs everything
-    in `requirements.pip` and `scripts/utils/requirements.pip` to `venv`.
+    in `requirements.pip` and `bin/utils/requirements.pip` to `venv`.
 
     This recipe will also prompt for whether or not you want to initialize
     as a _new_ project (as opposed to a clone of a previously started project).
