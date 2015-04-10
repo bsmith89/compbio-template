@@ -109,15 +109,15 @@ git add static/2014-11-17_fig1.png NOTE.md
 git commit -m "Updated notes with a prototyped analysis."
 
 # Write a script to do this analysis reproducibly
-vim scripts/analysis.py
-chmod +x scripts/analysis.py
+vim bin/analysis.py
+chmod +x bin/analysis.py
 cat res/sample001.all_way.blastx_out \
-    | scripts/analysis.py
+    | bin/analysis.py
     > res/sample001.all_way.blastx_out.analysis.tsv
 
 # Add a recipe to run the analysis
 vim Makefile
-git add scripts/analysis.py Makefile
+git add bin/analysis.py Makefile
 git commit -m "Script to carry out analysis."
 
 # Additional analysis
@@ -215,7 +215,7 @@ _All project code is version controlled._
     Alternatively, add a smudge filter in the intialization process that
     replaces the shebang with the virtualenv python.)
 
-`scripts/`
+`bin/`
 
 :   Executable files which carry out any parts of the pipeline requiring more
     than a `Makefile` recipe.

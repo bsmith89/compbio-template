@@ -191,18 +191,18 @@ _squash_history:
 	git commit --amend -em "Initial commit"
 
 # Git submodule recipes:
-SUBMODULES = scripts/utils/.git  # TODO: Retrieve these from `.gitmodules`.
+SUBMODULES = bin/utils/.git  # TODO: Retrieve these from `.gitmodules`.
 submodules: ${SUBMODULES}
 
 ${SUBMODULES}: .gitmodules
 	git submodule update --init --recursive ${@D}
 	touch $@
 
-scripts/utils/ipynb_output_filter.py: scripts/utils/.git
+bin/utils/ipynb_output_filter.py: bin/utils/.git
 
-.git/config: scripts/utils/ipynb_output_filter.py
+.git/config: bin/utils/ipynb_output_filter.py
 	# Configure IPYNB output filtering
-	git config --local filter.dropoutput_ipynb.clean scripts/utils/ipynb_output_filter.py
+	git config --local filter.dropoutput_ipynb.clean bin/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
 	touch $@
 
@@ -210,7 +210,7 @@ scripts/utils/ipynb_output_filter.py: scripts/utils/.git
 .PHONY: venv
 venv: venv/bin/activate
 
-PIP_REQUIREMENTS = requirements.pip scripts/utils/requirements.pip
+PIP_REQUIREMENTS = requirements.pip bin/utils/requirements.pip
 venv/bin/activate: ${PIP_REQUIREMENTS}
 	[ -f $@ ] || python3 -m venv venv
 	source $@ ; \
@@ -219,4 +219,4 @@ venv/bin/activate: ${PIP_REQUIREMENTS}
 	done
 	touch $@
 
-scripts/utils/requirements.pip: scripts/utils/.git
+bin/utils/requirements.pip: bin/utils/.git
