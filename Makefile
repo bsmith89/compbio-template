@@ -1,4 +1,4 @@
-# Preface {{{
+# Preface {{{1
 define HELP_MSG
 
 ================================
@@ -55,15 +55,16 @@ export HELP_MSG
 
 -include local.mk
 
-# ===============
-#  Configuration
-# ===============
-PYTHON2 = venv/bin/python2
-PYTHON3 = venv/bin/python3
+# ========================
+#  Standard Configuration
+# ========================
+VENV = ./venv
 
-# This special target means that the first failing command in a recipe will
-# cause the whole recipe to fail.
+# One failing step in a recipe causes the whole recipe to fail.
 .POSIX:
+
+# Don't delete intermediate files.
+.SECONDARY:
 
 .PHONY: all figs
 all:   docs figs
@@ -74,7 +75,22 @@ HELP_TRGTS = help h HELP Help
 ${HELP_TRGTS}:
 	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
 
+export VIRTUAL_ENV = $(abspath ${VENV})
+export PATH := ${VIRTUAL_ENV}/bin:${PATH}
+
+SUBMODULES = bin/utils/.git
+
 # }}}
+
+# ====================
+#  User Configuration
+# ====================
+
+# List of submodules directories for submodules in .gitmodules
+# with '.git' appended.
+# TODO: Retrieve these automatically from `.gitmodules`.
+SUBMODULES +=
+
 # ==============
 #  Data Recipes
 # ==============
@@ -141,16 +157,16 @@ ${NOTE_HTML}: ${NOTE_MD_PREX}
 	${MD2HTML}
 
 # =================
-#  Cleanup Recipes
+#  Cleanup Recipes {{{1
 # =================
 .PHONY: clean
 clean:
-	rm -f ${ALL_DOCS_HTML}
+	rm -f ${ALL_DOCS_HTML} ${CLEANUP}
 
 # ========================
 #  Initialization Recipes {{{1
 # ========================
-SEMAPHORE = .initialized
+SEMAPHORE = .git/.initialized
 init: venv ${SEMAPHORE}
 
 
@@ -170,7 +186,8 @@ export CONFIRM_SQUASH
 ${SEMAPHORE}: .git/config
 	unlink README.md
 	ln -s NOTE.md README.md
-	@while [ -z "$$SQUASH" ] ; do \
+	@set -e ; \
+	while [ -z "$$SQUASH" ] ; do \
 		echo "$$CONFIRM_SQUASH" ; \
 		read -rp 'Would you like to squash the commit history? [y/N]: ' SQUASH ; \
 	done ; \
@@ -183,15 +200,15 @@ ${SEMAPHORE}: .git/config
 	touch $@
 
 _remove_remote:
-	git remote remove origin
+	-git remote remove origin
 
 _squash_history:
+	git branch -m master
 	git reset --soft $$(git rev-list --max-parents=0 HEAD)
 	git add -A
-	git commit --amend -em "Initial commit"
+	git commit --amend -m "Initial commit."
 
 # Git submodule recipes:
-SUBMODULES = bin/utils/.git  # TODO: Retrieve these from `.gitmodules`.
 submodules: ${SUBMODULES}
 
 ${SUBMODULES}: .gitmodules
@@ -208,12 +225,11 @@ bin/utils/ipynb_output_filter.py: bin/utils/.git
 
 # Python virtual environment recipes:
 .PHONY: venv
-venv: venv/bin/activate
+venv: ${VENV}/bin/activate
 
 PIP_REQUIREMENTS = requirements.pip bin/utils/requirements.pip
-venv/bin/activate: ${PIP_REQUIREMENTS}
-	[ -f $@ ] || python3 -m venv venv
-	source $@ ; \
+${VENV}/bin/activate: ${PIP_REQUIREMENTS}
+	[ -f $@ ] || python3 -m venv ${VENV}
 	for req_file in ${PIP_REQUIREMENTS} ; do \
 		pip install --upgrade -r $$req_file ; \
 	done
