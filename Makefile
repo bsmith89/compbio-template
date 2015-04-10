@@ -1,3 +1,4 @@
+# Preface {{{
 define HELP_MSG
 
 ================================
@@ -73,6 +74,7 @@ HELP_TRGTS = help h HELP Help
 ${HELP_TRGTS}:
 	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
 
+# }}}
 # ==============
 #  Data Recipes
 # ==============
@@ -94,22 +96,6 @@ ${HELP_TRGTS}:
 # ==================
 # User defined recipes for plotting figures.  These should use
 # the targets of analysis recipes above as their prerequisites.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # =======================
