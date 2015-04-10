@@ -210,8 +210,10 @@ _All project code is version controlled._
     Any data processing which is computationally intensive should save
     intermediate files in order to utilize `make`'s piece-wise build.
 
-    TODO: Link recipes directly to the virtualenv python (how?)
-    TODO: Clean up the initialization routines
+    TODO: Link recipes directly to the virtualenv python (how? maybe use
+    a `$PYTHON` variable in `Makefile` and run all recipes with that.
+    Alternatively, add a smudge filter in the intialization process that
+    replaces the shebang with the virtualenv python.)
 
 `scripts/`
 
@@ -414,6 +416,11 @@ _Data is not version controlled._
     so growth curves started on October 20th, 2014, would be stored in
     `raw/2014-10-20/growth-curve.csv`, and
     `raw/NOTE.md` would describe the experiment and this file in detail.
+
+    TODO: What about data files that are created by hand and/or not hosted
+    somewhere else?
+    For instance, I'd like to be able to save primers that were designed by
+    hand and for which I don't have an automated process to regenerate them.
 
 Intermediate data files are separated into directories based on their content.
 The extension portion of these file names should indicate the format of the
