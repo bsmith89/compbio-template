@@ -175,45 +175,43 @@ init: initialization ${SEMAPHORE}
 initialization: venv submodules
 	@${MAKE} python-reqs
 
-
-# Base initialization recipes:
-define CONFIRM_SQUASH
-
-You are initializing a new project from the current repository. If you would
-like to treat this repository as a template then the entire previous commit
-history will be squashed into a single initial commit and the git remote will
-be removed to ensure that you don't push changes to the template.  If, instead,
-you are initializing from a prior project, you most likely do NOT want the
-commit history to be squashed.  The remote will also be retained."
-
-endef
-export CONFIRM_SQUASH
-
 ${SEMAPHORE}:
 	unlink README.md
 	ln -s NOTE.md README.md
 	@${MAKE} _ipynb_filter
+	@${MAKE} _remove_remote
+	@${MAKE} _squash_history
+
+_remove_remote:
+	@set -e ; \
+	while [ -z "$$UNREMOTE" ] ; do \
+		read -rp "Would you like to unset the remote repository? [y/N]: " UNREMOTE ; \
+	done ; \
+	if [ $$UNREMOTE != "y" ] && [ $$UNREMOTE != "Y" ] ; then \
+		: ; \
+	else \
+		echo "git remote remove origin" ; \
+		git remote remove origin ; \
+	fi
+
+_squash_history:
 	@set -e ; \
 	while [ -z "$$SQUASH" ] ; do \
-		echo "$$CONFIRM_SQUASH" ; \
 		read -rp "Would you like to squash the commit history? [y/N]: " SQUASH ; \
 	done ; \
 	if [ $$SQUASH != "y" ] && [ $$SQUASH != "Y" ] ; then \
 		: ; \
 	else \
-		${MAKE} _remove_remote; \
-		${MAKE} _squash_history; \
+		echo "git branch -m master" ; \
+		git branch -m master ; \
+		echo "git reset --soft $$(git rev-list --max-parents=0 HEAD)" ; \
+		git reset --soft $$(git rev-list --max-parents=0 HEAD) ; \
+		echo "git add -A" ; \
+		git add -A ; \
+		echo "git commit --amend -m 'Initial commit.'" ; \
+		git commit --amend -m "Initial commit." ; \
 	fi
-	touch $@
 
-_remove_remote:
-	git remote remove origin
-
-_squash_history:
-	git branch -m master
-	git reset --soft $$(git rev-list --max-parents=0 HEAD)
-	git add -A
-	git commit --amend -m "Initial commit."
 
 
 # Git Submodules:
