@@ -33,10 +33,14 @@ TARGETS
 			    completed.
 
 	submodules
-		Initialize and update all requirements.
+		Initialize and update all git submodules (see `.gitmodules`).
 
 	venv
-		Create the virtualenv if absent and install from `requirements.txt`.
+		Create the virtualenv if absent.
+
+	python-reqs
+		Install all python requirements from requirements.txt and
+		all <SUBMODULE>/requirements.txt to the venv.
 
 EXAMPLES
 	make init  # Initialize the project.
@@ -53,6 +57,7 @@ GNU MAKE HELP:
 endef
 export HELP_MSG
 
+# Use this file to include sensitive data that shouldn't be version controlled.
 -include local.mk
 
 # ========================
@@ -83,6 +88,10 @@ export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 # ====================
 #  User Configuration
 # ====================
+
+# Use the following template to add directories with executibles to the
+# `make` recipe path.
+# export PATH := <BIN-DIR>:${PATH}
 
 
 # ==============
@@ -161,8 +170,10 @@ clean:
 #  Initialization Recipes {{{1
 # ========================
 SEMAPHORE = .git/.initialized
-init: venv submodules ${SEMAPHORE}
-	${MAKE} _install_python_reqs
+init: initialization ${SEMAPHORE}
+
+initialization: venv submodules
+	@${MAKE} python-reqs
 
 
 # Base initialization recipes:
@@ -178,9 +189,10 @@ commit history to be squashed.  The remote will also be retained."
 endef
 export CONFIRM_SQUASH
 
-${SEMAPHORE}: .git/config
+${SEMAPHORE}:
 	unlink README.md
 	ln -s NOTE.md README.md
+	@${MAKE} _ipynb_filter
 	@set -e ; \
 	while [ -z "$$SQUASH" ] ; do \
 		echo "$$CONFIRM_SQUASH" ; \
@@ -195,7 +207,7 @@ ${SEMAPHORE}: .git/config
 	touch $@
 
 _remove_remote:
-	-git remote remove origin
+	git remote remove origin
 
 _squash_history:
 	git branch -m master
@@ -216,11 +228,11 @@ ${SUBMODULES}: .gitmodules
 
 bin/utils/ipynb_output_filter.py: bin/utils/.git
 
-.git/config: bin/utils/ipynb_output_filter.py
+_ipynb_filter:
+	@${MAKE} bin/utils/ipynb_output_filter.py
 	# Configure IPYNB output filtering
 	git config --local filter.dropoutput_ipynb.clean bin/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
-	touch $@
 
 # Python virtual environment recipes:
 .PHONY: venv
@@ -231,7 +243,7 @@ ${VENV}/bin/activate:
 	touch $@
 
 PIP_REQS = requirements.txt ${SUBMODULE_PIP_REQS}
-_install_python_reqs: ${PIP_REQS}
+python-reqs: venv ${PIP_REQS}
 	for req_file in ${PIP_REQS} ; do \
 		pip install --upgrade -r $$req_file ; \
 	done
