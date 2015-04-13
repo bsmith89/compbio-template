@@ -184,35 +184,22 @@ _link-readme:
 	unlink README.md
 	ln -s NOTE.md README.md
 
-_remove-remote:
-	@set -e ; \
-	while [ -z "$$UNREMOTE" ] ; do \
-		read -rp "Would you like to unset the remote repository? [y/N]: " UNREMOTE ; \
-	done ; \
-	if [ $$UNREMOTE != "y" ] && [ $$UNREMOTE != "Y" ] ; then \
-		: ; \
-	else \
-		echo "git remote remove origin" ; \
-		git remote remove origin ; \
-	fi
+_confirm-remove-remote:
+	@read -rp "Are you sure you want to unset the remote repository? [y/N]: " UNREMOTE ; \
+	[ $$UNREMOTE == "y" ] || [ $$UNREMOTE == "Y" ]
 
-_squash-history:
-	@set -e ; \
-	while [ -z "$$SQUASH" ] ; do \
-		read -rp "Would you like to squash the commit history? [y/N]: " SQUASH ; \
-	done ; \
-	if [ $$SQUASH != "y" ] && [ $$SQUASH != "Y" ] ; then \
-		: ; \
-	else \
-		echo "git branch -m master" ; \
-		git branch -m master ; \
-		echo "git reset --soft $$(git rev-list --max-parents=0 HEAD)" ; \
-		git reset --soft $$(git rev-list --max-parents=0 HEAD) ; \
-		echo "git add -A" ; \
-		git add -A ; \
-		echo "git commit --amend -m 'Initial commit.'" ; \
-		git commit --amend -m "Initial commit." ; \
-	fi
+_confirm-squash-history:
+	@read -rp "Are you sure you want to squash the commit history? [y/N]: " SQUASH ; \
+	[ $$SQUASH == "y" ] || [ $$SQUASH == "Y" ]
+
+_remove-remote: _confirm-remove-remote
+	git remote remove origin
+
+_squash-history: _confirm-squash-history
+	git branch -m master
+	git reset --soft $$(git rev-list --max-parents=0 HEAD)
+	git add -A
+	git commit --amend -m "Initial commit."
 
 # Git Submodules:
 SUBMODULE_DIRS := $(shell git submodule | sed 's:^ ::' | cut -d" " -f2)
