@@ -36,7 +36,7 @@ TARGETS
 		Initialize and update all requirements.
 
 	venv
-		Create the virtualenv if absent and install from `requirements.pip`.
+		Create the virtualenv if absent and install from `requirements.txt`.
 
 EXAMPLES
 	make init  # Initialize the project.
@@ -207,7 +207,7 @@ _squash_history:
 # Git Submodules:
 SUBMODULE_DIRS := $(shell git submodule | sed 's:^ ::' | cut -d" " -f2)
 SUBMODULES = $(patsubst %,%/.git,${SUBMODULE_DIRS})
-SUBMODULE_PIP_REQS = $(wildcard $(patsubst %,%/requirements.pip,${SUBMODULE_DIRS}))
+SUBMODULE_PIP_REQS = $(wildcard $(patsubst %,%/requirements.txt,${SUBMODULE_DIRS}))
 
 submodules: ${SUBMODULES}
 
@@ -225,14 +225,15 @@ bin/utils/ipynb_output_filter.py: bin/utils/.git
 # Python virtual environment recipes:
 .PHONY: venv
 venv: ${VENV}/bin/activate
+
 ${VENV}/bin/activate:
 	[ -f $@ ] || python3 -m venv ${VENV}
 	touch $@
 
-PIP_REQS = requirements.pip ${SUBMODULE_PIP_REQS}
+PIP_REQS = requirements.txt ${SUBMODULE_PIP_REQS}
 _install_python_reqs: ${PIP_REQS}
 	for req_file in ${PIP_REQS} ; do \
 		pip install --upgrade -r $$req_file ; \
 	done
 
-%/requirements.pip: %/.git
+%/requirements.txt: %/.git

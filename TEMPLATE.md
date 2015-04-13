@@ -354,7 +354,7 @@ same configuration.
     The file is created on running `make init`,
     which adds the IPython notebook filter to the project's git configuration,
     makes a new Python virtual environment (`venv/`), and installs everything
-    in `requirements.pip` and `bin/utils/requirements.pip` to `venv`.
+    in `requirements.txt` and `bin/utils/requirements.txt` to `venv`.
 
     This recipe will also prompt for whether or not you want to initialize
     as a _new_ project (as opposed to a clone of a previously started project).
