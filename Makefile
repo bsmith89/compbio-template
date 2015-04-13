@@ -78,18 +78,12 @@ ${HELP_TRGTS}:
 export VIRTUAL_ENV = $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
-SUBMODULES = bin/utils/.git
-
 # }}}
 
 # ====================
 #  User Configuration
 # ====================
 
-# List of submodules directories for submodules in .gitmodules
-# with '.git' appended.
-# TODO: Retrieve these automatically from `.gitmodules`.
-SUBMODULES +=
 
 # ==============
 #  Data Recipes
@@ -119,7 +113,7 @@ SUBMODULES +=
 # =======================
 # All directories which are part of the project (since all of these might have
 # documentation and notes to be compiled.)
-PROJ_DIRS = $(shell find . \( -name ".git" \) -prune -o -type d -print)
+PROJ_DIRS := $(shell find . \( -name ".git" \) -prune -o -type d -print)
 
 TEMPLATE = TEMPLATE
 TEMPLATE_MD_NAME = ${TEMPLATE}.md
@@ -167,7 +161,8 @@ clean:
 #  Initialization Recipes {{{1
 # ========================
 SEMAPHORE = .git/.initialized
-init: venv ${SEMAPHORE}
+init: venv submodules ${SEMAPHORE}
+	${MAKE} _install_python_reqs
 
 
 # Base initialization recipes:
@@ -189,7 +184,7 @@ ${SEMAPHORE}: .git/config
 	@set -e ; \
 	while [ -z "$$SQUASH" ] ; do \
 		echo "$$CONFIRM_SQUASH" ; \
-		read -rp 'Would you like to squash the commit history? [y/N]: ' SQUASH ; \
+		read -rp "Would you like to squash the commit history? [y/N]: " SQUASH ; \
 	done ; \
 	if [ $$SQUASH != "y" ] && [ $$SQUASH != "Y" ] ; then \
 		: ; \
@@ -208,12 +203,16 @@ _squash_history:
 	git add -A
 	git commit --amend -m "Initial commit."
 
-# Git submodule recipes:
+
+# Git Submodules:
+SUBMODULE_DIRS := $(shell git submodule | sed 's:^ ::' | cut -d" " -f2)
+SUBMODULES = $(patsubst %,%/.git,${SUBMODULE_DIRS})
+SUBMODULE_PIP_REQS = $(wildcard $(patsubst %,%/requirements.pip,${SUBMODULE_DIRS}))
+
 submodules: ${SUBMODULES}
 
 ${SUBMODULES}: .gitmodules
 	git submodule update --init --recursive ${@D}
-	touch $@
 
 bin/utils/ipynb_output_filter.py: bin/utils/.git
 
@@ -226,13 +225,14 @@ bin/utils/ipynb_output_filter.py: bin/utils/.git
 # Python virtual environment recipes:
 .PHONY: venv
 venv: ${VENV}/bin/activate
-
-PIP_REQUIREMENTS = requirements.pip bin/utils/requirements.pip
-${VENV}/bin/activate: ${PIP_REQUIREMENTS}
+${VENV}/bin/activate:
 	[ -f $@ ] || python3 -m venv ${VENV}
-	for req_file in ${PIP_REQUIREMENTS} ; do \
-		pip install --upgrade -r $$req_file ; \
-	done
 	touch $@
 
-bin/utils/requirements.pip: bin/utils/.git
+PIP_REQS = requirements.pip ${SUBMODULE_PIP_REQS}
+_install_python_reqs: ${PIP_REQS}
+	for req_file in ${PIP_REQS} ; do \
+		pip install --upgrade -r $$req_file ; \
+	done
+
+%/requirements.pip: %/.git
