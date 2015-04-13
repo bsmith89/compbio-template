@@ -90,9 +90,11 @@ export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 # ====================
 
 # Use the following template to add directories with executibles to the
-# `make` recipe path.
-# export PATH := <BIN-DIR>:${PATH}
+# `make` recipe path:
+# export PATH := <BIN-DIR-A>:<BIN-DIR-B>:${PATH}
 
+# Use the following template to add files to be deleted on `make clean`:
+# CLEANUP += <FILE>
 
 # ==============
 #  Data Recipes
@@ -145,13 +147,14 @@ ALL_DOCS_HTML = ${TEMPLATE_HTML} ${NOTE_HTML}
 .PHONY: docs
 docs: ${ALL_DOCS_HTML}
 
-MD2HTML = \
+define MD2HTML
 cat $^ \
 | pandoc -f markdown -t html5 -s \
 			--highlight-style pygments --mathjax \
 			--toc --toc-depth=4 \
 			--css static/main.css \
 > $@
+endef
 
 ${TEMPLATE_HTML}: ${TEMPLATE_MD_PREX}
 	${MD2HTML}
