@@ -174,28 +174,28 @@ init: .git/.initialized
 	@${MAKE} submodules
 	@${MAKE} venv
 	@${MAKE} python-reqs
-	@${MAKE} _ipynb-filter-config
-	@${MAKE} _remove-remote
-	@${MAKE} _squash-history
-	@${MAKE} _link-readme
+	@${MAKE} .ipynb-filter-config
+	@${MAKE} .remove-remote
+	@${MAKE} .squash-history
+	@${MAKE} .link-readme
 	touch $@
 
-_link-readme:
+.link-readme:
 	unlink README.md
 	ln -s NOTE.md README.md
 
-_confirm-remove-remote:
+.confirm-remove-remote:
 	@read -rp "Are you sure you want to unset the remote repository? [y/N]: " UNREMOTE ; \
 	[ $$UNREMOTE == "y" ] || [ $$UNREMOTE == "Y" ]
 
-_confirm-squash-history:
+.confirm-squash-history:
 	@read -rp "Are you sure you want to squash the commit history? [y/N]: " SQUASH ; \
 	[ $$SQUASH == "y" ] || [ $$SQUASH == "Y" ]
 
-_remove-remote: _confirm-remove-remote
+.remove-remote: .confirm-remove-remote
 	git remote remove origin
 
-_squash-history: _confirm-squash-history
+.squash-history: .confirm-squash-history
 	git branch -m master
 	git reset --soft $$(git rev-list --max-parents=0 HEAD)
 	git add -A
@@ -212,7 +212,7 @@ ${SUBMODULES}: .gitmodules
 # IPython Notebook Output Filter Configuration
 bin/utils/ipynb_output_filter.py: bin/utils/.git
 
-_ipynb-filter-config: bin/utils/ipynb_output_filter.py
+.ipynb-filter-config: bin/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.clean bin/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
 
