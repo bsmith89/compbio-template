@@ -227,7 +227,8 @@ PIP_REQS = requirements.txt ${SUBMODULE_PIP_REQS}
 
 python-reqs: venv
 	for req_file in ${PIP_REQS} ; do \
-		pip install --upgrade -r $$req_file ; \
+		pip install --upgrade --no-deps -r $$req_file ; \
+		pip install -r $$req_file ; \
 	done
 
 %/requirements.txt: %/.git
