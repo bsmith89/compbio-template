@@ -91,10 +91,9 @@ ${HELP_TRGTS}:
 export VIRTUAL_ENV = $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
-# }}}
 
-# ====================
-#  User Configuration
+# ====================}}}
+#  User Configuration {{{1
 # ====================
 
 # Use this file to include sensitive data that shouldn't be version controlled.
@@ -110,6 +109,7 @@ CLEANUP +=
 # What files are generated on `make all`?
 all: docs figs res
 
+# }}}
 # ==============
 #  Data Recipes
 # ==============
@@ -197,51 +197,6 @@ init: .git/.initialized
 	-@${MAKE} .git-mangle
 	touch $@
 
-.PHONY: .link-readme .confirm-git-mangle \
-		.git-mangle .ipynb-filter-config
-
-.link-readme:
-	unlink README.md
-	ln -s NOTE.md README.md
-
-define INIT_OPTS_MSG
-
-You are about to remove the remote repository labeled 'origin' and squash the
-commit history into a single commit.  This procedure makes sense for
-initializing a new project from a template project, where the history of the
-template is unimportant and you do not want to push or pull changes to the
-remote repository from which you cloned the template.
-
-Alternatively, if you are initializing a previously started project, you most
-likely do not want to lose the commit history, and you may want to push or pull
-changes from the remote.
-
-endef
-export INIT_OPTS_MSG
-
-.confirm-git-mangle:
-	@echo
-	@echo $$INIT_OPTS_MSG
-	@echo
-	@read -rp "Are you sure you want to remove the remote and squash the commit history? [y/N]: " MANGLE ; \
-	[ $$MANGLE == "y" ] || [ $$MANGLE == "Y" ]
-
-.git-mangle: .confirm-git-mangle
-	git remote remove origin
-	git branch -m master
-	git reset --soft $$(git rev-list --max-parents=0 HEAD)
-	git add -A
-	git commit --amend -m "Initial commit."
-
-%/requirements.txt: %/.git
-
-# IPython Notebook Output Filter Configuration
-bin/utils/ipynb_output_filter.py: bin/utils/.git
-
-.ipynb-filter-config: bin/utils/ipynb_output_filter.py
-	git config --local filter.dropoutput_ipynb.clean bin/utils/ipynb_output_filter.py
-	git config --local filter.dropoutput_ipynb.smudge cat
-
 .PHONY: venv submodule python-reqs
 venv:
 	[ -f $@ ] || python3 -m venv ${VENV}
@@ -263,3 +218,48 @@ python-reqs: venv
 		pip install -r $$req_file ; \
 	done
 
+.PHONY: .link-readme .confirm-git-mangle \
+		.git-mangle .ipynb-filter-config
+.link-readme:
+	unlink README.md
+	ln -s NOTE.md README.md
+
+define INIT_OPTS_MSG
+
+You are about to remove the remote repository labeled 'origin' and squash the
+commit history into a single commit.  This procedure makes sense for
+initializing a new project from a template project, where the history of the
+template is unimportant and you do not want to push or pull changes to the
+remote repository from which you cloned the template.
+
+Alternatively, if you are initializing a previously started project, you most
+likely do not want to lose the commit history, and you may want to push or pull
+changes from the remote.  In that case, respond with something other than "y"
+or "Y" to the following prompt.  `make` will thow an error, but initialization
+will work as intended.
+
+endef
+export INIT_OPTS_MSG
+
+.confirm-git-mangle:
+	@echo
+	@echo "$$INIT_OPTS_MSG"
+	@echo
+	@read -rp "Are you sure you want to remove the remote and squash the commit history? [y/N]: " MANGLE ; \
+	[ $$MANGLE == "y" ] || [ $$MANGLE == "Y" ]
+
+.git-mangle: .confirm-git-mangle
+	git remote remove origin
+	git branch -m master
+	git reset --soft $$(git rev-list --max-parents=0 HEAD)
+	git add -A
+	git commit --amend -m "Initial commit."
+
+%/requirements.txt: %/.git
+
+# IPython Notebook Output Filter Configuration
+bin/utils/ipynb_output_filter.py: bin/utils/.git
+
+.ipynb-filter-config: bin/utils/ipynb_output_filter.py
+	git config --local filter.dropoutput_ipynb.clean bin/utils/ipynb_output_filter.py
+	git config --local filter.dropoutput_ipynb.smudge cat
