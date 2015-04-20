@@ -48,10 +48,8 @@ cd new-project
 
 # Initialize the project
 make init
-# You'll be prompted for whether you'd like to treat the current
-# repository as a template, or an active project.
-# Initialization from a template squashes the entire commit history into
-# a single commit and removes the 'origin' repository from remotes.
+# You'll be asked if you want to mangle the git repository, removing the
+# remote and sqaushing all of the template's history into one commit.
 
 ```
 
@@ -70,7 +68,7 @@ tar -xzvf seq.tgz
 cd ..
 
 # Write a thorough description of the raw data
-vim raw/NOTE.md
+vim NOTE.md
 
 # Write a recipe (or two) to recreate the download protocol
 vim Makefile
@@ -86,7 +84,7 @@ vim Makefile
 
 # Describe and commit progress
 vim NOTE.md
-git add raw/NOTE.md Makefile NOTE.md
+git add Makefile NOTE.md
 git commit -m "Downloaded and described data."
 
 # Run data through an analysis pipeline (e.g. an all-by-all BLASTx)
@@ -133,7 +131,7 @@ git push -u origin
 ## Notes Files ##
 _All files which describe the project are version controlled._
 
-Notes files are written in
+Notes files are written in (and make copious use of)
 [Pandoc Markdown][pdmd],
 a superset of [strict Markdown][stmd],
 and may be compiled for reading.
@@ -159,10 +157,6 @@ $$
     Along with the project's `Makefile`, this notebook should allow a 3rd party
     to run and understand the entire analysis which was carried out.
 
-    Subdirectories `raw/` and `meta/` both have their own `NOTE.md`,
-    each containing an appendix about the raw data and the metadata,
-    respectively.
-
 `TODO.md`
 
 :    List of remaining tasks.
@@ -171,10 +165,6 @@ $$
 
 :   This file, describing how to use the template and the project's
     directory structure.
-    Additional `*/TEMPLATE.md` files serve as directory placeholders for git
-    and describe consistant naming schemes for particular file types.
-    See the section on
-    [file name conventions](#filename-conventions) below.
 
 `static/`
 
@@ -316,7 +306,7 @@ _All project code is version controlled._
     They are also not conducive to reproducing a result after external files
     and directories have been changed.
     This is largely because they have file paths hard-coded in.
-    IPYNBs should be used kinda like the `NOTE.md` files;
+    IPYNBs should be used kinda like the `NOTE.md`;
     They are a record of a thought-process/workflow, but are not guarenteed to
     execute the same way after subsequent commits.
     Instead, important analyses should be ported over to version controlled
@@ -412,7 +402,7 @@ _Data is not version controlled._
     other than `raw/`.
     While raw data files are not version controlled, they _should_ all be
     available in an online repository.
-    The raw data appendix, in `raw/NOTE.md`, describes everything a third party
+    The raw data appendix, in `NOTE.md`, describes everything a third party
     (or the author a month later) needs to know about the raw data.
 
     -  Required: Describes (in detail) where all of the data came from.
@@ -424,7 +414,7 @@ _Data is not version controlled._
     collected, or the date of the experiment
     so growth curves started on October 20th, 2014, would be stored in
     `raw/2014-10-20/growth-curve.csv`, and
-    `raw/NOTE.md` would describe the experiment and this file in detail.
+    `NOTE.md` would describe the experiment and this file in detail.
 
     TODO: Deal with data repositories: recommend Zenodo, built in recipes
     for publishing?
@@ -440,14 +430,6 @@ For example:
 -  `tre/16S.align.ungap.nwk` is a Newick formatted phylogenetic tree generated
     from `seq/16S.align.ungap.afn`.
 
-A subset of filename keyword recommendations are document in `*/TEMPLATE.md`
-files in various directories.
-This naming scheme is not a replacement for both liberal note-taking
-and a programmatic description of the pipeline in the `Makefile`.
-
-TODO: remove these TEMPLATE.md files.  All of the template information should
-be in `*/TEMPLATE.md`.
-
 `meta/`
 
 :   All of the experiment metadata, formatted conveniently for downstream
@@ -456,7 +438,7 @@ be in `*/TEMPLATE.md`.
     The files in this directory are usually minimally processed versions of
     the original metadata files stored in `raw/`.
     Column titles should be explained in the metadata appendix
-    in `meta/NOTE.md`.
+    in `NOTE.md`.
 
 `seq/`
 
@@ -486,19 +468,22 @@ _Final results are not version controlled._
 
 # Filename Conventions #
 These conventions may vary from project to project.
+The naming scheme is not a replacement for both liberal note-taking
+and a programmatic description of the pipeline in the `Makefile`.
+
 
 ## File Formats ##
 
-| suffix          | meaning                       | comments                       |
-| ----            | ----                          | ----                           |
-| `list`          | list of values                | one item per line              |
-| `tsv`           | tab separated values          | see [`pandas.read_table`][prt] |
-| `csv`[^csv-tsv] | comma separated values        | see [`pandas.read_csv`][prc]   |
-| `fn`            | unaligned nucleotide sequence | see [Wikipedia][wiki-fasta]    |
-| `fa`            | unaligned amino acid sequence |                                |
-| `afn`           | aligned nucleotide sequence   | InDels as '-' [^align-fmt]     |
-| `afa`           | aligned amino acid sequence   |                                |
-| `nwk`           | Newick formatted binary tree  | See [Wikipedia][wiki-newick]   |
+| suffix          | meaning                       | comments                     |
+| ----            | ----                          | ----                         |
+| `list`          | list of values                | one item per line            |
+| `tsv`           | tab separated values          | see [`pandas`][prt]          |
+| `csv`[^csv-tsv] | comma separated values        | see [`pandas`][prc]          |
+| `fn`            | unaligned nucleotide sequence | see [Wikipedia][wiki-fasta]  |
+| `fa`            | unaligned amino acid sequence |                              |
+| `afn`           | aligned nucleotide sequence   | indels as '`-`' [^align-fmt] |
+| `afa`           | aligned amino acid sequence   |                              |
+| `nwk`           | Newick formatted binary tree  | see [Wikipedia][wiki-newick] |
 
 [prt]: <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.parsers.read_table.html>
 [prc]: <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.parsers.read_csv.html>
@@ -512,9 +497,9 @@ These conventions may vary from project to project.
 
 ## Processing Flags ##
 
-| infix         | meaning                        | comments                            |
-| ----          | ----                           | ----                                |
-| `head`/`tail` | top and bottom entries         | part of dataset, meant for testing  |
-| `align`       | aligned for estimated homology | a variety of tools are available    |
-| `ungap`       | gap only positions removed     |                                     |
-| `codon`       | nucleotides aligned codon-wise | this is usually done via back-align |
+| infix         | meaning                    | comments                            |
+| ----          | ----                       | ----                                |
+| `head`/`tail` | top and bottom entries     | part of dataset, meant for testing  |
+| `align`       | aligned by homology        | a variety of tools are available    |
+| `ungap`       | gap only positions removed |                                     |
+| `codon`       | codons aligned             | this is usually done via back-align |

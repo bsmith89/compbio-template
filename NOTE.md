@@ -35,7 +35,7 @@ author: [Author Name]
 
 # Appendices #
 ## Data Sources ##
-### [`raw/example-raw-file.txt`] ###
+### [`raw/example-raw-file.sff`] ###
 [Where did this file come from?]
 
 [Detailed description of the format of the file.]
@@ -46,3 +46,9 @@ author: [Author Name]
 # This file has a recipe in Makefile.
 make raw/example-raw-file.txt
 ```
+
+## Data Semantics ##
+### [`meta/example-metadata.tsv`] ###
+[Explanation for column meanings.]
+
+[Any notes regarding individual observations.]
