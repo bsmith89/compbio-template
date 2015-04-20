@@ -46,11 +46,6 @@ git clone http://github.com/USERNAME/extant-project new-project
 
 cd new-project
 
-# Remove unneeded directories/files/requirements from the repository.
-# You might want to do this before you've initialized the project.
-# e.g. if you're not analyzing images, sequence data, or phylogenetic trees:
-git rm -r img/ seq/ tre/
-
 # Initialize the project
 make init
 # You'll be prompted for whether you'd like to treat the current
@@ -192,6 +187,8 @@ $$
     these files,
     but, in order to record the research process,
     the results are maintained in this folder.
+    Static file names should be prefixed with the date in YYYY-MM-DD
+    format.
 
 `static/main.css`
 
@@ -259,7 +256,10 @@ _All project code is version controlled._
 
     Scripts for which all of these recommendations are met,
     and where the routine may be useful in other projects,
-    are great candidates for inclusion in the `scripts/utils/` submodule.
+    are great candidates for inclusion in the `bin/utils/` submodule.
+
+    PBS submission scripts should be stored in `bin/pbs`, and those
+    which produce figures, `vin/fig`.
 
 `bin/utils/`
 
@@ -487,5 +487,34 @@ _Final results are not version controlled._
 # Filename Conventions #
 These conventions may vary from project to project.
 
-<!-- Compiled documentation will include `TEMPLATE.md` files from
-subdirectories of the project in the final version of `TEMPLATE.html` -->
+## File Formats ##
+
+| suffix          | meaning                       | comments                       |
+| ----            | ----                          | ----                           |
+| `list`          | list of values                | one item per line              |
+| `tsv`           | tab separated values          | see [`pandas.read_table`][prt] |
+| `csv`[^csv-tsv] | comma separated values        | see [`pandas.read_csv`][prc]   |
+| `fn`            | unaligned nucleotide sequence | see [Wikipedia][wiki-fasta]    |
+| `fa`            | unaligned amino acid sequence |                                |
+| `afn`           | aligned nucleotide sequence   | InDels as '-' [^align-fmt]     |
+| `afa`           | aligned amino acid sequence   |                                |
+| `nwk`           | Newick formatted binary tree  | See [Wikipedia][wiki-newick]   |
+
+[prt]: <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.parsers.read_table.html>
+[prc]: <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.io.parsers.read_csv.html>
+[wiki-fasta]: <http://en.wikipedia.org/wiki/FASTA_format#Format>
+[wiki-newick]: <http://en.wikipedia.org/wiki/Newick_format>
+
+[^csv-tsv]: TSVs with column titles are preferred (because they're easier
+            to inspect manually), but CSVs are acceptable.
+[^align-fmt]: Alignment software has several standards for indicating indels.
+              Here, somewhat arbitrarily, '-' is the preferred symbol.
+
+## Processing Flags ##
+
+| infix         | meaning                        | comments                            |
+| ----          | ----                           | ----                                |
+| `head`/`tail` | top and bottom entries         | part of dataset, meant for testing  |
+| `align`       | aligned for estimated homology | a variety of tools are available    |
+| `ungap`       | gap only positions removed     |                                     |
+| `codon`       | nucleotides aligned codon-wise | this is usually done via back-align |

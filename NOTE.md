@@ -25,13 +25,24 @@ author: [Author Name]
 
 # Notebook #
 ## [First Experiment Name] ##
-(date:[First Date])
+(date:[Expt#1 Start Date])
 [Content]
 
-(date:[Next Date])
+(date:[Continuation Date])
 
 ## [Next Experiment Name] ##
+(date: [Expt#2 Start Date])
 
 # Appendices #
+## Data Sources ##
+### [`raw/example-raw-file.txt`] ###
+[Where did this file come from?]
 
-<!-- This space left open for `NOTE.md` files in project subdirectories. -->
+[Detailed description of the format of the file.]
+
+[Exactly how should I get this file?]
+
+```bash
+# This file has a recipe in Makefile.
+make raw/example-raw-file.txt
+```

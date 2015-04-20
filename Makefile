@@ -72,8 +72,6 @@ export HELP_MSG
 # ========================
 #  Standard Configuration
 # ========================
-VENV = ./venv
-
 # One failing step in a recipe causes the whole recipe to fail.
 .POSIX:
 
@@ -82,11 +80,8 @@ VENV = ./venv
 
 # The target `all` needs to be the first one defined (besides special
 # targets) in order for it to be made on running `make` without a target.
-.PHONY: all docs figs res
+.PHONY: all
 all:
-docs:
-figs:
-res:
 
 HELP_TRGTS = help h HELP Help
 .PHONY: ${HELP_TRGTS}
@@ -94,26 +89,34 @@ ${HELP_TRGTS}:
 	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
 
 # All recipes are run as though they are within the virtualenv.
+VENV = ./venv
 export VIRTUAL_ENV = $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
-
-# ====================}}}
-#  User Configuration {{{0
-# ====================
+DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
 
 # Use this file to include sensitive data that shouldn't be version controlled.
 -include local.mk
 
+# ====================}}}
+#  User Configuration {{{0
+# ====================
 # Use the following line to add project directories with executibles
 # to the `make` recipe path:
 # export PATH := <BIN-DIR-A>:<BIN-DIR-B>:${PATH}
 
 # Use the following line to add files to be deleted on `make clean`:
-CLEANUP +=
+CLEANUP = ${ALL_DOCS_HTML}
 
 # What directories to generate on `make data-dirs`.
-DATA_DIRS += etc/ raw/ meta/ seq/ tre/ img/ fig/ res/
+# By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
+# DATA_DIRS += seq/ tre/ img/
+
+# Add prerequisites to the major phony targets.
+.PHONY: docs figs res
+docs: ${ALL_DOCS_HTML}
+figs:
+res:
 
 # What files are generated on `make all`?
 all: docs figs res
@@ -145,52 +148,26 @@ all: docs figs res
 # =======================
 #  Documentation Recipes {{{1
 # =======================
-# All directories which are part of the project (since all of these might have
-# documentation and notes to be compiled.)
-PROJ_DIRS := $(shell find . \( -name ".git" \) -prune -o -type d -print)
-
 TEMPLATE = TEMPLATE
-TEMPLATE_MD_NAME = ${TEMPLATE}.md
-TEMPLATE_MD_MAIN = ./${TEMPLATE_MD_NAME}
-TEMPLATE_MD_AUX = $(foreach d,${PROJ_DIRS}, $(wildcard ${d}/${TEMPLATE_MD_NAME}))
-TEMPLATE_MD_PREX = ${TEMPLATE_MD_MAIN} ${TEMPLATE_MD_AUX}
-TEMPLATE_HTML = ${TEMPLATE}.html
-
 NOTE = NOTE
-NOTE_MD_NAME = ${NOTE}.md
-NOTE_MD_MAIN = ./${NOTE_MD_NAME}
-NOTE_MD_AUX = $(foreach d,${PROJ_DIRS}, $(wildcard ${d}/${NOTE_MD_NAME})) ${TODO_MD_MAIN}
 TODO = TODO
-TODO_MD_MAIN = TODO.md
-NOTE_MD_PREX = ${NOTE_MD_MAIN} ${NOTE_MD_AUX} ${TODO_MD_MAIN}
-NOTE_HTML = ${NOTE}.html
+ALL_DOCS = ${TEMPLATE} ${NOTE} ${TODO}
+ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 
-ALL_DOCS_HTML = ${TEMPLATE_HTML} ${NOTE_HTML}
-
-.PHONY: docs
-docs: ${ALL_DOCS_HTML}
-
-define MD2HTML
-cat $^ \
-| pandoc -f markdown -t html5 -s \
-			--highlight-style pygments --mathjax \
-			--toc --toc-depth=4 \
-			--css static/main.css \
-> $@
-endef
-
-${TEMPLATE_HTML}: ${TEMPLATE_MD_PREX}
-	${MD2HTML}
-
-${NOTE_HTML}: ${NOTE_MD_PREX}
-	${MD2HTML}
+%.html: %.md
+	cat $^ \
+	| pandoc -f markdown -t html5 -s \
+				--highlight-style pygments --mathjax \
+				--toc --toc-depth=4 \
+				--css static/main.css \
+	> $@
 
 # =================
 #  Cleanup Recipes {{{1
 # =================
 .PHONY: clean
 clean:
-	rm -f ${ALL_DOCS_HTML} ${CLEANUP}
+	rm -f ${CLEANUP}
 
 # ========================
 #  Initialization Recipes {{{1
