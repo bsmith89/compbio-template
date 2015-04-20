@@ -153,11 +153,13 @@ NOTE = NOTE
 TODO = TODO
 ALL_DOCS = ${TEMPLATE} ${NOTE} ${TODO}
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
+MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
 %.html: %.md
 	cat $^ \
-	| pandoc -f markdown -t html5 -s \
-				--highlight-style pygments --mathjax \
+	| pandoc -f markdown -t html5 -s\
+				--highlight-style pygments \
+				--mathjax=${MATHJAX} \
 				--toc --toc-depth=4 \
 				--css static/main.css \
 	> $@
