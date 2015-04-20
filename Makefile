@@ -29,12 +29,14 @@ TARGETS
 
 	init
 		Initialize the project:
-			(1) make submodules
-			(2) make venv
-			(3) configure git to automatically clean IPython notebooks;
-			(4) remove the 'origin' git remote;
-			(5) squash the commit history into a single 'Initial commit';
-			(6) create `.initialized` to indicate that these steps are
+			(1) submodules
+			(2) venv
+			(3) python-reqs
+			(3) data-dirs
+			(4) configure git to automatically clean IPython notebooks;
+			(5) remove the 'origin' git remote;
+			(6) squash the commit history into a single 'Initial commit';
+			(7) create `.initialized` to indicate that these steps are
 			    completed.
 
 	submodules
@@ -46,6 +48,10 @@ TARGETS
 	python-reqs
 		Install all python requirements from requirements.txt and
 		all <SUBMODULE>/requirements.txt to the venv.
+
+	data-dirs
+		Create all data directories listed in $${DATA_DIRS}
+		Default: raw/ seq/ tre/ img/ fig/ res/
 
 EXAMPLES
 	make init  # Initialize the project.
@@ -93,7 +99,7 @@ export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
 
 # ====================}}}
-#  User Configuration {{{1
+#  User Configuration {{{0
 # ====================
 
 # Use this file to include sensitive data that shouldn't be version controlled.
@@ -105,6 +111,9 @@ export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
 # Use the following line to add files to be deleted on `make clean`:
 CLEANUP +=
+
+# What directories to generate on `make data-dirs`.
+DATA_DIRS += etc/ raw/ meta/ seq/ tre/ img/ fig/ res/
 
 # What files are generated on `make all`?
 all: docs figs res
@@ -192,12 +201,13 @@ init: .git/.initialized
 	@${MAKE} submodules
 	@${MAKE} venv
 	@${MAKE} python-reqs
+	@${MAKE} data-dirs
 	@${MAKE} .link-readme
 	@${MAKE} .ipynb-filter-config
 	-@${MAKE} .git-mangle
 	touch $@
 
-.PHONY: venv submodule python-reqs
+.PHONY: venv submodule python-reqs data-dirs
 venv:
 	[ -f $@ ] || python3 -m venv ${VENV}
 
@@ -217,6 +227,9 @@ python-reqs: venv
 		pip install --upgrade --no-deps -r $$req_file ; \
 		pip install -r $$req_file ; \
 	done
+
+data-dirs:
+	mkdir -p ${DATA_DIRS}
 
 .PHONY: .link-readme .confirm-git-mangle \
 		.git-mangle .ipynb-filter-config
