@@ -13,7 +13,7 @@ A git repository which implements this template is available
 
 ## License ##
 
-This project is licensed under the terms of the MIT license:
+This work is licensed under the terms of the MIT license:
 
 Copyright (c) 2014-2015 Byron J. Smith
 
@@ -40,7 +40,11 @@ SOFTWARE.
 
 ```bash
 # Clone a project or project template
-git clone http://github.com/USERNAME/compbio-project new-project
+git clone http://github.com/bsmith89/compbio-template new-project
+# ---OR---
+git clone http://github.com/USERNAME/extant-project new-project
+
+cd new-project
 
 # Remove unneeded directories/files/requirements from the repository.
 # You might want to do this before you've initialized the project.
@@ -209,11 +213,6 @@ _All project code is version controlled._
 
     Any data processing which is computationally intensive should save
     intermediate files in order to utilize `make`'s piece-wise build.
-
-    TODO: Link recipes directly to the virtualenv python (how? maybe use
-    a `$PYTHON` variable in `Makefile` and run all recipes with that.
-    Alternatively, add a smudge filter in the intialization process that
-    replaces the shebang with the virtualenv python.)
 
 `etc/`
 
@@ -427,10 +426,8 @@ _Data is not version controlled._
     `raw/2014-10-20/growth-curve.csv`, and
     `raw/NOTE.md` would describe the experiment and this file in detail.
 
-    TODO: What about data files that are created by hand and/or not hosted
-    somewhere else?
-    For instance, I'd like to be able to save primers that were designed by
-    hand and for which I don't have an automated process to regenerate them.
+    TODO: Deal with data repositories: recommend Zenodo, built in recipes
+    for publishing?
 
 Intermediate data files are separated into directories based on their content.
 The extension portion of these file names should indicate the format of the
@@ -447,6 +444,9 @@ A subset of filename keyword recommendations are document in `*/TEMPLATE.md`
 files in various directories.
 This naming scheme is not a replacement for both liberal note-taking
 and a programmatic description of the pipeline in the `Makefile`.
+
+TODO: remove these TEMPLATE.md files.  All of the template information should
+be in `*/TEMPLATE.md`.
 
 `meta/`
 
