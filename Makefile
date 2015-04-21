@@ -6,61 +6,57 @@ define HELP_MSG
 ================================
 
 SYNOPSIS
-	Run project operations using make commands.
+    Run project operations using make commands.
 
 TARGETS
-	all
-		Generate all. (By default this includes all figures,
-		results, and documentation based on user-defined recipes.)
+    all
+        Generate all. (By default this includes all figures,
+        results, and documentation based on user-defined recipes.)
 
-	docs
-		Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML (uses
-		Pandoc).
+    docs
+        Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML (uses
+        Pandoc).
 
-	figs
-		Carry out the pipeline to ultimately generate figures of the results.
+    figs
+        Carry out the pipeline to ultimately generate figures of the results.
 
-	res
-		Carry out the pipeline to ultimately generate quantitative results
-		files.
+    res
+        Carry out the pipeline to ultimately generate quantitative results
+        files.
 
-	help
-		Show this help message.
+    help
+        Show this help message.
 
-	init
-		Initialize the project:
-			(1) submodules
-			(2) venv
-			(3) python-reqs
-			(3) data-dirs
-			(4) configure git to automatically clean IPython notebooks;
-			(5) remove the 'origin' git remote;
-			(6) squash the commit history into a single 'Initial commit';
-			(7) create `.initialized` to indicate that these steps are
-			    completed.
+    init
+        Initialize the project:
+            (1) submodules
+            (2) venv
+            (3) python-reqs
+            (3) data-dirs
+            (4) configure git to automatically clean IPython notebooks;
+            (5) OPTIONAL: remove the 'origin' git remote
+            (6) OPTIONAL: squash the commit history into a single
+                'Initial commit';
+            (7) create `.git/.initialized` to indicate that these steps are
+                completed.
 
-	submodules
-		Initialize and update all git submodules (see `.gitmodules`).
+    submodules
+        Initialize and update all git submodules (see `.gitmodules`).
 
-	venv
-		Create the virtualenv if absent.
+    venv
+        Create the virtualenv if absent.
 
-	python-reqs
-		Install all python requirements from requirements.txt and
-		all <SUBMODULE>/requirements.txt to the venv.
+    python-reqs
+        Install all python requirements from requirements.txt and
+        all <SUBMODULE>/requirements.txt to the venv.
 
-	data-dirs
-		Create all data directories listed in $${DATA_DIRS}
-		Default: raw/ seq/ tre/ img/ fig/ res/
+    data-dirs
+        Create all data directories listed in $${DATA_DIRS}
+        Default: raw/ seq/ tre/ img/ fig/ res/
 
 EXAMPLES
-	make init  # Initialize the project.
-	make all   # Carry out all defined steps in the project.
-
-NOTE
-	Sensitive data should not be included in `Makefile`, since that
-	file is frequently version controlled.  Instead `local.mk` is included so
-	that sensitive values can be included and then referenced as variables.
+    make init  # Initialize the project.
+    make all   # Carry out all defined steps in the project.
 
 GNU MAKE HELP:
 
@@ -112,7 +108,7 @@ CLEANUP = ${ALL_DOCS_HTML}
 # By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
 # DATA_DIRS += seq/ tre/ img/
 
-# Add prerequisites to the major phony targets.
+# Add sub-targets (prerequisites) to the major phony targets.
 .PHONY: docs figs res
 docs: ${ALL_DOCS_HTML}
 figs:
@@ -192,13 +188,13 @@ venv:
 
 # Git Submodules:
 SUBMODULE_DIRS := $(shell git submodule | sed 's:^ ::' | cut -d" " -f2)
-SUBMODULES = $(patsubst %,%/.git,${SUBMODULE_DIRS})
+SUBMODULES = $(addsuffix /.git,${SUBMODULE_DIRS})
 
 submodules: ${SUBMODULES}
 ${SUBMODULES}: .gitmodules
 	git submodule update --init --recursive ${@D}
 
-SUBMODULE_PIP_REQS = $(wildcard $(patsubst %,%/requirements.txt,${SUBMODULE_DIRS}))
+SUBMODULE_PIP_REQS = $(wildcard $(addsuffix /requirements.txt,${SUBMODULE_DIRS}))
 PIP_REQS = requirements.txt ${SUBMODULE_PIP_REQS}
 
 python-reqs: venv

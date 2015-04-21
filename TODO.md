@@ -1,6 +1,4 @@
-<!-- Making space -->
+# TODO #
 
 -  [ ]  Import data
 -  [ ]  My first notebook entry
-
-<!-- End space -->

@@ -201,6 +201,10 @@ _All project code is version controlled._
     Any data processing which is computationally intensive should save
     intermediate files in order to utilize `make`'s piece-wise build.
 
+    Sensitive data should not be included in `Makefile`, since that
+    file is frequently version controlled.  Instead `local.mk` is included so
+    that sensitive values can be included and then referenced as variables.
+
 `etc/`
 
 :   While not strictly code, the `etc/` directory is a place to store version
@@ -374,9 +378,6 @@ same configuration.
 
     [ipy-config]: <http://ipython.org/ipython-doc/dev/config/intro.html>
 
-    -  TODO: Load the users defaults
-    -  TODO: Should these override project defaults?
-
 `matplotlibrc`
 
 :   A custom matplotlib profile for compbio projects.
@@ -415,9 +416,6 @@ _Data is not version controlled._
     so growth curves started on October 20th, 2014, would be stored in
     `raw/2014-10-20/growth-curve.csv`, and
     `NOTE.md` would describe the experiment and this file in detail.
-
-    TODO: Deal with data repositories: recommend Zenodo, built in recipes
-    for publishing?
 
 Intermediate data files are separated into directories based on their content.
 The extension portion of these file names should indicate the format of the
