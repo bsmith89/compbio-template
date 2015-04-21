@@ -181,9 +181,21 @@ init: .git/.initialized
 	-@${MAKE} .git-mangle
 	touch $@
 
+define VENV_ACTIVATE_MSG
+
+A python3 virtual environment has been made in `${VENV}`.
+
+Python called from recipes in `Makefile` will automatically use this virtual
+environment.  To activate ${VENV} for the command-line, however,
+run `source ${VENV}/bin/activate`.
+
+endef
+export VENV_ACTIVATE_MSG
+
 .PHONY: venv submodule python-reqs data-dirs
 venv:
 	[ -f $@ ] || python3 -m venv ${VENV}
+	@echo "$$VENV_ACTIVATE_MSG"
 
 # Git Submodules:
 SUBMODULE_DIRS := $(shell git submodule | sed 's:^ ::' | cut -d" " -f2)
@@ -229,9 +241,7 @@ endef
 export INIT_OPTS_MSG
 
 .confirm-git-mangle:
-	@echo
 	@echo "$$INIT_OPTS_MSG"
-	@echo
 	@read -rp "Are you sure you want to remove the remote and squash the commit history? [y/N]: " MANGLE ; \
 	[ $$MANGLE == "y" ] || [ $$MANGLE == "Y" ]
 
