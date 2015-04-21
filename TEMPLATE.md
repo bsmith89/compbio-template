@@ -59,7 +59,7 @@ make init
 ```bash
 # Name the project; write a description;
 # create a preliminary list of objectives.
-vim NOTES.md TODO.md
+vim NOTES.md
 
 # Download raw data from an online repository
 cd raw/
@@ -156,10 +156,6 @@ $$
     "Notebook" section.
     Along with the project's `Makefile`, this notebook should allow a 3rd party
     to run and understand the entire analysis which was carried out.
-
-`TODO.md`
-
-:    List of remaining tasks.
 
 `TEMPLATE.md`
 

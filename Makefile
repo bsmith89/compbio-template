@@ -146,8 +146,7 @@ all: docs figs res
 # =======================
 TEMPLATE = TEMPLATE
 NOTE = NOTE
-TODO = TODO
-ALL_DOCS = ${TEMPLATE} ${NOTE} ${TODO}
+ALL_DOCS = ${TEMPLATE} ${NOTE}
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
