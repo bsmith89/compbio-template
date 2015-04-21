@@ -110,7 +110,7 @@ CLEANUP = ${ALL_DOCS_HTML}
 
 # Add sub-targets (prerequisites) to the major phony targets.
 .PHONY: docs figs res
-docs: ${ALL_DOCS_HTML}
+docs:
 figs:
 res:
 
@@ -144,9 +144,7 @@ all: docs figs res
 # =======================
 #  Documentation Recipes {{{1
 # =======================
-TEMPLATE = TEMPLATE
-NOTE = NOTE
-ALL_DOCS = ${TEMPLATE} ${NOTE}
+ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
@@ -158,6 +156,8 @@ MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_
 				--toc --toc-depth=4 \
 				--css static/main.css \
 	> $@
+
+docs: ${ALL_DOCS_HTML}
 
 # =================
 #  Cleanup Recipes {{{1
