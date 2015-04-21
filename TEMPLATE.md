@@ -262,6 +262,7 @@ _All project code is version controlled._
 `bin/fig/`
 
 :   Executable scripts which _normally_:
+
     -  Produce figures in PDF format, saving them to `fig/`;
     -  Require intermediate results in a tabular format, saved in `res/`;
     -  Usually have a name which is identical to or a substring of the figure
@@ -277,7 +278,7 @@ _All project code is version controlled._
     Perhaps best practice would be to just set up the environment and then run
     `make` directly...?
 
-    e.g. example.pbs:
+    e.g. `example.pbs`:
 
     ```bash
     #!/usr/bin/env sh
@@ -287,9 +288,6 @@ _All project code is version controlled._
 
     # Change to the directory from which the job was submitted.
     cd ${PBS_O_WORKDIR}
-
-    # Activate a python virtual environment.
-    source ~/.virtualenvs/compbioenv/bin/activate
 
     # Run make to produce a particular output.
     make tre/computationally_difficult.nwk
