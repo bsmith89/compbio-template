@@ -173,7 +173,7 @@ clean:
 init: .git/.initialized
 .git/.initialized:
 	@${MAKE} submodules
-	@${MAKE} venv
+	@${MAKE} ${VENV}
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
@@ -192,15 +192,15 @@ run `source ${VENV}/bin/activate`.
 endef
 export VENV_ACTIVATE_MSG
 
-.PHONY: venv submodule python-reqs data-dirs
-venv:
-	[ -f $@ ] || python3 -m venv ${VENV}
+${VENV}:
+	python3 -m venv $@
 	@echo "$$VENV_ACTIVATE_MSG"
 
 # Git Submodules:
 SUBMODULE_DIRS := $(shell git submodule | sed 's:^ ::' | cut -d" " -f2)
 SUBMODULES = $(addsuffix /.git,${SUBMODULE_DIRS})
 
+.PHONY: submodule python-reqs data-dirs
 submodules: ${SUBMODULES}
 ${SUBMODULES}: .gitmodules
 	git submodule update --init --recursive ${@D}
@@ -208,7 +208,7 @@ ${SUBMODULES}: .gitmodules
 SUBMODULE_PIP_REQS = $(wildcard $(addsuffix /requirements.txt,${SUBMODULE_DIRS}))
 PIP_REQS = requirements.txt ${SUBMODULE_PIP_REQS}
 
-python-reqs: venv
+python-reqs: | ${VENV}
 	for req_file in ${PIP_REQS} ; do \
 		pip install --upgrade --no-deps -r $$req_file ; \
 		pip install -r $$req_file ; \
@@ -255,6 +255,7 @@ export INIT_OPTS_MSG
 %/requirements.txt: %/.git
 
 # IPython Notebook Output Filter Configuration
+# TODO: Should I require `python-reqs`?
 bin/utils/ipynb_output_filter.py: bin/utils/.git
 
 .ipynb-filter-config: bin/utils/ipynb_output_filter.py
