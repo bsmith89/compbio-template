@@ -31,7 +31,7 @@ TARGETS
     init
         Initialize the project:
             (1) submodules
-            (2) venv
+            (2) virtualenv
             (3) python-reqs
             (3) data-dirs
             (4) configure git to automatically clean IPython notebooks;
@@ -44,12 +44,12 @@ TARGETS
     submodules
         Initialize and update all git submodules (see `.gitmodules`).
 
-    venv
+    virtualenv
         Create the virtualenv if absent.
 
     python-reqs
         Install all python requirements from requirements.txt and
-        all <SUBMODULE>/requirements.txt to the venv.
+        all <SUBMODULE>/requirements.txt to the virtualenv.
 
     data-dirs
         Create all data directories listed in $${DATA_DIRS}
@@ -67,7 +67,7 @@ export HELP_MSG
 
 
 # ========================
-#  Standard Configuration {{{2
+#  Standard Configuration Top {{{2
 # ========================
 # One failing step in a recipe causes the whole recipe to fail.
 .POSIX:
@@ -88,38 +88,27 @@ HELP_TRGTS = help h HELP Help
 ${HELP_TRGTS}:
 	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
 
-# All recipes are run as though they are within the virtualenv.
-# WARNING: This may cause difficult to debug problems.
-VENV = ./venv
-export VIRTUAL_ENV = $(abspath ${VENV})
-export PATH := ${VIRTUAL_ENV}/bin:${PATH}
-
 # TODO: Include a tmp/ dir?  Use it for what?
 DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
-
-# Use this file to include sensitive data that shouldn't be version controlled.
--include local.mk
 
 # ====================
 #  User Configuration {{{1
 # ====================
 
-# Name, and directory, of the python virtual environment:
-VENV = ./venv
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
 # To deactivate, thereby running all recipes from the global python
-# environment, comment out the following line:
-export VIRTUAL_ENV = $(abspath ${VENV})
+# environment, avoid setting ${VENV}. (Comment out the following.)
+VENV = venv
 
-# Use the following line to add to the PATH of all recipes.
-# WARNING: These executibles will not necessarily be available in the same
-# way from the command line, so you may get difficult to debug problems.
-export PATH := ${VIRTUAL_ENV}/bin:${PATH}
-# TODO: Deal with virtualenvs in a more transparent way.
-
-# Use the following line to add files and directories to be deleted on `make clean`:
+# Use the following line to add files and directories to be deleted on `make
+# clean`:
 CLEANUP += res/* seq/* tre/* meta/*
+
+# Use this file to include sensitive data that shouldn't be version controlled.
+# If your project *requires* a local.mk, remove the preceeding '-' on the
+# following line.
+-include local.mk
 
 # What directories to generate on `make data-dirs`.
 # By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
@@ -151,14 +140,26 @@ all: docs figs res
 
 
 # ==================
-#  Graphing {{{1
+#  Figures {{{1
 # ==================
 # User defined recipes for plotting figures.  These should use
 # the targets of analysis recipes above as their prerequisites.
 
 
+# Epliogue {{{1
+# ========================
+#  Standard Configuration Bottom {{{2
+# ========================
+
+# TODO: Deal with virtualenvs in a more transparent way.
+ifdef VENV
+export VIRTUAL_ENV = $(abspath ${VENV})
+export PATH := ${VIRTUAL_ENV}/bin:${PATH}
+$(info Running in virtualenv $(VIRTUAL_ENV))
+endif
+
 # =======================
-#  Documentation {{{1
+#  Documentation {{{2
 # =======================
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
@@ -170,20 +171,20 @@ MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_
 docs: ${ALL_DOCS_HTML}
 
 # =================
-#  Cleanup {{{1
+#  Cleanup {{{2
 # =================
 .PHONY: clean
 clean:
 	rm -rf ${CLEANUP}
 
 # ========================
-#  Initialization Recipes {{{1
+#  Initialization Recipes {{{2
 # ========================
 .PHONY: init
 init: .git/.initialized
 .git/.initialized:
 	@${MAKE} submodules
-	@[ "${VENV}" ] && ${MAKE} ${VENV}
+	@[ "${VENV}" ] && ${MAKE} virtualenv
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
@@ -202,8 +203,9 @@ run `source ${VENV}/bin/activate`.
 endef
 export VENV_ACTIVATE_MSG
 
+virtualenv: ${VENV}
 ${VENV}:
-	python3 -m venv $@
+	python3 -m venv '$@'
 	@echo "$$VENV_ACTIVATE_MSG"
 
 # Git Submodules:
