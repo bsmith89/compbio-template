@@ -75,6 +75,9 @@ export HELP_MSG
 # Don't delete intermediate files.
 .SECONDARY:
 
+# Delete targets if there is an error while executing a rule.
+.DELETE_ON_ERROR:
+
 # The target `all` needs to be the first one defined (besides special
 # targets) in order for it to be made on running `make` without a target.
 .PHONY: all
@@ -86,22 +89,37 @@ ${HELP_TRGTS}:
 	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
 
 # All recipes are run as though they are within the virtualenv.
+# WARNING: This may cause difficult to debug problems.
 VENV = ./venv
 export VIRTUAL_ENV = $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
+# TODO: Include a tmp/ dir?  Use it for what?
 DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
 
 # Use this file to include sensitive data that shouldn't be version controlled.
 -include local.mk
 
 # ====================
-# Use the following line to add project directories with executibles
-# to the `make` recipe path:
-# export PATH := <BIN-DIR-A>:<BIN-DIR-B>:${PATH}
+#  User Configuration {{{1
+# ====================
 
-# Use the following line to add files to be deleted on `make clean`:
-CLEANUP = ${ALL_DOCS_HTML}
+# Name, and directory, of the python virtual environment:
+VENV = ./venv
+# All recipes are run as though they are within the virtualenv.
+# WARNING: This may cause difficult to debug problems.
+# To deactivate, thereby running all recipes from the global python
+# environment, comment out the following line:
+export VIRTUAL_ENV = $(abspath ${VENV})
+
+# Use the following line to add to the PATH of all recipes.
+# WARNING: These executibles will not necessarily be available in the same
+# way from the command line, so you may get difficult to debug problems.
+export PATH := ${VIRTUAL_ENV}/bin:${PATH}
+# TODO: Deal with virtualenvs in a more transparent way.
+
+# Use the following line to add files and directories to be deleted on `make clean`:
+CLEANUP += res/* seq/* tre/* meta/*
 
 # What directories to generate on `make data-dirs`.
 # By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
@@ -147,13 +165,7 @@ ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
 %.html: %.md
-	cat $^ \
-	| pandoc -f markdown -t html5 -s\
-				--highlight-style pygments \
-				--mathjax=${MATHJAX} \
-				--toc --toc-depth=4 \
-				--css static/main.css \
-	> $@
+	pandoc -f markdown -t html5 -s --highlight-style pygments --mathjax=${MATHJAX} --toc --toc-depth=4 --css static/main.css $^ > $@
 
 docs: ${ALL_DOCS_HTML}
 
@@ -162,7 +174,7 @@ docs: ${ALL_DOCS_HTML}
 # =================
 .PHONY: clean
 clean:
-	rm -f ${CLEANUP}
+	rm -rf ${CLEANUP}
 
 # ========================
 #  Initialization Recipes {{{1
@@ -171,7 +183,7 @@ clean:
 init: .git/.initialized
 .git/.initialized:
 	@${MAKE} submodules
-	@${MAKE} ${VENV}
+	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
