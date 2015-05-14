@@ -1,4 +1,5 @@
 # Preface {{{1
+# User help message {{{2
 define HELP_MSG
 
 ================================
@@ -66,7 +67,7 @@ export HELP_MSG
 
 
 # ========================
-#  Standard Configuration
+#  Standard Configuration {{{2
 # ========================
 # One failing step in a recipe causes the whole recipe to fail.
 .POSIX:
@@ -94,8 +95,6 @@ DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
 # Use this file to include sensitive data that shouldn't be version controlled.
 -include local.mk
 
-# ====================}}}
-#  User Configuration {{{0
 # ====================
 # Use the following line to add project directories with executibles
 # to the `make` recipe path:
@@ -117,9 +116,8 @@ res:
 # What files are generated on `make all`?
 all: docs figs res
 
-# }}}
 # ==============
-#  Data Recipes
+#  Data {{{1
 # ==============
 # User defined recipes for cleaning up and initially parsing data.
 # e.g. Slicing out columns, combining data sources, alignment, generating
@@ -127,7 +125,7 @@ all: docs figs res
 
 
 # =======================
-#  Analysis Recipes
+#  Analysis {{{1
 # =======================
 # User defined recipes for analyzing the data.
 # e.g. Calculating means, distributions, correlations, fitting models, etc.
@@ -135,14 +133,14 @@ all: docs figs res
 
 
 # ==================
-#  Graphing Recipes
+#  Graphing {{{1
 # ==================
 # User defined recipes for plotting figures.  These should use
 # the targets of analysis recipes above as their prerequisites.
 
 
 # =======================
-#  Documentation Recipes {{{1
+#  Documentation {{{1
 # =======================
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
@@ -160,7 +158,7 @@ MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_
 docs: ${ALL_DOCS_HTML}
 
 # =================
-#  Cleanup Recipes {{{1
+#  Cleanup {{{1
 # =================
 .PHONY: clean
 clean:
