@@ -11,6 +11,8 @@ biology projects.
 A git repository which implements this template is available
 [on Github](http://github.com/bsmith89/compbio-template).
 
+TODO: Something with [this article](dx.doi.org/10.1371/journal.pcbi.1000424).
+
 ## License ##
 
 This work is licensed under the terms of the MIT license:
