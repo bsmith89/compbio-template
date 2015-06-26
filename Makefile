@@ -67,7 +67,7 @@ export HELP_MSG
 
 
 # ========================
-#  Standard Configuration Top {{{2
+#  Standard Configuration {{{2
 # ========================
 # One failing step in a recipe causes the whole recipe to fail.
 .POSIX:
@@ -91,35 +91,15 @@ ${HELP_TRGTS}:
 # TODO: Include a tmp/ dir?  Use it for what?
 DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
 
+# Use this file to include sensitive data that shouldn't be version controlled.
+# Others forking this project will need to create their own local.mk.
+# If local.mk is vital and you would like the user to be alerted to its
+# absence, remove the preceeding '-'.
+-include local.mk
+
 # ====================
 #  User Configuration {{{1
 # ====================
-
-# Name, and directory, of the python virtual environment:
-VENV = ./venv
-# All recipes are run as though they are within the virtualenv.
-# WARNING: This may cause difficult to debug problems.
-# To deactivate, thereby running all recipes from the global python
-# environment, comment out the following line:
-export VIRTUAL_ENV = $(abspath ${VENV})
-
-# Use the following line to add files and directories to be deleted on `make
-# clean`:
-CLEANUP += res/* seq/* tre/* meta/*
-# Use the following line to add to the PATH of all recipes.
-# WARNING: These executibles will not necessarily be available in the same
-# way from the command line, so you may get difficult to debug problems.
-export PATH := ${VIRTUAL_ENV}/bin:${PATH}
-# TODO: Deal with virtualenvs in a more transparent way.
-
-# Use this file to include sensitive data that shouldn't be version controlled.
-# If your project *requires* a local.mk, remove the preceeding '-' on the
-# following line.
--include local.mk
-
-# What directories to generate on `make data-dirs`.
-# By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
-# DATA_DIRS += seq/ tre/ img/
 
 # Add sub-targets (prerequisites) to the major phony targets.
 .PHONY: docs figs res
@@ -130,13 +110,33 @@ res:
 # What files are generated on `make all`?
 all: docs figs res
 
+# Name, and directory, of the python virtual environment:
+VENV = ./venv
+# All recipes are run as though they are within the virtualenv.
+# WARNING: This may cause difficult to debug problems.
+# To deactivate, thereby running all recipes from the global python
+# environment, comment out the following line:
+export VIRTUAL_ENV = $(abspath ${VENV})
+
+# Use the following line to add to the PATH of all recipes.
+# WARNING: These executibles will not necessarily be available in the same
+# way from the command line, so you may get difficult to debug problems.
+export PATH := ${VIRTUAL_ENV}/bin:${PATH}
+# TODO: Deal with virtualenvs in a more transparent way.
+
+# Use the following line to add files and directories to be deleted on `make clean`:
+CLEANUP +=
+
+# What directories to generate on `make data-dirs`.
+# By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
+DATA_DIRS +=
+
 # ==============
 #  Data {{{1
 # ==============
 # User defined recipes for cleaning up and initially parsing data.
 # e.g. Slicing out columns, combining data sources, alignment, generating
 # phylogenies, etc.
-
 
 # =======================
 #  Analysis {{{1
@@ -147,14 +147,14 @@ all: docs figs res
 
 
 # ==================
-#  Figures {{{1
+#  Graphing {{{1
 # ==================
 # User defined recipes for plotting figures.  These should use
 # the targets of analysis recipes above as their prerequisites.
 
 
 # =======================
-#  Documentation {{{2
+#  Documentation {{{1
 # =======================
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
@@ -165,15 +165,28 @@ MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_
 
 docs: ${ALL_DOCS_HTML}
 
+# Visualize makefile with cytoscape.
+# requires:
+# https://bitbucket.org/jpbarrette/makegrapher
+# details at: https://code.google.com/p/makegrapher
+res/Makefile.complete: Makefile
+	${MAKE} --makefile=$^ -npr > $@
+
+res/Makefile.dot: res/Makefile.complete
+	make_grapher.py -T $^ -o $@ >/dev/null
+
+fig/%.png: res/%.dot
+	dot -Tpng -Grankdir=BT -Nshape=plaintext < $^ > $@
+
 # =================
-#  Cleanup {{{2
+#  Cleanup {{{1
 # =================
 .PHONY: clean
 clean:
 	rm -rf ${CLEANUP}
 
 # ========================
-#  Initialization Recipes {{{2
+#  Initialization Recipes {{{1
 # ========================
 .PHONY: init
 init: .git/.initialized
