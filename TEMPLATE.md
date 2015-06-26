@@ -130,6 +130,22 @@ git push -u origin
 ```
 
 # User Guide and Project Structure#
+
+## Requirements ##
+
+-  GNU Make
+-  [Python](http://www.python.org/) (3.4+)
+-  BASH
+
+### Optional: dependency diagram ###
+
+-  [make_grapher.py](https://bitbucket.org/jpbarrette/makegrapher)
+-  Graphviz
+
+### Optional: tags ###
+
+-  [Exuberant Ctags](http://ctags.sourceforge.net/)
+
 ## Notes Files ##
 _All files which describe the project are version controlled._
 

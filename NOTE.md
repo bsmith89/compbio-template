@@ -3,6 +3,8 @@ title: [Project Name]
 author: [Author Name]
 ...
 
+<!-- Top Matter {{{-->
+
 # Introduction #
 [A single sentence summarizing the project.]
 
@@ -16,12 +18,11 @@ author: [Author Name]
 [TermB]
 :   [Definition]
 
-## Requirements and Environment ##
+## Project Specific Requirements ##
+
 ### Applications ###
--  [Python](http://www.python.org/) (3.4+)
--  GNU Make
--  BASH
--  [Exuberant Ctags](http://ctags.sourceforge.net/) (optional)
+
+<!-- /Top Matter }}}-->
 
 # Notebook #
 ## [First Experiment Name] ##
