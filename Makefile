@@ -31,7 +31,7 @@ TARGETS
     init
         Initialize the project:
             (1) submodules
-            (2) virtualenv
+            (2) venv
             (3) python-reqs
             (3) data-dirs
             (4) configure git to automatically clean IPython notebooks;
@@ -44,12 +44,12 @@ TARGETS
     submodules
         Initialize and update all git submodules (see `.gitmodules`).
 
-    virtualenv
+    venv
         Create the virtualenv if absent.
 
     python-reqs
         Install all python requirements from requirements.txt and
-        all <SUBMODULE>/requirements.txt to the virtualenv.
+        all <SUBMODULE>/requirements.txt to the venv.
 
     data-dirs
         Create all data directories listed in $${DATA_DIRS}
@@ -95,15 +95,22 @@ DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
 #  User Configuration {{{1
 # ====================
 
+# Name, and directory, of the python virtual environment:
+VENV = ./venv
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
 # To deactivate, thereby running all recipes from the global python
-# environment, avoid setting ${VENV}. (Comment out the following.)
-VENV = venv
+# environment, comment out the following line:
+export VIRTUAL_ENV = $(abspath ${VENV})
 
 # Use the following line to add files and directories to be deleted on `make
 # clean`:
 CLEANUP += res/* seq/* tre/* meta/*
+# Use the following line to add to the PATH of all recipes.
+# WARNING: These executibles will not necessarily be available in the same
+# way from the command line, so you may get difficult to debug problems.
+export PATH := ${VIRTUAL_ENV}/bin:${PATH}
+# TODO: Deal with virtualenvs in a more transparent way.
 
 # Use this file to include sensitive data that shouldn't be version controlled.
 # If your project *requires* a local.mk, remove the preceeding '-' on the
@@ -146,18 +153,6 @@ all: docs figs res
 # the targets of analysis recipes above as their prerequisites.
 
 
-# Epliogue {{{1
-# ========================
-#  Standard Configuration Bottom {{{2
-# ========================
-
-# TODO: Deal with virtualenvs in a more transparent way.
-ifdef VENV
-export VIRTUAL_ENV = $(abspath ${VENV})
-export PATH := ${VIRTUAL_ENV}/bin:${PATH}
-$(info Running in virtualenv $(VIRTUAL_ENV))
-endif
-
 # =======================
 #  Documentation {{{2
 # =======================
@@ -184,7 +179,7 @@ clean:
 init: .git/.initialized
 .git/.initialized:
 	@${MAKE} submodules
-	@[ "${VENV}" ] && ${MAKE} virtualenv
+	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
@@ -203,9 +198,8 @@ run `source ${VENV}/bin/activate`.
 endef
 export VENV_ACTIVATE_MSG
 
-virtualenv: ${VENV}
 ${VENV}:
-	python3 -m venv '$@'
+	python3 -m venv $@
 	@echo "$$VENV_ACTIVATE_MSG"
 
 # Git Submodules:
