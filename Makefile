@@ -88,8 +88,14 @@ HELP_TRGTS = help h HELP Help
 ${HELP_TRGTS}:
 	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
 
+# All recipes are run as though they are within the virtualenv.
+# WARNING: This may cause difficult to debug problems.
+VENV = ./venv
+export VIRTUAL_ENV = $(abspath ${VENV})
+export PATH := ${VIRTUAL_ENV}/bin:${PATH}
+
 # TODO: Include a tmp/ dir?  Use it for what?
-DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
+DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/
 
 # Use this file to include sensitive data that shouldn't be version controlled.
 # Others forking this project will need to create their own local.mk.
@@ -101,7 +107,7 @@ DATA_DIRS = etc/ ipynb/ raw/ meta/ res/ fig/
 #  User Configuration {{{1
 # ====================
 
-# Add sub-targets (prerequisites) to the major phony targets.
+# Major targets {{{2
 .PHONY: docs figs res
 docs:
 figs:
@@ -110,6 +116,7 @@ res:
 # What files are generated on `make all`?
 all: docs figs res
 
+# Compute environment {{{2
 # Name, and directory, of the python virtual environment:
 VENV = ./venv
 # All recipes are run as though they are within the virtualenv.
@@ -124,9 +131,11 @@ export VIRTUAL_ENV = $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 # TODO: Deal with virtualenvs in a more transparent way.
 
+# Cleanup settings {{{2
 # Use the following line to add files and directories to be deleted on `make clean`:
 CLEANUP +=
 
+# Initialization settings {{{2
 # What directories to generate on `make data-dirs`.
 # By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
 DATA_DIRS +=
@@ -156,12 +165,15 @@ DATA_DIRS +=
 # =======================
 #  Documentation {{{1
 # =======================
+# TODO: Consider splitting out all of the constant parts of this file into
+# a new Makefile
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
 %.html: %.md
-	pandoc -f markdown -t html5 -s --highlight-style pygments --mathjax=${MATHJAX} --toc --toc-depth=4 --css static/main.css $^ > $@
+	pandoc -f markdown -t html5 -s --highlight-style pygments \
+        --mathjax=${MATHJAX} --toc --toc-depth=4 --css static/main.css $^ > $@
 
 docs: ${ALL_DOCS_HTML}
 
@@ -229,15 +241,18 @@ PIP_REQS = requirements.txt ${SUBMODULE_PIP_REQS}
 
 python-reqs: | ${VENV}
 	for req_file in ${PIP_REQS} ; do \
-		pip install --upgrade --no-deps -r $$req_file ; \
-		pip install -r $$req_file ; \
-	done
+        pip install --upgrade --no-deps -r $$req_file ; \
+        pip install -r $$req_file ; \
+    done
 
 data-dirs:
 	mkdir -p ${DATA_DIRS}
 
+tags:
+	ctags -R
+
 .PHONY: .link-readme .confirm-git-mangle \
-		.git-mangle .ipynb-filter-config
+        .git-mangle .ipynb-filter-config
 .link-readme:
 	unlink README.md
 	ln -s NOTE.md README.md

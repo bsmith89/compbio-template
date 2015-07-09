@@ -11,8 +11,6 @@ biology projects.
 A git repository which implements this template is available
 [on Github](http://github.com/bsmith89/compbio-template).
 
-TODO: Something with [this article](dx.doi.org/10.1371/journal.pcbi.1000424).
-
 ## License ##
 
 This work is licensed under the terms of the MIT license:
@@ -130,22 +128,6 @@ git push -u origin
 ```
 
 # User Guide and Project Structure#
-
-## Requirements ##
-
--  GNU Make
--  [Python](http://www.python.org/) (3.4+)
--  BASH
-
-### Optional: dependency diagram ###
-
--  [make_grapher.py](https://bitbucket.org/jpbarrette/makegrapher)
--  Graphviz
-
-### Optional: tags ###
-
--  [Exuberant Ctags](http://ctags.sourceforge.net/)
-
 ## Notes Files ##
 _All files which describe the project are version controlled._
 
@@ -216,14 +198,8 @@ _All project code is version controlled._
     intermediate files in order to utilize `make`'s piece-wise build.
 
     Sensitive data should not be included in `Makefile`, since that
-    file is frequently version controlled.  Instead `local.mk` is `included` so
+    file is frequently version controlled.  Instead `local.mk` is included so
     that sensitive values can be included and then referenced as variables.
-
-    Also, auto-dependency generation is a very neat feature.
-    See [here](http://make.mad-scientist.net/papers/advanced-auto-dependency-generation/#include).
-    With this feature of GNU Make, more complex dependency structures,
-    (like all-by-all comparisons) can be generated.
-
 
 `etc/`
 
@@ -270,15 +246,16 @@ _All project code is version controlled._
 
     Scripts for which all of these recommendations are met,
     and where the routine may be useful in other projects,
-    are great candidates for inclusion in the `bin/utils/` submodule.
+    are great candidates for inclusion in the `bin/utils/` ~~submodule~~.
 
     PBS submission scripts should be stored in `bin/pbs`, and those
-    which produce figures, `vin/fig`.
+    which produce figures, `bin/fig`.
 
 `bin/utils/`
 
-:   A [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules)
-    of utility scripts and executables.
+:   ~~A [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules)
+    of utility scripts and executables.~~
+    Now I'm using [git-stree](https://github.com/tdd/git-stree) instead.
 
     Any analysis scripts that can be used by other projects should ultimately
     end up in this [repository](https://github.com/bsmith89/compbio-scripts).
