@@ -1,3 +1,0 @@
-ipython[nbconvert]>=3.1
-biopython
-

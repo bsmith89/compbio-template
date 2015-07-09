@@ -227,14 +227,12 @@ ${VENV}:
 	@echo "$$VENV_ACTIVATE_MSG"
 
 
-PIP_REQS = requirements.txt bin/utils/requirements.txt
+PIP_REQS = requirements.txt
 
 .PHONY: python-reqs data-dirs
 python-reqs: | ${VENV}
-	for req_file in ${PIP_REQS} ; do \
-        pip install --upgrade --no-deps -r $$req_file ; \
-        pip install -r $$req_file ; \
-    done
+	pip install --upgrade --no-deps -r ${PIP_REQS}
+	pip install -r ${PIP_REQS}
 
 data-dirs:
 	mkdir -p ${DATA_DIRS}
@@ -256,10 +254,6 @@ data-dirs:
 	git add -A
 	git commit -em "----[START PROJECT]----"
 
-# IPython Notebook Output Filter Configuration
-# TODO: Should I require `python-reqs`?
-bin/utils/ipynb_output_filter.py: bin/utils/.git
-
 .ipynb-filter-config: bin/utils/ipynb_output_filter.py
-	git config --local filter.dropoutput_ipynb.clean bin/utils/ipynb_output_filter.py
+	git config --local filter.dropoutput_ipynb.clean ipynb_output_filter
 	git config --local filter.dropoutput_ipynb.smudge cat

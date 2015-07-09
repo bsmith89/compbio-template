@@ -1,5 +1,6 @@
 pip>=6.1.1
 ipython[notebook]>=3.1
+git+https://github.com/bsmith89/compbio-scripts.git#egg=sequtils
 # Un-comment lines to include these suggested requirements.
 # numpy>=1.8.0
 # scipy>=0.14.0
