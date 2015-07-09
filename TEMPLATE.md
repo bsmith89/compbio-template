@@ -131,18 +131,22 @@ git push -u origin
 
 ## Requirements ##
 
--  GNU Make
--  [Python](http://www.python.org/) (3.4+)
--  BASH
+ -  GNU Make
+ -  [Python](http://www.python.org/) (3.4+)
+ -  BASH
 
 ### Optional: dependency diagram ###
 
--  [make_grapher.py](https://bitbucket.org/jpbarrette/makegrapher)
--  Graphviz
+ -  [make_grapher.py](https://bitbucket.org/jpbarrette/makegrapher)
+ -  Graphviz
 
 ### Optional: tags ###
 
--  [Exuberant Ctags](http://ctags.sourceforge.net/)
+ -  [Exuberant Ctags](http://ctags.sourceforge.net/)
+
+### Optional: stree ###
+
+ -  [git-stree](https://github.com/tdd/git-stree)
 
 ## Notes Files ##
 _All files which describe the project are version controlled._
@@ -241,12 +245,12 @@ _All project code is version controlled._
     unlike data files.
     Scripts should be well documented.
 
-    -  Required: Each script has a docstring (comment at the top after the
-       shebang) which describes the use of the script from the command line.
-    -  Good: Scripts are well commented, explaining the logic of any difficult
-       to understand code.
-    -  Great: Scripts are designed with full help text, conforming to POSIX
-       standards.
+     -  Required: Each script has a docstring (comment at the top after the
+        shebang) which describes the use of the script from the command line.
+     -  Good: Scripts are well commented, explaining the logic of any difficult
+        to understand code.
+     -  Great: Scripts are designed with full help text, conforming to POSIX
+        standards.
 
     Scripts should take any data which only needs to be used once from STDIN.
     If this can be accomplished in multiple ways, one rule of thumb is for
@@ -256,15 +260,15 @@ _All project code is version controlled._
 
     Scripts should be designed for portability.
 
-    -  Good: Scripts accept all input data externally.
-       Data files are _not_ hard coded into the script.
-    -  Great: Variable parameters of the analysis are accepted as positional
-       arguments, and options.
-       Logical defaults are acceptable.
-       Parameters are _not_ hard-coded into the scripts.
-    -  Greatest: Scripts are constructed in a modular design.
-       e.g. Python scripts divide logical chunks into "public" functions so
-       that those parts can be imported by other scripts.
+     -  Good: Scripts accept all input data externally.
+        Data files are _not_ hard coded into the script.
+     -  Great: Variable parameters of the analysis are accepted as positional
+        arguments, and options.
+        Logical defaults are acceptable.
+        Parameters are _not_ hard-coded into the scripts.
+     -  Greatest: Scripts are constructed in a modular design.
+        e.g. Python scripts divide logical chunks into "public" functions so
+        that those parts can be imported by other scripts.
 
     Scripts for which all of these recommendations are met,
     and where the routine may be useful in other projects,
@@ -286,9 +290,9 @@ _All project code is version controlled._
 
 :   Executable scripts which _normally_:
 
-    -  Produce figures in PDF format, saving them to `fig/`;
-    -  Require intermediate results in a tabular format, saved in `res/`;
-    -  Usually have a name which is identical to or a substring of the figure
+     -  Produce figures in PDF format, saving them to `fig/`;
+     -  Require intermediate results in a tabular format, saved in `res/`;
+     -  Usually have a name which is identical to or a substring of the figure
         produced.
 
 `bin/pbs/`
@@ -370,9 +374,9 @@ same configuration.
     as a _new_ project (as opposed to a clone of a previously started project).
     Treating it as a new project will also:
 
-    1. Removes the template remote repository (so the user doesn't
+    1.  Removes the template remote repository (so the user doesn't
         accidentally push changes to the template itself.)
-    2. Squashes the entire git history into a single
+    2.  Squashes the entire git history into a single
         initial commit.
 
     Unlike the other configuration files, `.initialized` is ignored by git.
@@ -382,12 +386,12 @@ same configuration.
 :   A custom IPython profile
     which changes a few things from the built-in default:
 
-    -  IPython notebooks display figures inline by default;
-    -  The default editor is full `vim`;
-    -  Tab completion is more like `bash`;
-    -  Running `ipython3 notebook` from the command line is convenient:
-        -  The server look for notebook files in the `ipynb/` subdirectory;
-        -  When loaded, the working directory for the notebook is automatically
+     -  IPython notebooks display figures inline by default;
+     -  The default editor is full `vim`;
+     -  Tab completion is more like `bash`;
+     -  Running `ipython3 notebook` from the command line is convenient:
+         -  The server look for notebook files in the `ipynb/` subdirectory;
+         -  When loaded, the working directory for the notebook is automatically
             changed to the root of the project (i.e. `cd ..`).
 
     See
@@ -423,10 +427,10 @@ _Data is not version controlled._
     The raw data appendix, in `NOTE.md`, describes everything a third party
     (or the author a month later) needs to know about the raw data.
 
-    -  Required: Describes (in detail) where all of the data came from.
-    -  Good: Instructions for retrieving all of the data from an online
+     -  Required: Describes (in detail) where all of the data came from.
+     -  Good: Instructions for retrieving all of the data from an online
         repository.
-    -  Great: Recipe for data retrieval included in `Makefile`.
+     -  Great: Recipe for data retrieval included in `Makefile`.
 
     It is also advisable to save data in directories named by the date it was
     collected, or the date of the experiment
@@ -439,10 +443,10 @@ The extension portion of these file names should indicate the format of the
 data, while the '`.`' separated words which make up the file name loosely
 describe the workflow used to produce the file.
 For example:
--  `seq/16S.align.ungap.afn` would be multiple sequence alignment (`.align.`)
+ -  `seq/16S.align.ungap.afn` would be multiple sequence alignment (`.align.`)
     in nuceotide FASTA format (`.afn`) which has had all gap positions removed
     (`.ungap.`).
--  `tre/16S.align.ungap.nwk` is a Newick formatted phylogenetic tree generated
+ -  `tre/16S.align.ungap.nwk` is a Newick formatted phylogenetic tree generated
     from `seq/16S.align.ungap.afn`.
 
 `meta/`
