@@ -246,14 +246,14 @@ data-dirs:
 	ln -s NOTE.md README.md
 
 .git-new-branch:
-	git branch -m template
-	git remote rename origin template-origin
-	git checkout -b master
+	-git branch -m template
+	-git remote rename origin template-origin
+	git checkout master || git checkout -b master
 
 .git-initial-commit:
 	git add -A
 	git commit -em "----[START PROJECT]----"
 
-.ipynb-filter-config: bin/utils/ipynb_output_filter.py
+.ipynb-filter-config:
 	git config --local filter.dropoutput_ipynb.clean ipynb_output_filter
 	git config --local filter.dropoutput_ipynb.smudge cat
