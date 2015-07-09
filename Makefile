@@ -240,8 +240,7 @@ data-dirs:
 	mkdir -p ${DATA_DIRS}
 
 .PHONY: .link-readme .confirm-git-mangle \
-        .git-mangle .ipynb-filter-config \
-		.stree.config
+        .git-mangle .ipynb-filter-config
 
 .link-readme:
 	unlink README.md
@@ -260,11 +259,3 @@ bin/utils/ipynb_output_filter.py: bin/utils/.git
 .ipynb-filter-config: bin/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.clean bin/utils/ipynb_output_filter.py
 	git config --local filter.dropoutput_ipynb.smudge cat
-
-# This is supposed to port all of the stree configuration over to the new
-# repository.
-# TODO: Does it work?
-.stree.config:
-	git remote add stree-compbio-scripts git@github.com:bsmith89/compbio-scripts.git
-	git config --local stree.compbio-scripts.prefix bin/utils
-	git config --local stree.combio-scripts.branch master
