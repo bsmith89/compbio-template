@@ -250,7 +250,7 @@ data-dirs:
 	git remote rename origin template
 	git branch -m master
 	git add -A
-	git commit -em "[PROJECT] Initial commit."
+	git commit -em "----[START PROJECT]----"
 
 # IPython Notebook Output Filter Configuration
 # TODO: Should I require `python-reqs`?
