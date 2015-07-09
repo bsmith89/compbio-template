@@ -128,6 +128,22 @@ git push -u origin
 ```
 
 # User Guide and Project Structure#
+
+## Requirements ##
+
+-  GNU Make
+-  [Python](http://www.python.org/) (3.4+)
+-  BASH
+
+### Optional: dependency diagram ###
+
+-  [make_grapher.py](https://bitbucket.org/jpbarrette/makegrapher)
+-  Graphviz
+
+### Optional: tags ###
+
+-  [Exuberant Ctags](http://ctags.sourceforge.net/)
+
 ## Notes Files ##
 _All files which describe the project are version controlled._
 
@@ -198,8 +214,14 @@ _All project code is version controlled._
     intermediate files in order to utilize `make`'s piece-wise build.
 
     Sensitive data should not be included in `Makefile`, since that
-    file is frequently version controlled.  Instead `local.mk` is included so
+    file is frequently version controlled.  Instead `local.mk` is `included` so
     that sensitive values can be included and then referenced as variables.
+
+    Also, auto-dependency generation is a very neat feature.
+    See [here](http://make.mad-scientist.net/papers/advanced-auto-dependency-generation/#include).
+    With this feature of GNU Make, more complex dependency structures,
+    (like all-by-all comparisons) can be generated.
+
 
 `etc/`
 
