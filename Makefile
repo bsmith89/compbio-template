@@ -245,6 +245,8 @@ data-dirs:
 	unlink README.md
 	ln -s NOTE.md README.md
 
+# TODO: Fix up some things assuming I don't always want to initialize
+# from a template, and sometime I want to go from a project.
 .git-new-branch:
 	-git branch -m template
 	-git remote rename origin template-origin
@@ -252,7 +254,7 @@ data-dirs:
 
 .git-initial-commit:
 	git add -A
-	git commit -em "----[START PROJECT]----"
+	git commit -em "[NEW PROJECT]"
 
 .ipynb-filter-config:
 	git config --local filter.dropoutput_ipynb.clean ipynb_output_filter
