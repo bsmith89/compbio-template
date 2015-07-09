@@ -110,7 +110,7 @@ MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_
 	pandoc -f markdown -t html5 -s --highlight-style pygments \
         --mathjax=${MATHJAX} --toc --toc-depth=4 --css static/main.css $^ > $@
 
-docs: ${ALL_DOCS_HTML} fig/Makefile.png
+docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 
 # Visualize makefile with cytoscape.
 # requires:
@@ -118,6 +118,10 @@ docs: ${ALL_DOCS_HTML} fig/Makefile.png
 # details at: https://code.google.com/p/makegrapher
 res/Makefile.complete: Makefile
 	${MAKE} --makefile=$^ -npr > $@
+
+# Just to force a re-write of res/Makefile.complete when init.mk changes.
+Makefile: init.mk
+	@touch $@
 
 res/Makefile.dot: res/Makefile.complete
 	make_grapher.py -T $^ -o $@ >/dev/null
