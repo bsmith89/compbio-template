@@ -282,14 +282,17 @@ _All project code is version controlled._
     PBS submission scripts should be stored in `bin/pbs`, and those
     which produce figures, `bin/fig`.
 
-`bin/utils/`
-
-:   ~~A [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules)
-    of utility scripts and executables.~~
-    Now I'm using [git-stree](https://github.com/tdd/git-stree) instead.
-
     Any analysis scripts that can be used by other projects should ultimately
-    end up in this [repository](https://github.com/bsmith89/compbio-scripts).
+    end up in the sequtils
+    [python package](https://github.com/bsmith89/compbio-scripts).
+    One way to develop this package in parallel with the template or a project
+    is to clone <https://github.com/bsmith89/compbio-scripts> and replace your
+    installation of sequtils with a development install.
+
+    ```
+    source venv/bin/activate
+    pip install -e path/to/clone
+    ```
 
 `bin/fig/`
 
@@ -373,18 +376,10 @@ same configuration.
     The file is created on running `make init`,
     which adds the IPython notebook filter to the project's git configuration,
     makes a new Python virtual environment (`venv/`), and installs everything
-    in `requirements.txt` and `bin/utils/requirements.txt` to `venv`.
+    in `requirements.txt` to `venv`.
 
-    This recipe will also prompt for whether or not you want to initialize
-    as a _new_ project (as opposed to a clone of a previously started project).
-    Treating it as a new project will also:
-
-    1.  Removes the template remote repository (so the user doesn't
-        accidentally push changes to the template itself.)
-    2.  Squashes the entire git history into a single
-        initial commit.
-
-    Unlike the other configuration files, `.initialized` is ignored by git.
+    Unlike the other configuration files in this template,
+    `.initialized` is ignored by git.
 
 `profile_default/`
 
