@@ -122,6 +122,13 @@ res/Makefile.complete: Makefile
 res/Makefile.dot: res/Makefile.complete
 	make_grapher.py -T $^ -o $@ >/dev/null
 
+res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
+	$(word 1,$^) -d '^raw/ab1' -d '^bin/utils/' -d '^\.' -d '\.git' \
+                 -d '(submodules|venv|python-reqs|init)' \
+                 -k '^raw/mcra' -k '^(all|res|figs|docs|Makefile)$$' \
+                 $(word 2,$^) > $@
+
+
 fig/%.png: res/%.dot
 	dot -Tpng -Grankdir=BT -Nshape=plaintext < $^ > $@
 
@@ -196,5 +203,5 @@ data-dirs:
 	git commit -em "[NEW PROJECT]"
 
 .ipynb-filter-config:
-	git config --local filter.dropoutput_ipynb.clean ipynb_output_filter
+	git config --local filter.dropoutput_ipynb.clean scripts/ipynb_output_filter
 	git config --local filter.dropoutput_ipynb.smudge cat
