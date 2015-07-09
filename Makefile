@@ -30,26 +30,22 @@ TARGETS
 
     init
         Initialize the project:
-            (1) submodules
-            (2) venv
-            (3) python-reqs
-            (3) data-dirs
-            (4) configure git to automatically clean IPython notebooks;
-            (5) OPTIONAL: remove the 'origin' git remote
-            (6) OPTIONAL: squash the commit history into a single
+            (1) venv
+            (2) python-reqs
+            (2) data-dirs
+            (3) configure git to automatically clean IPython notebooks;
+            (4) OPTIONAL: remove the 'origin' git remote
+            (5) OPTIONAL: squash the commit history into a single
                 'Initial commit';
-            (7) create `.git/.initialized` to indicate that these steps are
+            (6) create `.git/.initialized` to indicate that these steps are
                 completed.
-
-    submodules
-        Initialize and update all git submodules (see `.gitmodules`).
 
     venv
         Create the virtualenv if absent.
 
     python-reqs
         Install all python requirements from requirements.txt and
-        all <SUBMODULE>/requirements.txt to the venv.
+        all requirements.txt to the venv.
 
     data-dirs
         Create all data directories listed in $${DATA_DIRS}
@@ -203,7 +199,6 @@ clean:
 .PHONY: init
 init: .git/.initialized
 .git/.initialized:
-	@${MAKE} submodules
 	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
@@ -227,18 +222,10 @@ ${VENV}:
 	python3 -m venv $@
 	@echo "$$VENV_ACTIVATE_MSG"
 
-# Git Submodules:
-SUBMODULE_DIRS := $(shell git submodule | sed 's:^ ::' | cut -d" " -f2)
-SUBMODULES = $(addsuffix /.git,${SUBMODULE_DIRS})
 
-.PHONY: submodule python-reqs data-dirs
-submodules: ${SUBMODULES}
-${SUBMODULES}: .gitmodules
-	git submodule update --init --recursive ${@D}
+PIP_REQS = requirements.txt bin/utils/requirements.txt
 
-SUBMODULE_PIP_REQS = $(wildcard $(addsuffix /requirements.txt,${SUBMODULE_DIRS}))
-PIP_REQS = requirements.txt ${SUBMODULE_PIP_REQS}
-
+.PHONY: python-reqs data-dirs
 python-reqs: | ${VENV}
 	for req_file in ${PIP_REQS} ; do \
         pip install --upgrade --no-deps -r $$req_file ; \
@@ -285,8 +272,6 @@ export INIT_OPTS_MSG
 	git reset --soft $$(git rev-list --max-parents=0 HEAD)
 	git add -A
 	git commit --amend -m "Initial commit."
-
-%/requirements.txt: %/.git
 
 # IPython Notebook Output Filter Configuration
 # TODO: Should I require `python-reqs`?
