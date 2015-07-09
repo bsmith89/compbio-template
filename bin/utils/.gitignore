@@ -1,0 +1,7 @@
+# Always ignore
+.DS_Store
+*.swp
+*.pyc
+*.html
+tags
+__pycache__/
