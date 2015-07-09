@@ -202,13 +202,13 @@ clean:
 .PHONY: init
 init: .git/.initialized
 .git/.initialized:
+	@${MAKE} .git-new-branch
 	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
 	@${MAKE} .ipynb-filter-config
-	@${MAKE} .stree-config
-	-@${MAKE} .git-setup
+	@${MAKE} .git-initial-commit
 	touch $@
 
 define VENV_ACTIVATE_MSG
@@ -240,15 +240,19 @@ data-dirs:
 	mkdir -p ${DATA_DIRS}
 
 .PHONY: .link-readme .confirm-git-mangle \
-        .git-mangle .ipynb-filter-config
+        .git-branch .git-initial-commit \
+		.ipynb-filter-config
 
 .link-readme:
 	unlink README.md
 	ln -s NOTE.md README.md
 
-.git-setup:
-	git remote rename origin template
-	git branch -m master
+.git-new-branch:
+	git branch -m template
+	git remote rename origin template-origin
+	git checkout -b master
+
+.git-initial-commit:
 	git add -A
 	git commit -em "----[START PROJECT]----"
 
