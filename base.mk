@@ -14,8 +14,8 @@ TARGETS
         results, and documentation based on user-defined recipes.)
 
     docs
-        Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML (uses
-        Pandoc).
+        Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML using
+        Pandoc.
 
     figs
         Carry out the pipeline to ultimately generate figures of the results.
@@ -28,33 +28,41 @@ TARGETS
         Show this help message.
 
     init
-        Initialize the project:
-            (1) venv
+        Initialize a new project (from a template):
+            (1) ${VENV}
             (2) python-reqs
-            (2) data-dirs
-            (3) configure git to automatically clean IPython notebooks;
-            (4) OPTIONAL: remove the 'origin' git remote
-            (5) OPTIONAL: squash the commit history into a single
-                'Initial commit';
-            (6) create `.git/.initialized` to indicate that these steps are
+            (3) data-dirs
+            (4) link README.md to NOTE.md (from TEMPLATE.md)
+            (5) configure git to automatically clean IPython notebooks;
+            (6) rename the 'origin' git remote to 'template'
+            (7) initial project commit
+            (8) create `.git/.initialized` to indicate that these steps are
                 completed.
 
-    venv
-        Create the virtualenv if absent.
+    reinit
+        Reinitialize a project:
+            (1) ${VENV}
+            (2) python-reqs
+            (3) data-dirs
+            (4) configure git to automatically clean IPython notebooks;
+            (5) create `.git/.initialized` to indicate that these steps are
+                completed.
+
+    ${VENV}
+        Create the virtualenv if absent.  The name is set by $${VENV}.
 
     python-reqs
-        Install all python requirements from requirements.txt and
-        all requirements.txt to the venv.
+        Install all python requirements from `requirements.txt` to the venv.
 
     data-dirs
-        Create all data directories listed in $${DATA_DIRS}
-        Default: raw/ seq/ tre/ img/ fig/ res/
+        Create all data directories. Directories set in $${DATA_DIRS}.
+        (${DATA_DIRS})
 
 EXAMPLES
-    make init  # Initialize the project.
-    make all   # Carry out all defined steps in the project.
+    make reinit  # Reinitialize a project.
+    make all     # Carry out all defined steps in the project.
 
-GNU MAKE HELP:
+See `man make` for help with GNU Make.
 
 
 endef
@@ -80,7 +88,7 @@ all:
 HELP_TRGTS = help h HELP Help
 .PHONY: ${HELP_TRGTS}
 ${HELP_TRGTS}:
-	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
+	@echo "$$HELP_MSG" | more
 
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
