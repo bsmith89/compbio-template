@@ -178,6 +178,7 @@ reinit:
 	@${MAKE} .ipynb-filter-config
 	touch ${INIT_SEMAPHOR}
 
+# Python Environment {{{2
 define VENV_ACTIVATE_MSG
 
 A python3 virtual environment has been made in `${VENV}`.
@@ -201,6 +202,7 @@ python-reqs: | ${VENV}
 	pip install --upgrade --no-deps -r ${PIP_REQS}
 	pip install -r ${PIP_REQS}
 
+# Repository Structure {{{2
 data-dirs:
 	mkdir -p ${DATA_DIRS}
 
@@ -212,6 +214,7 @@ data-dirs:
 	unlink README.md
 	ln -s NOTE.md README.md
 
+# Git Configuration {{{2
 # TODO: Fix up some things assuming I don't always want to initialize
 # from a template, and sometime I want to go from a project.
 .git-new-branch:
@@ -221,7 +224,7 @@ data-dirs:
 
 .git-initial-commit:
 	git add -A
-	git commit -em "[NEW PROJECT]"
+	git commit -em "Started project"
 
 .ipynb-filter-config:
 	git config --local filter.dropoutput_ipynb.clean scripts/ipynb_output_filter
