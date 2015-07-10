@@ -18,6 +18,7 @@ tre/*
 img/*
 profile_default/*
 venv/
+packages/
 
 # But white-list these files
 !*/README.md

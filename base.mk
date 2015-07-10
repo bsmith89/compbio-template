@@ -202,6 +202,17 @@ python-reqs: | ${VENV}
 	pip install --upgrade --no-deps -r ${PIP_REQS}
 	pip install -r ${PIP_REQS}
 
+# Install compbio-scripts with a local repository that can be edited.
+PACKAGE_DIR=./packages
+SEQUTILS_URL=https://github.com/bsmith89/compbio-scripts
+SEQUTILS_DIR=${PACKAGE_DIR}/sequtils
+.editable-sequtils: | ${VENV}
+	mkdir -p ${PACKAGE_DIR}
+	rm -rf ${SEQUTILS_DIR}
+	git clone ${SEQUTILS_URL} ${SEQUTILS_DIR}
+	-pip uninstall sequtils
+	pip install -e ${SEQUTILS_DIR}
+
 # Repository Structure {{{2
 data-dirs:
 	mkdir -p ${DATA_DIRS}
