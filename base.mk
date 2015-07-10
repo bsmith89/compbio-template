@@ -158,8 +158,10 @@ clean:
 #  Initialization {{{1
 # ========================
 .PHONY: init
-init: .git/.initialized
-.git/.initialized:
+INIT_SEMAPHOR=.git/.initialized
+init: ${INIT_SEMAPHOR}
+
+${INIT_SEMAPHOR}:
 	@${MAKE} .git-new-branch
 	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
@@ -168,6 +170,13 @@ init: .git/.initialized
 	@${MAKE} .ipynb-filter-config
 	@${MAKE} .git-initial-commit
 	touch $@
+
+reinit:
+	@[ "${VENV}" ] && ${MAKE} ${VENV}
+	@${MAKE} python-reqs
+	@${MAKE} data-dirs
+	@${MAKE} .ipynb-filter-config
+	touch ${INIT_SEMAPHOR}
 
 define VENV_ACTIVATE_MSG
 
