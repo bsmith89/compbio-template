@@ -17,6 +17,7 @@ meta/*
 tre/*
 img/*
 profile_default/*
+fig/
 venv/
 
 # But white-list these files
