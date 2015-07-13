@@ -14,8 +14,8 @@ TARGETS
         results, and documentation based on user-defined recipes.)
 
     docs
-        Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML (uses
-        Pandoc).
+        Compile markdown files (e.g. NOTE.md, TEMPLATE.md) into HTML using
+        Pandoc.
 
     figs
         Carry out the pipeline to ultimately generate figures of the results.
@@ -28,33 +28,41 @@ TARGETS
         Show this help message.
 
     init
-        Initialize the project:
-            (1) venv
+        Initialize a new project (from a template):
+            (1) ${VENV}
             (2) python-reqs
-            (2) data-dirs
-            (3) configure git to automatically clean IPython notebooks;
-            (4) OPTIONAL: remove the 'origin' git remote
-            (5) OPTIONAL: squash the commit history into a single
-                'Initial commit';
-            (6) create `.git/.initialized` to indicate that these steps are
+            (3) data-dirs
+            (4) link README.md to NOTE.md (from TEMPLATE.md)
+            (5) configure git to automatically clean IPython notebooks;
+            (6) rename the 'origin' git remote to 'template'
+            (7) initial project commit
+            (8) create `.git/.initialized` to indicate that these steps are
                 completed.
 
-    venv
-        Create the virtualenv if absent.
+    reinit
+        Reinitialize a project:
+            (1) ${VENV}
+            (2) python-reqs
+            (3) data-dirs
+            (4) configure git to automatically clean IPython notebooks;
+            (5) create `.git/.initialized` to indicate that these steps are
+                completed.
+
+    ${VENV}
+        Create the virtualenv if absent.  The name is set by $${VENV}.
 
     python-reqs
-        Install all python requirements from requirements.txt and
-        all requirements.txt to the venv.
+        Install all python requirements from `requirements.txt` to the venv.
 
     data-dirs
-        Create all data directories listed in $${DATA_DIRS}
-        Default: raw/ seq/ tre/ img/ fig/ res/
+        Create all data directories. Directories set in $${DATA_DIRS}.
+        (${DATA_DIRS})
 
 EXAMPLES
-    make init  # Initialize the project.
-    make all   # Carry out all defined steps in the project.
+    make reinit  # Reinitialize a project.
+    make all     # Carry out all defined steps in the project.
 
-GNU MAKE HELP:
+See `man make` for help with GNU Make.
 
 
 endef
@@ -80,7 +88,7 @@ all:
 HELP_TRGTS = help h HELP Help
 .PHONY: ${HELP_TRGTS}
 ${HELP_TRGTS}:
-	@echo "$$HELP_MSG" "$$(${MAKE} -h)" | less
+	@echo "$$HELP_MSG" | more
 
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
@@ -150,8 +158,10 @@ clean:
 #  Initialization {{{1
 # ========================
 .PHONY: init
-init: .git/.initialized
-.git/.initialized:
+INIT_SEMAPHOR=.git/.initialized
+init: ${INIT_SEMAPHOR}
+
+${INIT_SEMAPHOR}:
 	@${MAKE} .git-new-branch
 	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
@@ -161,6 +171,14 @@ init: .git/.initialized
 	@${MAKE} .git-initial-commit
 	touch $@
 
+reinit:
+	@[ "${VENV}" ] && ${MAKE} ${VENV}
+	@${MAKE} python-reqs
+	@${MAKE} data-dirs
+	@${MAKE} .ipynb-filter-config
+	touch ${INIT_SEMAPHOR}
+
+# Python Environment {{{2
 define VENV_ACTIVATE_MSG
 
 A python3 virtual environment has been made in `${VENV}`.
@@ -184,6 +202,18 @@ python-reqs: | ${VENV}
 	pip install --upgrade --no-deps -r ${PIP_REQS}
 	pip install -r ${PIP_REQS}
 
+# Install compbio-scripts with a local repository that can be edited.
+PACKAGE_DIR=./packages
+SEQUTILS_URL=https://github.com/bsmith89/compbio-scripts
+SEQUTILS_DIR=${PACKAGE_DIR}/sequtils
+.editable-sequtils: | ${VENV}
+	mkdir -p ${PACKAGE_DIR}
+	rm -rf ${SEQUTILS_DIR}
+	git clone ${SEQUTILS_URL} ${SEQUTILS_DIR}
+	-pip uninstall sequtils
+	pip install -e ${SEQUTILS_DIR}
+
+# Repository Structure {{{2
 data-dirs:
 	mkdir -p ${DATA_DIRS}
 
@@ -195,6 +225,7 @@ data-dirs:
 	unlink README.md
 	ln -s NOTE.md README.md
 
+# Git Configuration {{{2
 # TODO: Fix up some things assuming I don't always want to initialize
 # from a template, and sometime I want to go from a project.
 .git-new-branch:
@@ -204,7 +235,7 @@ data-dirs:
 
 .git-initial-commit:
 	git add -A
-	git commit -em "[NEW PROJECT]"
+	git commit -em "Started project"
 
 .ipynb-filter-config:
 	git config --local filter.dropoutput_ipynb.clean scripts/ipynb_output_filter
