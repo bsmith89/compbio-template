@@ -241,7 +241,7 @@ data-dirs:
 # from a template, and sometime I want to go from a project.
 .git-new-branch:
 	-git branch -m template
-	-git remote rename origin template-origin
+	-git remote rename origin template-source
 	git checkout master || git checkout -b master
 
 .git-initial-commit:
