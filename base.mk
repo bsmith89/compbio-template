@@ -127,8 +127,8 @@ docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 res/Makefile.complete: Makefile
 	${MAKE} --makefile=$^ -npr > $@
 
-# Just to force a re-write of res/Makefile.complete when init.mk changes.
-Makefile: init.mk
+# Just to force a re-write of res/Makefile.complete when base.mk changes.
+Makefile: base.mk
 	@touch $@
 
 res/Makefile.dot: res/Makefile.complete
