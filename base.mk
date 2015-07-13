@@ -114,6 +114,9 @@ ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
+main.bib: ${EXTERNAL_BIBS}
+	scripts/sort_bib.py $^ > $@
+
 # If EXTERNAL_BIBS, should be defined in local.mk
 # BIB_FILE defined in Makefile User Config Section
 ifdef ${EXTERNAL_BIBS}
@@ -123,6 +126,7 @@ endif
 
 %.html: %.md
 	pandoc -f markdown -t html5 -s --highlight-style pygments \
+		--filter pandoc-citeproc \
         --mathjax=${MATHJAX} --toc --toc-depth=4 --css static/main.css $^ > $@
 
 docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
