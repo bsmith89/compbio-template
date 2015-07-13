@@ -246,7 +246,7 @@ data-dirs:
 
 .git-initial-commit:
 	git add -A
-	git commit -em "Started project"
+	git commit -em "NEW PROJECT: [Name]"
 
 .ipynb-filter-config:
 	git config --local filter.dropoutput_ipynb.clean scripts/ipynb_output_filter
