@@ -27,6 +27,9 @@ export VIRTUAL_ENV = $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 # TODO: Deal with virtualenvs in a more transparent way.
 
+# Documentation settings {{{2
+BIB_FILE=main.bib
+
 # Cleanup settings {{{2
 # Use the following line to add files and directories to be deleted on `make clean`:
 CLEANUP +=
