@@ -4,6 +4,7 @@
 .ipynb_checkpoints/
 *.pyc
 *.html
+*.docx
 *.pdf
 tags
 .initialized
