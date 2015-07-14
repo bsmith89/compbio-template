@@ -148,7 +148,7 @@ res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
                  $(word 2,$^) > $@
 
 fig/%.png: res/%.dot
-	dot -Tpng -Grankdir=BT -Nshape=plaintext < $^ > $@
+	dot -Tpng -Nshape=plaintext -Edir=back < $^ > $@
 
 tags:
 	ctags -R

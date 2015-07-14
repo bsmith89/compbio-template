@@ -4,6 +4,7 @@ import networkx as nx
 import sys
 import re
 import argparse
+from itertools import product
 
 
 def parse_args(argv):
@@ -25,46 +26,60 @@ def parse_args(argv):
     args = parser.parse_args(argv[1:])
     return args
 
-
 def matches_any(string, regex_list):
     return any(regex.search(string) for regex in regex_list)
 
-def remove_node(node):
-    """Re-connect sources to sinks."""
-    pass
+def get_detours(graph, nodes):
+    """Return a edges that by-pass nodes."""
+
+    get_parents = lambda node: list(graph.edge[node])
+    rev_graph = graph.reverse()
+    get_children = lambda node: list(rev_graph.edge[node])
+
+    detours = []  # (child, new_parent)
+    for node in nodes:
+        parents = get_parents(node)
+        i = 0
+        while i < len(parents):
+            parent = parents[i]
+            if parent in nodes:
+                parents.extend(get_parents(parent))  # Parents of the inacessable nodes become new parents
+            i += 1
+        parents = set(parents) - set(nodes)  # Remove the inacessable nodes
+
+        children = set(get_children(node)) - set(nodes)
+        detours.extend(product(children, parents))
+    return set(detours)
 
 def main():
     args = parse_args(sys.argv)
     graph = nx.read_dot(args.infile)
 
-    graph = graph.reverse()
-
     droppers = [re.compile(pattern) for pattern in args.drop]
     keepers = [re.compile(pattern) for pattern in args.keep]
 
-    in_degree = graph.in_degree()
+    rm_nodes = []
+    num_parents = graph.out_degree()
     degree = graph.degree()
     for node in graph.nodes():
         if matches_any(node, droppers) and not matches_any(node, keepers):
-            graph.remove_node(node)
-            continue
-        if degree[node] == 0:
-            graph.remove_node(node)
-        elif in_degree[node] == 0:
+            rm_nodes.append(node)
+        elif degree[node] == 0:
+            rm_nodes.append(node)
+        elif num_parents[node] == 0:
             graph.node[node]['shape'] = 'hexagon'
+        else:
+            pass  # Node will not be changed.
 
-    # After removing nodes, let's mark the new 'root' nodes
-    # indicates nodes which look like roots but aren't.
-    in_degree = graph.in_degree()
-    for node in graph.nodes():
-        if in_degree[node] == 0 and 'shape' not in graph.node[node]:
-            graph.node[node]['shape'] = 'box'
-
+    detours = get_detours(graph, rm_nodes)
+    graph.remove_nodes_from(rm_nodes)
+    graph.add_edges_from(detours, style='dashed')
 
     graph.graph = {}  # Clear all graph, edge, and node attributes
     # nx.write_dot(graph) should work,
     # but doesn't, because it calls nx.to_agraph(graph).clear()
     a = nx.to_agraph(graph)
+    # print(graph.edge, file=sys.stderr)
     a.write(sys.stdout)
 
 if __name__ == "__main__":
