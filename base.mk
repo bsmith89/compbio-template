@@ -138,10 +138,6 @@ docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 res/Makefile.complete: Makefile
 	${MAKE} --makefile=$^ -npr > $@
 
-# Just to force a re-write of res/Makefile.complete when base.mk changes.
-Makefile: base.mk
-	@touch $@
-
 res/Makefile.dot: res/Makefile.complete
 	make_grapher.py -T $^ -o $@ >/dev/null
 
@@ -150,7 +146,6 @@ res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
                  -d '(submodules|venv|python-reqs|init)' \
                  -k '^raw/mcra' -k '^(all|res|figs|docs|Makefile)$$' \
                  $(word 2,$^) > $@
-
 
 fig/%.png: res/%.dot
 	dot -Tpng -Grankdir=BT -Nshape=plaintext < $^ > $@
