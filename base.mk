@@ -181,12 +181,12 @@ reinit:
 	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
-	@${MAKE} .ipynb-filter-config
+	@${MAKE} .git-ipynb-filter-config
 	touch ${INIT_SEMAPHOR}
 
 .merge-template:
-	git pull template-source template:template
-	git merge template
+	git fetch template-source
+	git merge template-source
 
 # Python Environment {{{2
 define VENV_ACTIVATE_MSG
@@ -231,7 +231,7 @@ data-dirs:
 
 .PHONY: .link-readme .confirm-git-mangle \
         .git-branch .git-initial-commit \
-		.ipynb-filter-config
+		.git-ipynb-filter-config
 
 .link-readme:
 	unlink README.md
@@ -244,6 +244,7 @@ data-dirs:
 	git branch -m template
 	git remote rename origin template-source
 	git checkout -B master
+	git branch -d template
 
 .git-initial-commit:
 	git add -A
