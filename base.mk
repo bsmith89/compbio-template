@@ -187,6 +187,7 @@ reinit:
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .git-ipynb-filter-config
+	@${MAKE} .git-pager-config
 	touch ${INIT_SEMAPHOR}
 
 merge-template:
