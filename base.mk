@@ -184,6 +184,10 @@ reinit:
 	@${MAKE} .ipynb-filter-config
 	touch ${INIT_SEMAPHOR}
 
+.merge-template:
+	git pull template-source template:template
+	git merge template
+
 # Python Environment {{{2
 define VENV_ACTIVATE_MSG
 
