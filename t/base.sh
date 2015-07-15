@@ -7,11 +7,11 @@ set -o nounset -o errexit -o pipefail
 
 TEST_BRANCH_NAME=_test
 TEST_TEARDOWN=teardown
+TEST_START_DIR=`pwd`
 TEST_PREFIX="$TEST_START_DIR"/build
 
 base_setup() {
     TEST_START_BRANCH=`git rev-parse --abbrev-ref HEAD`
-    TEST_START_DIR=`pwd`
     git stash save --include-untracked
     git checkout -B "$TEST_BRANCH_NAME"
     git stash apply
