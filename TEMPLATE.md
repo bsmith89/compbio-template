@@ -353,6 +353,9 @@ _All project code is version controlled._
     run the filter when staging files to be commited.
     While this won't erase the output from the local copy of the notebook,
     forks of the project will get an 'un-run' version.
+    Notebook which do not fit the glob pattern `ipynb/*.ipynb` will not be
+    filtered, so static versions of notebooks with output included can be
+    moved to `static/` and version controlled.
 
     IPython has been configured (see `profile_default/` below)
     so that starting a notebook server from the
