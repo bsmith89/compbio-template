@@ -205,12 +205,14 @@ ${VENV}:
 	@echo "$$VENV_ACTIVATE_MSG"
 
 
-PIP_REQS = requirements.txt
+PIP_REQS = $(wildcard requirements.txt)
 
 .PHONY: python-reqs data-dirs
 python-reqs: | ${VENV}
-	pip install --upgrade --no-deps -r ${PIP_REQS}
-	pip install -r ${PIP_REQS}
+	for req_file in ${PIP_REQS}; do \
+        pip install --upgrade --no-deps -r $$req_file ; \
+        pip install -r $$req_file ; \
+    done
 
 # Install compbio-scripts with a local repository that can be edited.
 PACKAGE_DIR=./packages
