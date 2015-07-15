@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Remove some nodes from a graph based on the names of the nodes."""
 
 import networkx as nx
 import sys
@@ -26,8 +27,10 @@ def parse_args(argv):
     args = parser.parse_args(argv[1:])
     return args
 
+
 def matches_any(string, regex_list):
     return any(regex.search(string) for regex in regex_list)
+
 
 def get_detours(graph, nodes):
     """Return a edges that by-pass nodes."""
@@ -43,13 +46,15 @@ def get_detours(graph, nodes):
         while i < len(parents):
             parent = parents[i]
             if parent in nodes:
-                parents.extend(get_parents(parent))  # Parents of the inacessable nodes become new parents
+                # Parents of the inacessable nodes become new parents
+                parents.extend(get_parents(parent))
             i += 1
         parents = set(parents) - set(nodes)  # Remove the inacessable nodes
 
         children = set(get_children(node)) - set(nodes)
         detours.extend(product(children, parents))
     return set(detours)
+
 
 def main():
     args = parse_args(sys.argv)
@@ -78,9 +83,10 @@ def main():
     graph.graph = {}  # Clear all graph, edge, and node attributes
     # nx.write_dot(graph) should work,
     # but doesn't, because it calls nx.to_agraph(graph).clear()
-    a = nx.to_agraph(graph)
+    agraph = nx.to_agraph(graph)
+
     # print(graph.edge, file=sys.stderr)
-    a.write(sys.stdout)
+    agraph.write(sys.stdout)
 
 if __name__ == "__main__":
     main()
