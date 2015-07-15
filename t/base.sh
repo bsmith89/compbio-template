@@ -7,18 +7,20 @@ set -o nounset -o errexit -o pipefail
 
 TEST_BRANCH_NAME=_test
 TEST_TEARDOWN=teardown
+TEST_PREFIX="$TEST_START_DIR"/build
 
 base_setup() {
     TEST_START_BRANCH=`git rev-parse --abbrev-ref HEAD`
     TEST_START_DIR=`pwd`
-    TEST_PREFIX="$TEST_START_DIR"/build
     git stash save --include-untracked
     git checkout -B "$TEST_BRANCH_NAME"
     git stash apply
     git add -A
     git commit -m "[TEST COMMIT; TO BE REMOVED]"
+    mkdir -p "$TEST_PREFIX"
 }
 
+trap base_teardown EXIT
 base_setup
 
 function_exists() {
@@ -27,11 +29,8 @@ function_exists() {
 }
 
 base_teardown() {
-    cd "$TEST_START_DIR"
     git checkout "$TEST_START_BRANCH"
     git stash pop
     git branch -D "$TEST_BRANCH_NAME"
     function_exists "$TEST_TEARDOWN" && "$TEST_TEARDOWN"
 }
-trap base_teardown EXIT
-

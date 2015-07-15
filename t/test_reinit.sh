@@ -3,20 +3,23 @@
 # clone new-project and reinitialize.
 source t/base.sh
 
-test_reinit_setup() {
-    source t/test_init.sh
-    cd "$TEST_PREFIX"
+setup() {
+    TEST_REPO=`mktemp -d "$TEST_PREFIX"/XXXX.tmp.d`
+    git clone . "$TEST_REPO"
+    test_init_setup
+    cd "$TEST_REPO"  # {
+    rm requirements.txt
+    make INITIAL_COMMIT_OPTIONS='' init
+    cd "$TEST_START_DIR" # }
     TEST_REPO_CLONE=`"$TEST_PREFIX"/XXXX.tmp.d`
     git clone "$TEST_REPO" "$TEST_REPO_CLONE"
 }
 
-test_reinit_setup
-cd "$TEST_REPO_CLONE"
+setup
+cd "$TEST_REPO_CLONE"  # {
 make reinit
+cd "$TEST_START_DIR"  # }
 
-test_reinit_teardown() {
-    test_init_teardown
-    rm -rf "$TEST_PROJ_CLONE"
+teardown() {
+    rm -rf "$TEST_REPO_CLONE" "$TEST_REPO"
 }
-# So that the base EXIT trap will run it:
-teardown() { test_reinit_teardown; }
