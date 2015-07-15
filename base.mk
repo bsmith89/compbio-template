@@ -1,5 +1,5 @@
 # User help message {{{1
-define HELP_MSG
+define PROJECT_HELP_MSG
 
 ================================
  Analysis Makefile Documentation
@@ -34,9 +34,10 @@ TARGETS
             (3) data-dirs
             (4) link README.md to NOTE.md (from TEMPLATE.md)
             (5) configure git to automatically clean IPython notebooks;
-            (6) rename the 'origin' git remote to 'template'
-            (7) initial project commit
-            (8) create `.git/.initialized` to indicate that these steps are
+            (6) rename the 'origin' git remote to 'template-source'
+            (7) make a new branch 'master' and remove the origin branch
+            (8) initial project commit
+            (9) create `.git/.initialized` to indicate that these steps are
                 completed.
 
     reinit
@@ -58,6 +59,9 @@ TARGETS
         Create all data directories. Directories set in $${DATA_DIRS}.
         (${DATA_DIRS})
 
+    merge-template:
+        Pull in changes to the template remote 'template-source'.
+
 EXAMPLES
     make reinit  # Reinitialize a project.
     make all     # Carry out all defined steps in the project.
@@ -66,7 +70,7 @@ See `man make` for help with GNU Make.
 
 
 endef
-export HELP_MSG
+export PROJECT_HELP_MSG
 
 # ========================
 #  Standard Configuration {{{1
@@ -88,7 +92,7 @@ all:
 HELP_TRGTS = help h HELP Help
 .PHONY: ${HELP_TRGTS}
 ${HELP_TRGTS}:
-	@echo "$$HELP_MSG" | more
+	@echo "$$PROJECT_HELP_MSG" | more
 
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
@@ -173,8 +177,9 @@ ${INIT_SEMAPHOR}:
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
-	@${MAKE} .ipynb-filter-config
+	@${MAKE} .git-ipynb-filter-config
 	@${MAKE} .git-initial-commit
+	@${MAKE} .git-pager-config
 	touch $@
 
 reinit:
@@ -184,7 +189,7 @@ reinit:
 	@${MAKE} .git-ipynb-filter-config
 	touch ${INIT_SEMAPHOR}
 
-.merge-template:
+merge-template:
 	git fetch template-source
 	git merge template-source
 
@@ -246,10 +251,21 @@ data-dirs:
 	git checkout -B master
 	git branch -d template
 
+define INITIAL_PROJECT_COMMIT_MSG
+Initial project commit.
+
+# PLEASE CUSTOMIZE THIS MESSAGE.
+endef
+export INITIAL_PROJECT_COMMIT_MSG
+
 .git-initial-commit:
 	git add -A
-	git commit -em "NEW PROJECT: [Name]"
+	git commit -em "$$INITIAL_PROJECT_COMMIT_MSG"
 
-.ipynb-filter-config:
+.git-ipynb-filter-config:
 	git config --local filter.dropoutput_ipynb.clean scripts/ipynb_output_filter
 	git config --local filter.dropoutput_ipynb.smudge cat
+
+# Since Makefiles mix tabs and spaces, the default 8 spaces is too large
+.git-pager-config:
+	git config --local core.pager 'less -x4'
