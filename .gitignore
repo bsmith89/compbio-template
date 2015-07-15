@@ -18,11 +18,10 @@ meta/*
 tre/*
 img/*
 profile_default/*
-fig/
-venv/
-packages/
+fig/*
+venv/*
+packages/*
+build/
 
 # But white-list these files
-!*/README.md
-!*/NOTES.md
 !profile_default/*config.py
