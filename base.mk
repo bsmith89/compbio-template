@@ -178,9 +178,11 @@ ${INIT_SEMAPHOR}:
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
 	@${MAKE} .git-ipynb-filter-config
-	@${MAKE} .git-initial-commit
+	@${MAKE} INITIAL_COMMIT_OPTIONS='${INITIAL_COMMIT_OPTIONS}' .git-initial-commit
 	@${MAKE} .git-pager-config
 	touch $@
+
+# TODO: Figure out why the explicit passing of INITIAL_COMMIT_OPTIONS is required.
 
 reinit:
 	@[ "${VENV}" ] && ${MAKE} ${VENV}
@@ -209,7 +211,6 @@ export VENV_ACTIVATE_MSG
 ${VENV}:
 	python3 -m venv $@
 	@echo "$$VENV_ACTIVATE_MSG"
-
 
 PIP_REQS = $(wildcard requirements.txt)
 
@@ -259,12 +260,15 @@ Initial project commit.
 endef
 export INITIAL_PROJECT_COMMIT_MSG
 
+INITIAL_COMMIT_OPTIONS = -e
+
 .git-initial-commit:
 	git add -A
-	git commit -em "$$INITIAL_PROJECT_COMMIT_MSG"
+	git commit ${INITIAL_COMMIT_OPTIONS} -m "$$INITIAL_PROJECT_COMMIT_MSG"
 
 .git-ipynb-filter-config:
-	git config --local filter.dropoutput_ipynb.clean scripts/ipynb_output_filter
+	git config --local filter.dropoutput_ipynb.clean \
+        scripts/ipynb_output_filter
 	git config --local filter.dropoutput_ipynb.smudge cat
 
 # Since Makefiles mix tabs and spaces, the default 8 spaces is too large
