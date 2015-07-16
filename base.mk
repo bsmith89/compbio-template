@@ -278,13 +278,4 @@ INITIAL_COMMIT_OPTIONS = -e
 # TODO: Make the _test branch once; each script checks if it's in it, but
 # otherwise leaves well-enough alone.
 test:
-	@rm -rf $@.log
-	@rm -rf $@.out.log
-	@for test in $$(find t -name test_*) ; do \
-        echo "RUNNING TEST SUITE: $$test" | tee -a $@.out.log ; \
-        bash "$$test" >> $@.out.log 2>&1 ; \
-        echo "$$?	$$test" >> $@.log ; \
-    done
-	@echo
-	@cat $@.log
-	@awk '{if ($$1 != 0) exit 1}' $@.log
+	bash t/run_tests.sh t
