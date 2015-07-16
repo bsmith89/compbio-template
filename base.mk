@@ -277,11 +277,16 @@ INITIAL_COMMIT_OPTIONS = -e
 	git config --local core.pager 'less -x4'
 
 # Testing {{{1
-.PHONY: test test-template
+.PHONY: test
 
-test: test-template
-
-test-%: t/%/test_*
-	for test in $^; do \
-        bash $$test ; \
+test:
+	@rm -rf $@.log
+	@rm -rf $@.out.log
+	@for test in $$(find t -name test_*) ; do \
+        echo "RUNNING TEST SUITE: $$test" | tee -a $@.out.log ; \
+        bash "$$test" >> $@.out.log 2>&1 ; \
+        echo "$$?	$$test" >> $@.log ; \
     done
+	@echo
+	@cat $@.log
+	@awk '{if ($$1 != 0) exit 1}' $@.log
