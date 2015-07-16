@@ -167,7 +167,7 @@ clean:
 # ========================
 #  Initialization {{{1
 # ========================
-.PHONY: init
+.PHONY: init reinit merge-template data-dirs
 INIT_SEMAPHOR=.git/.initialized
 init: ${INIT_SEMAPHOR}
 
@@ -197,6 +197,7 @@ merge-template:
 	git merge template-source
 
 # Python Environment {{{2
+.PHONY: python-reqs .editable-sequtils
 define VENV_ACTIVATE_MSG
 
 A python3 virtual environment has been made in `${VENV}`.
@@ -214,7 +215,6 @@ ${VENV}:
 
 PIP_REQS = $(wildcard requirements.txt)
 
-.PHONY: python-reqs data-dirs
 python-reqs: | ${VENV}
 	for req_file in ${PIP_REQS}; do \
         pip install --upgrade --no-deps -r $$req_file ; \
@@ -233,18 +233,19 @@ SEQUTILS_DIR=${PACKAGE_DIR}/sequtils
 	pip install -e ${SEQUTILS_DIR}
 
 # Repository Structure {{{2
+.PHONY: .link-readme data-dirs
+
 data-dirs:
 	mkdir -p ${DATA_DIRS}
-
-.PHONY: .link-readme .confirm-git-mangle \
-        .git-branch .git-initial-commit \
-		.git-ipynb-filter-config
 
 .link-readme:
 	unlink README.md
 	ln -s NOTE.md README.md
 
 # Git Configuration {{{2
+.PHONY: .git-new-branch .git-initial-commit \
+		.git-ipynb-filter-config .git-pager-config
+
 # TODO: Fix up some things assuming I don't always want to initialize
 # from a template, and sometime I want to go from a project.
 .git-new-branch:
