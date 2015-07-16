@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 # Initialize a new project and then try adding an ipynb.
 # Make sure the filtering works.
-source t/template/base.sh
 
-IPYNB_SOURCE=t/data/notebook.ipynb
+IPYNB_SOURCE=$(dirname "$0")/notebook.ipynb
 
 setup() {
-    cd "$TEST_START_DIR"
     TEST_REPO=`mktemp -d "$TEST_PREFIX"/XXXX.tmp.d`
     git clone . "$TEST_REPO"
     cd "$TEST_REPO"  # {
@@ -18,13 +16,15 @@ EOF
     cp "$IPYNB_SOURCE" "$TEST_REPO"/ipynb/notebook.ipynb
 }
 
+setup
+
 teardown() {
     rm -rf "${TEST_REPO}"
 }
 
-setup
-[ `pwd` == "$TEST_START_DIR" ]
-cd "$TEST_REPO"  # {
+trap teardown EXIT
+
+cd "$TEST_REPO"
 cp ipynb/notebook.ipynb pre-add.ipynb
 git add ipynb/notebook.ipynb
 cp ipynb/notebook.ipynb post-add.ipynb
@@ -39,4 +39,3 @@ cp ipynb/notebook.ipynb committed.ipynb
 diff pre-add.ipynb post-add.ipynb
 diff pre-add.ipynb post-commit.ipynb
 ! diff pre-add.ipynb committed.ipynb
-cd -  # }

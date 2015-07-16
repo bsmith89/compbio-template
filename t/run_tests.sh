@@ -10,9 +10,9 @@ if ! mkdir "$LOCKDIR"; then
     exit 1
 fi
 
-[ -z "$1" ] && TEST_DIR="$1" || TEST_DIR='.'
-START_DIR=$(pwd)
-export PREFIX=build
+[ -z "$1" ] && TEST_SCRIPT_DIR="$1" || TEST_SCRIPT_DIR='.'
+export TEST_START_DIR=$(pwd)
+export TEST_PREFIX=$(realpath build)
 # Save the original branchname so we can revert
 START_BRANCH=`git rev-parse --abbrev-ref HEAD`
 # Switch to a random branchname (not quite threadsafe) so we don't mess up
@@ -24,11 +24,11 @@ git checkout -B "$TEST_BRANCH"
 git stash apply
 git add -A
 git commit --allow-empty -m "[TEST COMMIT; TO BE REMOVED]"
-mkdir -p "$PREFIX"
-ALL_TESTS=$(find "$TEST_DIR" -name test_*)
+mkdir -p "$TEST_PREFIX"
+ALL_TESTS=$(find "$TEST_SCRIPT_DIR" -name test_*)
 
 teardown() {
-    cd "$START_DIR"
+    cd "$TEST_START_DIR"
     git checkout "$START_BRANCH"
     git stash pop
     git branch -D "$TEST_BRANCH"
