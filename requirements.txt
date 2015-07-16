@@ -1,14 +1,15 @@
+# Just to shut-up that damned warning message.
 pip>=6.1.1
+
+# Standard part of projects, but not _entirely_ necessary.
 ipython[notebook]>=3.1
-git+https://github.com/bsmith89/compbio-scripts.git#egg=sequtils
+
+# Common tools for working with sequence data
+# -e flag makes it editable:
+# installing with `pip install --src packages -r requirements.txt`
+# will result in a local copy of the repository in that directory.
+-e git+https://github.com/bsmith89/compbio-scripts.git#egg=sequtils
+
+# For generating makefile figures.
 networkx
 git+https://github.com/pygraphviz/pygraphviz.git#egg=pygraphviz
-# Un-comment lines to include these suggested requirements.
-# numpy>=1.8.0
-# scipy>=0.14.0
-# pandas>=0.13.1
-# matplotlib>=1.3.1
-# patsy>=0.3.0
-# statsmodels>=0.6.0
-# biopython>=1.65
-# line_profiler

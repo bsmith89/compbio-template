@@ -215,22 +215,13 @@ ${VENV}:
 
 PIP_REQS = $(wildcard requirements.txt)
 
+PACKAGE_DIR=./packages
+
 python-reqs: | ${VENV}
 	for req_file in ${PIP_REQS}; do \
-        pip install --upgrade --no-deps -r $$req_file ; \
+        pip install --upgrade --no-deps --src ${PACKAGE_DIR} -r $$req_file ; \
         pip install -r $$req_file ; \
     done
-
-# Install compbio-scripts with a local repository that can be edited.
-PACKAGE_DIR=./packages
-SEQUTILS_URL=https://github.com/bsmith89/compbio-scripts
-SEQUTILS_DIR=${PACKAGE_DIR}/sequtils
-.editable-sequtils: | ${VENV}
-	mkdir -p ${PACKAGE_DIR}
-	rm -rf ${SEQUTILS_DIR}
-	git clone ${SEQUTILS_URL} ${SEQUTILS_DIR}
-	-pip uninstall sequtils
-	pip install -e ${SEQUTILS_DIR}
 
 # Repository Structure {{{2
 .PHONY: .link-readme data-dirs
