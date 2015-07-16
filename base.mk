@@ -112,8 +112,6 @@ DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/
 # ====================
 #  Documentation {{{1
 # =======================
-# TODO: Consider splitting out all of the constant parts of this file into
-# a new Makefile
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
@@ -284,6 +282,10 @@ INITIAL_COMMIT_OPTIONS = -e
 # Testing {{{1
 .PHONY: test
 
+# The way I have it designed currently, each test independently saves
+# git's state and restores it in the end with an exit trap.
+# TODO: Make the _test branch once; each script checks if it's in it, but
+# otherwise leaves well-enough alone.
 test:
 	@rm -rf $@.log
 	@rm -rf $@.out.log
