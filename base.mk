@@ -112,14 +112,9 @@ DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/
 # ====================
 #  Documentation {{{1
 # =======================
-# TODO: Consider splitting out all of the constant parts of this file into
-# a new Makefile
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-
-main.bib: ${EXTERNAL_BIBS}
-	scripts/sort_bib.py $^ > $@
 
 # If EXTERNAL_BIBS, should be defined in local.mk
 # BIB_FILE defined in Makefile User Config Section
@@ -128,10 +123,18 @@ ${BIB_FILE}: ${EXTERNAL_BIBS}
 	scripts/sort_bib.py $^ > $@
 endif
 
-%.html: %.md
-	pandoc -f markdown -t html5 -s --highlight-style pygments \
-		--filter pandoc-citeproc \
-        --mathjax=${MATHJAX} --toc --toc-depth=4 --css static/main.css $^ > $@
+PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
+                      --filter pandoc-citeproc --toc --toc-depth=4 -o $@
+
+%.html: %.md ${BIB_FILE}
+	pandoc ${PANDOC_OPTS_GENERAL} -t html5 --standalone --mathjax=${MATHJAX} \
+        --css static/main.css $<
+
+%.docx: %.md ${BIB_FILE}
+	pandoc ${PANDOC_OPTS_GENERAL} -t docx $<
+
+%.pdf: %.md ${BIB_FILE}
+	pandoc ${PANDOC_OPTS_GENERAL} -t latex $<
 
 docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 
@@ -270,6 +273,10 @@ INITIAL_COMMIT_OPTIONS = -e
 # Testing {{{1
 .PHONY: test
 
+# The way I have it designed currently, each test independently saves
+# git's state and restores it in the end with an exit trap.
+# TODO: Make the _test branch once; each script checks if it's in it, but
+# otherwise leaves well-enough alone.
 test:
 	@rm -rf $@.log
 	@rm -rf $@.out.log
