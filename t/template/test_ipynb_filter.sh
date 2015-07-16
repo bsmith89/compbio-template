@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Initialize a new project and then try adding an ipynb.
 # Make sure the filtering works.
-source t/base.sh
+source t/template/base.sh
 
 IPYNB_SOURCE=t/data/notebook.ipynb
 

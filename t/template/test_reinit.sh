@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # After sourcing test_init.sh,
 # clone new-project and reinitialize.
-source t/base.sh
+source t/template/base.sh
 
 setup() {
     cd "$TEST_START_DIR"

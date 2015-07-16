@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Clone the template and initialize it.
-source t/base.sh
+source t/template/base.sh
 
 setup() {
     cd "$TEST_START_DIR"

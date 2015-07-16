@@ -275,3 +275,13 @@ INITIAL_COMMIT_OPTIONS = -e
 # Since Makefiles mix tabs and spaces, the default 8 spaces is too large
 .git-pager-config:
 	git config --local core.pager 'less -x4'
+
+# Testing {{{1
+.PHONY: test test-template
+
+test: test-template
+
+test-%: t/%/test_*
+	for test in $^; do \
+        bash $$test ; \
+    done
