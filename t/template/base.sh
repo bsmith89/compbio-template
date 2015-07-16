@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
-# Set flags to make an effective test script.
 # Make a commit of the current repository state
 # (so you can test before you commit for real).
 # Setup a trap to revert the commit.
-set -o nounset -o errexit -o pipefail
+source t/base.sh
 
 TEST_BRANCH_NAME=_test
 TEST_TEARDOWN=teardown
@@ -33,6 +32,6 @@ base_teardown() {
     git branch -D "$TEST_BRANCH_NAME"
     function_exists "$TEST_TEARDOWN" && "$TEST_TEARDOWN"
 }
-
 trap base_teardown EXIT
+
 base_setup
