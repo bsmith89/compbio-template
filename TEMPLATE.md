@@ -525,3 +525,12 @@ and a programmatic description of the pipeline in the `Makefile`.
 | `align`       | aligned by homology        | a variety of tools are available    |
 | `ungap`       | gap only positions removed |                                     |
 | `codon`       | codons aligned             | this is usually done via back-align |
+
+
+# TODO #
+
+-   [] Testing framework
+-   [] Fill in common file conventions
+-   [] SHA-1 checksum for data files
+-   [] Package scripts in a different repo?
+-   [] `template` branch?
