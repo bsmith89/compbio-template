@@ -28,7 +28,7 @@ setup() {
 
     git add -A
     git commit --allow-empty --quiet -m "[TEST COMMIT; TO BE REMOVED]"
-    git checkout -B --quiet "$TEST_BRANCH"
+    git checkout --quiet -B "$TEST_BRANCH"
 
     mkdir -p "$TEST_PREFIX"
     ALL_TESTS=$(find "$TEST_SCRIPT_DIR" -name test_*)
@@ -47,6 +47,16 @@ teardown() {
 
 trap teardown EXIT
 
+TEST_RES="$TEST_PREFIX"/result.log
+rm -rf "$TEST_RES"
+
 for t in $ALL_TESTS; do
-    bash "$t"
+    TEST_BASENAME=$(basename "$t")
+    TEST_NAME=${TEST_BASENAME/test_/}
+    TEST_OUT="$TEST_PREFIX"/"$TEST_NAME".out.log
+    TEST_ERR="$TEST_PREFIX"/"$TEST_NAME".err.log
+    echo $(bash "$t" 1>"$TEST_OUT" 2>"$TEST_ERR"; echo "$t	$?") \
+        | tee -a "$TEST_RES"
 done
+wait
+awk '{if ($2 != 0) exit 1}' $TEST_RES
