@@ -279,3 +279,6 @@ INITIAL_COMMIT_OPTIONS = -e
 # otherwise leaves well-enough alone.
 test:
 	bash t/run_tests.sh t
+
+test-%:
+	bash t/run_tests.sh t/$*
