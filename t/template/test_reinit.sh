@@ -14,12 +14,11 @@ setup() {
     cd "$TEST_REPO_CLONE"
 }
 
-setup
-
 teardown() {
     rm -rf "$TEST_REPO_CLONE" "$TEST_REPO"
 }
-
 trap teardown EXIT
+
+setup
 
 make reinit

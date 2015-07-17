@@ -7,13 +7,12 @@ setup() {
     git clone . "$TEST_REPO"
 }
 
-setup
-
 teardown() {
     rm -rf "$TEST_REPO"
 }
-
 trap teardown EXIT
+
+setup
 
 cd "$TEST_REPO"
 rm requirements.txt
