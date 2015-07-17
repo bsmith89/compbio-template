@@ -56,7 +56,7 @@ for t in $ALL_TESTS; do
     TEST_OUT="$TEST_PREFIX"/"$TEST_NAME".out.log
     TEST_ERR="$TEST_PREFIX"/"$TEST_NAME".err.log
     echo $(bash "$t" 1>"$TEST_OUT" 2>"$TEST_ERR"; echo "$t	$?") \
-        | tee -a "$TEST_RES"
+        | tee -a "$TEST_RES" &
 done
 wait
 awk '{if ($2 != 0) exit 1}' $TEST_RES
