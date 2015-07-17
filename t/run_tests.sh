@@ -3,10 +3,11 @@
 # Place a semaphore during testing
 set -o nounset -o errexit -o pipefail
 
-if [ -z "$1" ]; then
+if [ -z "${1:-}" ]; then
     TEST_SCRIPT_DIR='.'
 else
     TEST_SCRIPT_DIR="$1"
+    [ -d "$TEST_SCRIPT_DIR" ]
 fi
 
 setup() {
