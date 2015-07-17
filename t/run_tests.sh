@@ -14,7 +14,7 @@ setup() {
     LOCKDIR=.testing
     mkdir -p $(dirname "$LOCKDIR")
     if ! mkdir "$LOCKDIR"; then
-        echo "Cannot acquire lock. '$LOCKDIR' exists.  Exiting." >&2
+        echo "Cannot acquire testing lock. '$LOCKDIR' exists.  Exiting." >&2
         exit 1
     fi
 
@@ -27,8 +27,8 @@ setup() {
     TEST_BRANCH=$(mktemp -u _test_XXXXXXX)
 
     git add -A
-    git commit --allow-empty -m "[TEST COMMIT; TO BE REMOVED]"
-    git checkout -B "$TEST_BRANCH"
+    git commit --allow-empty --quiet -m "[TEST COMMIT; TO BE REMOVED]"
+    git checkout -B --quiet "$TEST_BRANCH"
 
     mkdir -p "$TEST_PREFIX"
     ALL_TESTS=$(find "$TEST_SCRIPT_DIR" -name test_*)
@@ -38,10 +38,10 @@ setup
 
 teardown() {
     cd "$TEST_START_DIR"
-    git reset --hard HEAD
-    git checkout "$START_BRANCH"
-    git reset HEAD^
-    git branch -D "$TEST_BRANCH"
+    git reset --quiet --hard HEAD
+    git checkout --quiet "$START_BRANCH"
+    git reset --quiet HEAD^
+    git branch --quiet -D "$TEST_BRANCH"
     rm -r "$LOCKDIR"
 }
 
