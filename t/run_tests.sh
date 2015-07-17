@@ -9,11 +9,6 @@ else
     TEST_SCRIPT_DIR="$1"
 fi
 
-git_has_no_changes() {
-    git diff-index --quiet HEAD --
-    return $?
-}
-
 setup() {
     LOCKDIR=.testing
     mkdir -p $(dirname "$LOCKDIR")
@@ -30,18 +25,9 @@ setup() {
     # history
     TEST_BRANCH=$(mktemp -u _test_XXXXXXX)
 
-    # Commit everything in the working directory if they exist
-    if git_has_no_changes; then
-        git checkout -B "$TEST_BRANCH"
-        STASHED=false
-    else
-        git stash save
-        git checkout -B "$TEST_BRANCH"
-        git stash apply
-        git add -A
-        git commit --allow-empty -m "[TEST COMMIT; TO BE REMOVED]"
-        STASHED=true
-    fi
+    git add -A
+    git commit --allow-empty -m "[TEST COMMIT; TO BE REMOVED]"
+    git checkout -B "$TEST_BRANCH"
 
     mkdir -p "$TEST_PREFIX"
     ALL_TESTS=$(find "$TEST_SCRIPT_DIR" -name test_*)
@@ -51,10 +37,9 @@ setup
 
 teardown() {
     cd "$TEST_START_DIR"
+    git reset --hard HEAD
     git checkout "$START_BRANCH"
-    if [ "$STASHED" = true ]; then
-        git stash pop
-    fi
+    git reset HEAD^
     git branch -D "$TEST_BRANCH"
     rm -r "$LOCKDIR"
 }
