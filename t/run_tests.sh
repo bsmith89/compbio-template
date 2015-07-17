@@ -31,7 +31,7 @@ setup() {
     git checkout --quiet -B "$TEST_BRANCH"
 
     mkdir -p "$TEST_PREFIX"
-    ALL_TESTS=$(find "$TEST_SCRIPT_DIR" -name test_*)
+    ALL_TESTS=$(find "$TEST_SCRIPT_DIR" -name test_* -type f)
 }
 
 setup
@@ -50,12 +50,13 @@ trap teardown EXIT
 TEST_RES="$TEST_PREFIX"/result.log
 rm -rf "$TEST_RES"
 
-for t in $ALL_TESTS; do
-    TEST_BASENAME=$(basename "$t")
-    TEST_NAME=${TEST_BASENAME/test_/}
-    TEST_OUT="$TEST_PREFIX"/"$TEST_NAME".out.log
-    TEST_ERR="$TEST_PREFIX"/"$TEST_NAME".err.log
-    echo $(bash "$t" 1>"$TEST_OUT" 2>"$TEST_ERR"; echo "$t	$?") \
+for T in $ALL_TESTS; do
+    TEST_NAME=$(basename "$T")
+    export TEST_OUT_DIR=$(mktemp -d -p "$TEST_PREFIX" "$TEST_NAME".XXXX)
+    TEST_OUT="$TEST_OUT_DIR"/out.log
+    TEST_ERR="$TEST_OUT_DIR"/err.log
+    echo $(bash "$T" 1>"$TEST_OUT" 2>"$TEST_ERR"; \
+           echo "$T	$?	$TEST_OUT_DIR") \
         | tee -a "$TEST_RES" &
 done
 wait
