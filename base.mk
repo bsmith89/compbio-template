@@ -96,7 +96,7 @@ ${HELP_TRGTS}:
 
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
-VENV = ./venv
+VENV = ./.venv
 export VIRTUAL_ENV = $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
@@ -150,7 +150,7 @@ res/Makefile.dot: res/Makefile.complete
 
 res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
 	$(word 1,$^) -d '^raw/ab1' -d '^bin/utils/' -d '^\.' -d '\.git' \
-                 -d '(submodules|venv|python-reqs|init)' \
+                 -d '(submodules|${VENV}|python-reqs|init)' \
                  -k '^raw/mcra' -k '^(all|res|figs|docs|Makefile)$$' \
                  $(word 2,$^) > $@
 

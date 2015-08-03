@@ -20,7 +20,7 @@ tre/*
 img/*
 profile_default/*
 fig/*
-venv/*
+.venv/*
 packages/*
 build/
 
