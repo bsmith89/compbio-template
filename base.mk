@@ -145,8 +145,8 @@ docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 res/Makefile.complete: Makefile
 	${MAKE} --makefile=$^ -npr > $@
 
-res/Makefile.dot: res/Makefile.complete
-	make_grapher.py -T $^ -o $@ >/dev/null
+res/Makefile.dot: scripts/parse_make_db.py res/Makefile.complete
+	$^ > $@
 
 res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
 	$(word 1,$^) -d '^raw/ab1' -d '^bin/utils/' -d '^\.' -d '\.git' \
@@ -154,8 +154,8 @@ res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
                  -k '^raw/mcra' -k '^(all|res|figs|docs|Makefile)$$' \
                  $(word 2,$^) > $@
 
-fig/%.png: res/%.dot
-	dot -Tpng -Nshape=plaintext -Edir=back < $^ > $@
+fig/Makefile.reduced.%: res/Makefile.reduced.dot
+	dot -T$* -Edir=back -Nshape=plaintext < $^ > $@
 
 tags:
 	ctags -R
