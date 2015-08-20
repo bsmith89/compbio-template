@@ -11,5 +11,5 @@ ipython[notebook]>=3.1
 -e git+https://github.com/bsmith89/compbio-scripts.git#egg=sequtils
 
 # For generating makefile figures.
-networkx
+networkx==1.9.1
 git+https://github.com/pygraphviz/pygraphviz.git#egg=pygraphviz
