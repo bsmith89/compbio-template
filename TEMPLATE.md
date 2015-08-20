@@ -415,6 +415,13 @@ same configuration.
 
 :   Configuration files for `git`.
 
+`requirements.txt`
+
+:   Packages installed to the python virtualenv on `make python-reqs`.
+    To make it easier for others to re-run your scripts, rather than using
+    `pip install [package]` or similar, instead add the package to this file.
+    Then make `python-reqs`.
+
 ## Data ##
 _Data is not version controlled._
 
