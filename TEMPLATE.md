@@ -290,7 +290,7 @@ _All project code is version controlled._
     installation of sequtils with a development install.
 
     ```
-    source venv/bin/activate
+    source .venv/bin/activate
     pip install -e path/to/clone
     ```
 
@@ -378,8 +378,8 @@ same configuration.
 :   Empty file used to signal whether or not the project has been initialized.
     The file is created on running `make init`,
     which adds the IPython notebook filter to the project's git configuration,
-    makes a new Python virtual environment (`venv/`), and installs everything
-    in `requirements.txt` to `venv`.
+    makes a new Python virtual environment (`.venv/`), and installs everything
+    in `requirements.txt` to `.venv`.
 
     Unlike the other configuration files in this template,
     `.initialized` is ignored by git.
