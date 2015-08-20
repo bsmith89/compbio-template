@@ -69,11 +69,11 @@ h1.title {
     border: none;
 }
 
-dt code {
+dt, code {
     font-weight: bold;
 }
 
-dd p {
+dd, p {
     margin-top: 0;
 }
 
