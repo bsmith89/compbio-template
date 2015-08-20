@@ -118,6 +118,8 @@ MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_
 
 # If EXTERNAL_BIBS, should be defined in local.mk
 # BIB_FILE defined in Makefile User Config Section
+# TODO: Why does this think that BIB_FILE is unset when I'm importing
+# this entire file from Makefile (where main.bib IS set)?1?!
 ifdef ${EXTERNAL_BIBS}
 ${BIB_FILE}: ${EXTERNAL_BIBS}
 	scripts/sort_bib.py $^ > $@
