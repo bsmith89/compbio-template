@@ -143,15 +143,6 @@ git push -u origin
 
  -  [Exuberant Ctags](http://ctags.sourceforge.net/)
 
-### Optional: stree ###
-
- -  [git-stree](https://github.com/tdd/git-stree)
-    (see [tutorial][stree-tutorial])
-
-    For pushing changes back to the compbio-scripts repository.
-
-[stree-tutorial]: https://medium.com/@porteneuve/mastering-git-subtrees-943d29a798ec
-
 ## Notes Files ##
 _All files which describe the project are version controlled._
 
