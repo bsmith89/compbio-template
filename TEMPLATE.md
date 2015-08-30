@@ -137,7 +137,6 @@ git push -u origin
 
 ### Optional: dependency diagram ###
 
- -  [make_grapher.py](https://bitbucket.org/jpbarrette/makegrapher)
  -  Graphviz
 
 ### Optional: tags ###
