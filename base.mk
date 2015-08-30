@@ -128,15 +128,15 @@ endif
 PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
                       --filter pandoc-citeproc --toc --toc-depth=4 -o $@
 
-%.html: %.md ${BIB_FILE}
+%.html: %.md header.yaml ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t html5 --standalone --mathjax=${MATHJAX} \
-        --css static/main.css $<
+        --css static/main.css $(word 1,$^) $(word 2,$^)
 
 %.docx: %.md ${BIB_FILE}
-	pandoc ${PANDOC_OPTS_GENERAL} -t docx $<
+	pandoc ${PANDOC_OPTS_GENERAL} -t docx $(word 1,$^) $(word 2,$^)
 
 %.pdf: %.md ${BIB_FILE}
-	pandoc ${PANDOC_OPTS_GENERAL} -t latex $<
+	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^)
 
 docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 

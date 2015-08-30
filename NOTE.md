@@ -1,6 +1,6 @@
 ---
-title: [Project Name]
-author: [Author Name]
+title: "[Project Name]"
+author: "[Author Name]"
 ...
 
 <!-- Top Matter {{{-->
