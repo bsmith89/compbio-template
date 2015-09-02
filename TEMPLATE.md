@@ -164,7 +164,7 @@ $$
 \chi^2
 $$
 
-[`NOTE.md`](NOTE.html)
+[`NOTE.md`](NOTE.md)
 
 :   This is the core notebook for the project.
     All experiments and conclusions should be clearly described in the

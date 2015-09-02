@@ -18,7 +18,7 @@ author: "[Author Name]"
 [TermB]
 :   [Definition]
 
-For additional information on project structure, see [TEMPLATE.md](TEMPLATE.html).
+For additional information on project structure, see [TEMPLATE.md](TEMPLATE.md).
 
 ## Project Specific Requirements ##
 
