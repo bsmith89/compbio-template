@@ -18,6 +18,8 @@ author: "[Author Name]"
 [TermB]
 :   [Definition]
 
+For additional information on project structure, see [TEMPLATE.md](TEMPLATE.html).
+
 ## Project Specific Requirements ##
 
 ### Applications ###
