@@ -29,7 +29,7 @@ CLEANUP +=
 # By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
 DATA_DIRS +=
 
-# FINALLY: Include base makefile.
+# FINALLY: Include base makefile {{{2
 include base.mk
 
 # ==============

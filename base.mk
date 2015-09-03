@@ -86,8 +86,7 @@ export PROJECT_HELP_MSG
 
 # The target `all` needs to be the first one defined (besides special
 # targets) in order for it to be made on running `make` without a target.
-.PHONY: all
-all:
+.DEFAULT_GOAL := all
 
 HELP_TRGTS = help h HELP Help
 .PHONY: ${HELP_TRGTS}
