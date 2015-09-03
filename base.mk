@@ -223,6 +223,8 @@ PIP_REQS = $(wildcard requirements.txt)
 PACKAGE_DIR=./packages
 
 python-reqs: | ${VENV}
+	@python --version
+	@which python
 	for req_file in ${PIP_REQS}; do \
         pip install --upgrade --no-deps --src ${PACKAGE_DIR} -r $$req_file ; \
         pip install -r $$req_file ; \
