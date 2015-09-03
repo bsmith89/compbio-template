@@ -14,18 +14,7 @@ all: docs figs res
 
 # Compute environment {{{2
 # Name, and directory, of the python virtual environment:
-VENV = ./venv
-# All recipes are run as though they are within the virtualenv.
-# WARNING: This may cause difficult to debug problems.
-# To deactivate, thereby running all recipes from the global python
-# environment, comment out the following line:
-export VIRTUAL_ENV = $(abspath ${VENV})
-
-# Use the following line to add to the PATH of all recipes.
-# WARNING: These executibles will not necessarily be available in the same
-# way from the command line, so you may get difficult to debug problems.
-export PATH := ${VIRTUAL_ENV}/bin:${PATH}
-# TODO: Deal with virtualenvs in a more transparent way.
+VENV = .venv
 
 # Documentation settings {{{2
 BIB_FILE=main.bib
