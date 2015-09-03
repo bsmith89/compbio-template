@@ -172,9 +172,31 @@ clean:
 # ========================
 #  Initialization {{{1
 # ========================
+
 .PHONY: init reinit merge-template data-dirs
 INIT_SEMAPHOR=.git/.initialized
 init: ${INIT_SEMAPHOR}
+
+# Test if you're already initialized
+INITIALIZED := $(shell [ -f ${INIT_SEMAPHOR} ] && echo True || echo False)
+
+define NOT_INITIALIZED_MSG
+This project is uninitialized.
+To initialize run:
+> make init
+or:
+> make reinit
+
+Ctrl-C to abort; any other key to continue.
+endef
+
+ifeq (${INITIALIZED},False)
+    ifeq (${MAKELEVEL},0)
+        $(warning ${NOT_INITIALIZED_MSG})
+        $(shell read -r)
+    endif
+    .DEFAULT_GOAL := help
+endif
 
 ${INIT_SEMAPHOR}:
 	@${MAKE} .git-new-branch
