@@ -91,7 +91,7 @@ export PROJECT_HELP_MSG
 HELP_TRGTS = help h HELP Help
 .PHONY: ${HELP_TRGTS}
 ${HELP_TRGTS}:
-	@echo "$$PROJECT_HELP_MSG" | more
+	@echo "$$PROJECT_HELP_MSG" | less
 
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
