@@ -1,5 +1,3 @@
-include base.mk
-
 #  User Configuration {{{1
 # ====================
 
@@ -27,6 +25,9 @@ CLEANUP +=
 # What directories to generate on `make data-dirs`.
 # By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
 DATA_DIRS +=
+
+# FINALLY: Include base makefile.
+include base.mk
 
 # ==============
 #  Data {{{1
