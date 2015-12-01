@@ -300,15 +300,3 @@ INITIAL_COMMIT_OPTIONS = -e
 .git-pager-config:
 	git config --local core.pager 'less -x4'
 
-# Testing {{{1
-.PHONY: test
-
-# The way I have it designed currently, each test independently saves
-# git's state and restores it in the end with an exit trap.
-# TODO: Make the _test branch once; each script checks if it's in it, but
-# otherwise leaves well-enough alone.
-test:
-	bash t/run_tests.sh t
-
-test-%:
-	bash t/run_tests.sh t/$*
