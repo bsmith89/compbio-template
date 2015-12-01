@@ -162,6 +162,7 @@ res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
 fig/Makefile.reduced.%: res/Makefile.reduced.dot
 	dot -T$* -Edir=back -Nshape=plaintext < $^ > $@
 
+.PHONY: tags
 tags:
 	ctags -R
 
