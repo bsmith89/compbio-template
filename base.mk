@@ -300,3 +300,8 @@ INITIAL_COMMIT_OPTIONS = -e
 .git-pager-config:
 	git config --local core.pager 'less -x4'
 
+#  Utils {{{1
+# ========================
+
+start-jupyter:
+	jupyter notebook --config=ipynb/jupyter_notebook_config.py

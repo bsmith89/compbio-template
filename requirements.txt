@@ -2,7 +2,14 @@
 pip>=6.1.1
 
 # Standard part of projects, but not _entirely_ necessary.
-ipython[notebook]>=3.1
+ipython
+jupyter
+matplotlib
+rpy2
+pandas
+seaborn
+numpy
+statsmodels
 
 # Common tools for working with sequence data
 # -e flag makes it editable:
