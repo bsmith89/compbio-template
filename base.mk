@@ -95,8 +95,8 @@ ${HELP_TRGTS}:
 
 # All recipes are run as though they are within the virtualenv.
 # WARNING: This may cause difficult to debug problems.
-VENV = ./.venv
-export VIRTUAL_ENV = $(abspath ${VENV})
+VENV ?= .venv
+export VIRTUAL_ENV := $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
 # TODO: Include a tmp/ dir?  Use it for what?
@@ -239,13 +239,13 @@ ${VENV}:
 	python3 -m venv $@
 	@echo "$$VENV_ACTIVATE_MSG"
 
-PIP_REQS = $(wildcard requirements.txt)
+PIP_REQS = $(wildcard requirements.txt requirements.pip)
 
 PACKAGE_DIR=./packages
 
 python-reqs: | ${VENV}
-	@python --version
-	@which python
+	@which pip
+	@pip --version
 	for req_file in ${PIP_REQS}; do \
         pip install --upgrade --no-deps --src ${PACKAGE_DIR} -r $$req_file ; \
         pip install -r $$req_file ; \
