@@ -146,16 +146,17 @@ docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 # requires:
 # https://bitbucket.org/jpbarrette/makegrapher
 # details at: https://code.google.com/p/makegrapher
-res/Makefile.complete: Makefile
-	${MAKE} --makefile=$^ -npr > $@
+res/Makefile.complete: Makefile base.mk
+	${MAKE} MAKEFLAGS= -npr > $@
 
 res/Makefile.dot: scripts/parse_make_db.py res/Makefile.complete
 	$^ > $@
 
 res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
-	$(word 1,$^) -d '^raw/ab1' -d '^bin/utils/' -d '^\.' -d '\.git' \
+	$(word 1,$^) -d '^\.' -d '\.git' \
                  -d '(submodules|${VENV}|python-reqs|init)' \
-                 -k '^raw/mcra' -k '^(all|res|figs|docs|Makefile)$$' \
+                 -k '^(all|res|figs|docs|Makefile)$$' \
+                 ${MAKEFILE_GRAPH_FLAGS} \
                  $(word 2,$^) > $@
 
 fig/Makefile.reduced.%: res/Makefile.reduced.dot
