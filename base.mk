@@ -137,6 +137,9 @@ PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
 %.pdf: %.md ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^)
 
+%.docx: %.md
+	pandoc -f markdown -t docx --smart --filter pandoc-citeproc -o $@ $<
+
 docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 
 # Visualize makefile with cytoscape.
