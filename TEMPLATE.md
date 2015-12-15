@@ -526,7 +526,7 @@ and a programmatic description of the pipeline in the `Makefile`.
 
 # TODO #
 
--   [ ] Testing framework (not usable currently)
+-   [ ] Testing framework
 -   [ ] Fill in common file conventions
 -   [ ] SHA-1 checksum for data files
 -   [ ] Package scripts in a different repo?
