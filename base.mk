@@ -293,7 +293,7 @@ INITIAL_COMMIT_OPTIONS = -e
 
 .git-ipynb-filter-config:
 	git config --local filter.dropoutput_ipynb.clean \
-        scripts/ipynb_output_filter.py
+        scripts/ipynb_output_filter.sh
 	git config --local filter.dropoutput_ipynb.smudge cat
 
 # Since Makefiles mix tabs and spaces, the default 8 spaces is too large
