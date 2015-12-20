@@ -111,6 +111,8 @@ DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/
 # ====================
 #  Documentation {{{1
 # =======================
+docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
+
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
@@ -137,11 +139,6 @@ PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
 
 %.pdf: %.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^)
-
-%.docx: %.md
-	pandoc -f markdown -t docx --smart --filter pandoc-citeproc -o $@ $<
-
-docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 
 # Visualize makefile with cytoscape.
 # requires:
