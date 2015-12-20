@@ -18,7 +18,7 @@ all: docs figs res
 VENV = .venv
 
 # Documentation settings {{{2
-BIB_FILE=main.bib
+BIB_FILE=doc/main.bib
 
 # Cleanup settings {{{2
 # Use the following line to add files and directories to be deleted on `make clean`:

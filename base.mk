@@ -32,7 +32,7 @@ TARGETS
             (1) ${VENV}
             (2) python-reqs
             (3) data-dirs
-            (4) link README.md to NOTE.md (from TEMPLATE.md)
+            (4) link README.md to doc/NOTE.md (from doc/TEMPLATE.md)
             (5) configure git to automatically clean IPython notebooks;
             (6) rename the 'origin' git remote to 'template-source'
             (7) make a new branch 'master' and remove the origin branch
@@ -114,6 +114,7 @@ DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+DOC_HEADER = doc/header.yaml
 
 # If EXTERNAL_BIBS, should be defined in local.mk
 # BIB_FILE defined in Makefile User Config Section
@@ -127,14 +128,14 @@ endif
 PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
                       --filter pandoc-citeproc --toc --toc-depth=4 -o $@
 
-%.html: %.md header.yaml ${BIB_FILE}
+%.html: %.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t html5 --standalone --mathjax=${MATHJAX} \
         --css static/main.css $(word 1,$^) $(word 2,$^)
 
-%.docx: %.md ${BIB_FILE}
+%.docx: %.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t docx $(word 1,$^) $(word 2,$^)
 
-%.pdf: %.md ${BIB_FILE}
+%.pdf: %.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^)
 
 %.docx: %.md
@@ -264,7 +265,7 @@ data-dirs:
 
 .link-readme:
 	unlink README.md
-	ln -s NOTE.md README.md
+	ln -s doc/NOTE.md README.md
 
 # Git Configuration {{{2
 .PHONY: .git-new-branch .git-initial-commit \

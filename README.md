@@ -1,1 +1,1 @@
-TEMPLATE.md
+doc/TEMPLATE.md

@@ -59,7 +59,7 @@ make init
 ```bash
 # Name the project; write a description;
 # create a preliminary list of objectives.
-vim NOTES.md
+vim doc/NOTE.md
 
 # Download raw data from an online repository
 cd raw/
@@ -68,7 +68,7 @@ tar -xzvf seq.tgz
 cd ..
 
 # Write a thorough description of the raw data
-vim NOTE.md
+vim doc/NOTE.md
 
 # Write a recipe (or two) to recreate the download protocol
 vim Makefile
@@ -83,8 +83,8 @@ cat raw/seq/metadata.tsv | sed '1,1d' > meta/samples.tsv
 vim Makefile
 
 # Describe and commit progress
-vim NOTE.md
-git add Makefile NOTE.md
+vim doc/NOTE.md
+git add Makefile doc/NOTE.md
 git commit -m "Downloaded and described data."
 
 # Run data through an analysis pipeline (e.g. an all-by-all BLASTx)
@@ -98,11 +98,11 @@ vim Makefile  # Write makefile recipes for the above.
 ipython3 notebook
 
 # Describe what was done, including an output figure.
-vim NOTE.md
+vim doc/NOTE.md
 mv fig/histogram.png static/2014-11-17_fig1.png
 
 # Commit this progress
-git add static/2014-11-17_fig1.png NOTE.md
+git add static/2014-11-17_fig1.png doc/NOTE.md
 git commit -m "Updated notes with a prototyped analysis."
 
 # Write a script to do this analysis reproducibly
@@ -164,7 +164,7 @@ $$
 \chi^2
 $$
 
-[`NOTE.md`](NOTE.md)
+[`doc/NOTE.md`](doc/NOTE.md)
 
 :   This is the core notebook for the project.
     All experiments and conclusions should be clearly described in the
@@ -172,7 +172,7 @@ $$
     Along with the project's `Makefile`, this notebook should allow a 3rd party
     to run and understand the entire analysis which was carried out.
 
-`TEMPLATE.md`
+`doc/TEMPLATE.md`
 
 :   This file, describing how to use the template and the project's
     directory structure.
@@ -329,7 +329,7 @@ _All project code is version controlled._
     They are also not conducive to reproducing a result after external files
     and directories have been changed.
     This is largely because they have file paths hard-coded in.
-    IPYNBs should be used kinda like the `NOTE.md`;
+    IPYNBs should be used kinda like the `doc/NOTE.md`;
     They are a record of a thought-process/workflow, but are not guarenteed to
     execute the same way after subsequent commits.
     Instead, important analyses should be ported over to version controlled
@@ -424,7 +424,7 @@ _Data is not version controlled._
     other than `raw/`.
     While raw data files are not version controlled, they _should_ all be
     available in an online repository.
-    The raw data appendix, in `NOTE.md`, describes everything a third party
+    The raw data appendix, in `doc/NOTE.md`, describes everything a third party
     (or the author a month later) needs to know about the raw data.
 
      -  Required: Describes (in detail) where all of the data came from.
@@ -436,7 +436,7 @@ _Data is not version controlled._
     collected, or the date of the experiment
     so growth curves started on October 20th, 2014, would be stored in
     `raw/2014-10-20/growth-curve.csv`, and
-    `NOTE.md` would describe the experiment and this file in detail.
+    `doc/NOTE.md` would describe the experiment and this file in detail.
 
 Intermediate data files are separated into directories based on their content.
 The extension portion of these file names should indicate the format of the
@@ -457,7 +457,7 @@ For example:
     The files in this directory are usually minimally processed versions of
     the original metadata files stored in `raw/`.
     Column titles should be explained in the metadata appendix
-    in `NOTE.md`.
+    in `doc/NOTE.md`.
 
 `seq/`
 
