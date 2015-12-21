@@ -26,8 +26,8 @@ CLEANUP +=
 
 # Initialization settings {{{2
 # What directories to generate on `make data-dirs`.
-# By default, already includes etc/ ipynb/ raw/ meta/ res/ fig/
-DATA_DIRS +=
+# By default, already includes build/ fig/
+DATA_DIRS += etc/ raw/ meta/ res/
 
 # FINALLY: Include base makefile {{{2
 include base.mk

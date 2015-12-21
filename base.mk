@@ -100,7 +100,7 @@ export VIRTUAL_ENV := $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
 # TODO: Include a tmp/ dir?  Use it for what?
-DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/ build/
+DATA_DIRS += build/ fig/
 
 # Use this file to include sensitive data that shouldn't be version controlled.
 # Others forking this project will need to create their own local.mk.
