@@ -100,7 +100,7 @@ export VIRTUAL_ENV := $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
 # TODO: Include a tmp/ dir?  Use it for what?
-DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/
+DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/ build/
 
 # Use this file to include sensitive data that shouldn't be version controlled.
 # Others forking this project will need to create their own local.mk.
@@ -128,18 +128,19 @@ ${BIB_FILE}: ${EXTERNAL_BIBS}
 	scripts/sort_bib.py $^ > $@
 endif
 
-PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
-                      --filter pandoc-citeproc --toc --toc-depth=4 -o $@
+PANDOC_OPTS_GENERAL = --from markdown --smart --highlight-style pygments \
+                      --filter pandoc-citeproc \
+                      --table-of-contents --toc-depth=4
 
-%.html: %.md ${DOC_HEADER} ${BIB_FILE}
+build/%.html: doc/%.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t html5 --standalone --mathjax=${MATHJAX} \
-        --css doc/static/main.css $(word 1,$^) $(word 2,$^)
+        --css doc/static/main.css $(word 1,$^) $(word 2,$^) -o $@
 
-%.docx: %.md ${DOC_HEADER} ${BIB_FILE}
-	pandoc ${PANDOC_OPTS_GENERAL} -t docx $(word 1,$^) $(word 2,$^)
+build/%.docx: doc/%.md ${DOC_HEADER} ${BIB_FILE}
+	pandoc ${PANDOC_OPTS_GENERAL} -t docx $(word 1,$^) $(word 2,$^) -o $@
 
-%.pdf: %.md ${DOC_HEADER} ${BIB_FILE}
-	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^)
+build/%.pdf: doc/%.md ${DOC_HEADER} ${BIB_FILE}
+	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^) -o $@
 
 # Makefile Visualization {{{2
 # Visualize makefile with cytoscape.
