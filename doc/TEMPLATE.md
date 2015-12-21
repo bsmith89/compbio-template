@@ -369,7 +369,7 @@ same configuration.
     The file is created on running `make init`,
     which adds the IPython notebook filter to the project's git configuration,
     makes a new Python virtual environment (`.venv/`), and installs everything
-    in `requirements.txt` to `.venv`.
+    in `requirements.pip` to `.venv`.
 
     Unlike the other configuration files in this template,
     `.initialized` is ignored by git.
@@ -396,7 +396,7 @@ same configuration.
 
 :   Configuration files for `git`.
 
-`requirements.txt`
+`requirements.pip`
 
 :   Packages installed to the python virtualenv on `make python-reqs`.
     To make it easier for others to re-run your scripts, rather than using

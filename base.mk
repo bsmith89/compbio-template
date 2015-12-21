@@ -53,7 +53,7 @@ TARGETS
         Create the virtualenv if absent.  The name is set by $${VENV}.
 
     python-reqs
-        Install all python requirements from `requirements.txt` to the venv.
+        Install all python requirements from `requirements.pip` to the venv.
 
     data-dirs
         Create all data directories. Directories set in $${DATA_DIRS}.
