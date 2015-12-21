@@ -18,7 +18,7 @@ raw/*
 meta/*
 tre/*
 img/*
-profile_default/*
+ipynb/profile_default/*
 fig/*
 .venv/*
 packages/*

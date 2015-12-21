@@ -347,7 +347,7 @@ _All project code is version controlled._
     filtered, so static versions of notebooks with output included can be
     moved to `static/` and version controlled.
 
-    IPython has been configured (see `profile_default/` below)
+    IPython has been configured (see `ipynb/profile_default/` below)
     so that starting a notebook server from the
     command line will look for `*.ipynb` files in `ipynb/`,
     but the working directory will be set back to the root directory when a
@@ -374,7 +374,7 @@ same configuration.
     Unlike the other configuration files in this template,
     `.initialized` is ignored by git.
 
-`profile_default/`
+`ipynb/profile_default/`
 
 :   A custom IPython profile
     which changes a few things from the built-in default:
