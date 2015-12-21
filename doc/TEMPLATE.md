@@ -392,15 +392,6 @@ same configuration.
 
     [ipy-config]: <http://ipython.org/ipython-doc/dev/config/intro.html>
 
-`matplotlibrc`
-
-:   A custom matplotlib profile for compbio projects.
-    Change matplotlib styles in a central place.
-    All figures will have the same config.
-
-    See
-    [matplotlib's documentation](http://matplotlib.org/users/customizing.html).
-
 `.gitattributes` / `.gitignore` / `.gitmodules`
 
 :   Configuration files for `git`.

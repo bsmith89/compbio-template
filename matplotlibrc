@@ -1,4 +1,0 @@
-axes.grid      : False   # display grid or not
-axes.titlesize : x-large # fontsize of the axes title
-axes.labelsize : large   # fontsize of the x any y labels
-legend.frameon : False   # whether or not to draw a frame around legend
