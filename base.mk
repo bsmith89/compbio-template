@@ -1,4 +1,4 @@
-# User help message {{{1
+# User Help Message {{{1
 define PROJECT_HELP_MSG
 
 ================================
@@ -113,6 +113,7 @@ DATA_DIRS += etc/ ipynb/ raw/ meta/ res/ fig/
 # =======================
 docs: ${ALL_DOCS_HTML} fig/Makefile.reduced.png
 
+# Notes {{{2
 ALL_DOCS = TEMPLATE NOTE
 ALL_DOCS_HTML = $(addsuffix .html,${ALL_DOCS})
 MATHJAX = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
@@ -140,6 +141,7 @@ PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
 %.pdf: %.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^)
 
+# Makefile Visualization {{{2
 # Visualize makefile with cytoscape.
 # requires:
 # https://bitbucket.org/jpbarrette/makegrapher
