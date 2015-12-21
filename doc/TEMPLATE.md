@@ -99,10 +99,10 @@ ipython3 notebook
 
 # Describe what was done, including an output figure.
 vim doc/NOTE.md
-mv fig/histogram.png static/2014-11-17_fig1.png
+mv fig/histogram.png doc/static/2014-11-17_fig1.png
 
 # Commit this progress
-git add static/2014-11-17_fig1.png doc/NOTE.md
+git add doc/static/2014-11-17_fig1.png doc/NOTE.md
 git commit -m "Updated notes with a prototyped analysis."
 
 # Write a script to do this analysis reproducibly
@@ -177,7 +177,7 @@ $$
 :   This file, describing how to use the template and the project's
     directory structure.
 
-`static/`
+`doc/static/`
 
 :   Files (usually images) which are included in notebooks.
     These files are version controlled, so that a remote
@@ -191,7 +191,7 @@ $$
     Static file names should be prefixed with the date in YYYY-MM-DD
     format.
 
-`static/main.css`
+`doc/static/main.css`
 
 :   Used in the compilation of HTML versions of notes written in
     markdown.
@@ -345,7 +345,7 @@ _All project code is version controlled._
     forks of the project will get an 'un-run' version.
     Notebook which do not fit the glob pattern `ipynb/*.ipynb` will not be
     filtered, so static versions of notebooks with output included can be
-    moved to `static/` and version controlled.
+    moved to `doc/static/` and version controlled.
 
     IPython has been configured (see `ipynb/profile_default/` below)
     so that starting a notebook server from the

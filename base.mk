@@ -132,7 +132,7 @@ PANDOC_OPTS_GENERAL = -f markdown --smart --highlight-style pygments \
 
 %.html: %.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t html5 --standalone --mathjax=${MATHJAX} \
-        --css static/main.css $(word 1,$^) $(word 2,$^)
+        --css doc/static/main.css $(word 1,$^) $(word 2,$^)
 
 %.docx: %.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t docx $(word 1,$^) $(word 2,$^)
