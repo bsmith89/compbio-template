@@ -261,7 +261,7 @@ python-reqs: | ${VENV}
 	@pip --version
 	for req_file in ${PIP_REQS}; do \
         pip install --upgrade --no-deps --src ${PACKAGE_DIR} -r $$req_file ; \
-        pip install -r $$req_file ; \
+        pip install --src ${PACKAGE_DIR} -r $$req_file ; \
     done
 
 # Repository Structure {{{2
