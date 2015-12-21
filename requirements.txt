@@ -3,7 +3,7 @@ pip>=6.1.1
 
 # Standard part of projects, but not _entirely_ necessary.
 ipython
-jupyter
+jupyter>=1.0.0
 matplotlib
 rpy2
 pandas

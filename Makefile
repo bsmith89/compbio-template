@@ -46,6 +46,11 @@ include base.mk
 # e.g. Calculating means, distributions, correlations, fitting models, etc.
 # Basically anything that *could* go into the paper as a table.
 
+# Jupyter Notebooks {{{2
+# Add pre-requisites for particular jupyter notebooks so that
+# `make build/<notebook>.ipynb` will first make those pre-reqs.
+# e.g.
+# build/notebook.ipynb: res/results.tsv
 
 # ==================
 #  Graphing {{{1

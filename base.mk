@@ -164,6 +164,13 @@ fig/Makefile.reduced.%: res/Makefile.reduced.dot
 tags:
 	ctags -R
 
+# Jupyter notebooks {{{2
+build/%.ipynb: ipynb/%.ipynb
+	jupyter nbconvert $^ \
+        --config=ipynb/jupyter_notebook_config.py \
+        --to notebook --execute \
+        --stdout > $@
+
 # =================
 #  Cleanup {{{1
 # =================
