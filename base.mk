@@ -160,8 +160,11 @@ res/Makefile.reduced.dot: scripts/clean_makefile_graph.py res/Makefile.dot
                  ${MAKEFILE_GRAPH_FLAGS} \
                  $(word 2,$^) > $@
 
-fig/Makefile.reduced.%: res/Makefile.reduced.dot
-	dot -T$* -Edir=back -Nshape=plaintext < $^ > $@
+fig/%.png: res/%.dot
+	dot -Tpng -Edir=back -Nshape=plaintext < $^ > $@
+
+fig/%.svg: res/%.dot
+	dot -Tsvg -Edir=back -Nshape=plaintext < $^ > $@
 
 .PHONY: tags
 tags:
