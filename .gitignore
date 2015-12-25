@@ -15,6 +15,7 @@ local.mk
 res/*
 seq/*
 raw/*
+ref/*
 meta/*
 tre/*
 img/*
