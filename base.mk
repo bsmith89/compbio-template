@@ -315,4 +315,4 @@ INITIAL_COMMIT_OPTIONS = -e
 # ========================
 
 start-jupyter:
-	jupyter notebook --config=ipynb/jupyter_notebook_config.py
+	jupyter notebook --notebook-dir=ipynb/
