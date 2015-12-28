@@ -19,6 +19,7 @@ ref/*
 meta/*
 tre/*
 img/*
+
 ipynb/profile_default/*
 fig/*
 .venv/*
@@ -26,4 +27,4 @@ packages/*
 build/
 
 # But white-list these files
-!profile_default/*config.py
+!ipynb/profile_default/*config.py
