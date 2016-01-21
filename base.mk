@@ -316,3 +316,23 @@ INITIAL_COMMIT_OPTIONS = -e
 
 start-jupyter:
 	jupyter notebook --notebook-dir=ipynb/
+
+# ========================
+#   Convenience Macros {{{1
+# ========================
+
+# Pre-requisites: ${P<N>} where <N> is the pre-requisite index
+P1  = $(word 1,$^)
+P2  = $(word 2,$^)
+P3  = $(word 3,$^)
+P4  = $(word 4,$^)
+P5  = $(word 5,$^)
+P6  = $(word 6,$^)
+P7  = $(word 7,$^)
+P8  = $(word 8,$^)
+P9  = $(word 9,$^)
+P10 = $(word 10,$^)
+P11 = $(word 11,$^)
+P12 = $(word 12,$^)
+P13 = $(word 13,$^)
+P14 = $(word 14,$^)
