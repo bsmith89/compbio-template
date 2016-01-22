@@ -100,7 +100,7 @@ export VIRTUAL_ENV := $(abspath ${VENV})
 export PATH := ${VIRTUAL_ENV}/bin:${PATH}
 
 # TODO: Include a tmp/ dir?  Use it for what?
-DATA_DIRS += build/ fig/
+DATA_DIRS += ${BUILD_DIR}/ fig/
 
 # Use this file to include sensitive data that shouldn't be version controlled.
 # Others forking this project will need to create their own local.mk.
@@ -132,14 +132,14 @@ PANDOC_OPTS_GENERAL = --from markdown --smart --highlight-style pygments \
                       --filter pandoc-citeproc \
                       --table-of-contents --toc-depth=4
 
-build/%.html: doc/%.md ${DOC_HEADER} ${BIB_FILE}
+${BUILD_DIR}/%.html: doc/%.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t html5 --standalone --mathjax=${MATHJAX} \
         --css doc/static/main.css $(word 1,$^) $(word 2,$^) -o $@
 
-build/%.docx: doc/%.md ${DOC_HEADER} ${BIB_FILE}
+${BUILD_DIR}/%.docx: doc/%.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t docx $(word 1,$^) $(word 2,$^) -o $@
 
-build/%.pdf: doc/%.md ${DOC_HEADER} ${BIB_FILE}
+${BUILD_DIR}/%.pdf: doc/%.md ${DOC_HEADER} ${BIB_FILE}
 	pandoc ${PANDOC_OPTS_GENERAL} -t latex $(word 1,$^) $(word 2,$^) -o $@
 
 # Makefile Visualization {{{2
@@ -171,7 +171,7 @@ tags:
 	ctags -R
 
 # Jupyter notebooks {{{2
-build/%.ipynb: ipynb/%.ipynb
+${BUILD_DIR}/%.ipynb: ipynb/%.ipynb
 	jupyter nbconvert $^ \
         --config=ipynb/jupyter_notebook_config.py \
         --to notebook --execute \
