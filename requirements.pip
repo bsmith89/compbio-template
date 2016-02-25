@@ -11,6 +11,8 @@ seaborn
 numpy
 statsmodels
 
+daff
+
 # Common tools for working with sequence data
 # -e flag makes it editable:
 # installing with `pip install --src packages -r requirements.txt`

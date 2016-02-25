@@ -222,6 +222,7 @@ ${INIT_SEMAPHOR}:
 	@${MAKE} .git-ipynb-filter-config
 	@${MAKE} INITIAL_COMMIT_OPTIONS='${INITIAL_COMMIT_OPTIONS}' .git-initial-commit
 	@${MAKE} .git-pager-config
+	@${MAKE} .git-gaff-config
 	touch $@
 
 # TODO: Figure out why the explicit passing of INITIAL_COMMIT_OPTIONS is required.
@@ -310,6 +311,11 @@ INITIAL_COMMIT_OPTIONS = -e
 # Since Makefiles mix tabs and spaces, the default 8 spaces is too large
 .git-pager-config:
 	git config --local core.pager 'less -x4'
+
+.git-gaff-config:
+	git config --local diff.daff-csv.command "daff.py diff --git"
+	git config --local merge.daff-csv.name "daff.py tabular merge"
+	git config --local merge.daff-csv.driver "daff.py merge --output %A %O %A %B"
 
 # ========================
 #  Convenience Targets {{{1
