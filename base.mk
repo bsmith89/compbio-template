@@ -219,6 +219,7 @@ ${INIT_SEMAPHOR}:
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
 	@${MAKE} .link-readme
+	git init
 	@${MAKE} .git-ipynb-filter-config
 	@${MAKE} INITIAL_COMMIT_OPTIONS='${INITIAL_COMMIT_OPTIONS}' .git-initial-commit
 	@${MAKE} .git-pager-config
@@ -231,6 +232,7 @@ reinit:
 	@[ "${VENV}" ] && ${MAKE} ${VENV}
 	@${MAKE} python-reqs
 	@${MAKE} data-dirs
+	git init
 	@${MAKE} .git-ipynb-filter-config
 	@${MAKE} .git-pager-config
 	touch ${INIT_SEMAPHOR}
