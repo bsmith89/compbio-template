@@ -9,6 +9,7 @@ rpy2
 pandas
 seaborn
 numpy
+scipy
 statsmodels
 
 daff
