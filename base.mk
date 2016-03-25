@@ -324,7 +324,7 @@ INITIAL_COMMIT_OPTIONS = -e
 # ========================
 
 start-jupyter:
-	jupyter notebook --notebook-dir=ipynb/
+	jupyter notebook --config=ipynb/jupyter_notebook_config.py --notebook-dir=ipynb/
 
 # ========================
 #   Convenience Macros {{{1
